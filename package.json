@@ -1,25 +1,32 @@
 {
-    "name": "@yulolimum/scripts",
-    "private": true,
-    "scripts": {},
-    "packageManager": "pnpm@10.13.1",
-    "dependencies": {
-        "@eslint/js": "^9.29.0",
-        "@tsconfig/strictest": "^2.0.5",
-        "eslint": "^9.29.0",
-        "eslint-config-prettier": "^10.1.5",
-        "eslint-formatter-pretty": "^6.0.1",
-        "eslint-plugin-import": "^2.31.0",
-        "eslint-plugin-prettier": "^5.5.0",
-        "eslint-plugin-react": "^7.37.5",
-        "eslint-plugin-react-hooks": "^5.2.0",
-        "eslint-plugin-simple-import-sort": "^12.1.1",
-        "prettier": "^3.6.2",
-        "prettier-plugin-packagejson": "^2.5.18",
-        "tsup": "^8.5.0",
-        "tsx": "^4.20.3",
-        "typescript": "5.8.3",
-        "typescript-eslint": "^8.34.1",
-        "zx": "^8.7.0"
-    }
+  "name": "@yulolimum/scripts",
+  "private": true,
+  "scripts": {
+    "dev:check-code-quality": "npx zx --install ./src/dev-check-code-quality.mjs",
+    "dev:clean": "./src/dev-clean.sh",
+    "dev:verify-software": "./src/dev-verify-software.sh"
+  },
+  "dependencies": {
+    "@eslint/js": "^9.29.0",
+    "@tsconfig/strictest": "^2.0.5",
+    "@types/fs-extra": "^11.0.4",
+    "@types/node": "^24.0.13",
+    "eslint": "^9.29.0",
+    "eslint-config-prettier": "^10.1.5",
+    "eslint-formatter-pretty": "^6.0.1",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-prettier": "^5.5.0",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-simple-import-sort": "^12.1.1",
+    "globals": "^16.3.0",
+    "prettier": "^3.6.2",
+    "prettier-plugin-packagejson": "^2.5.18",
+    "tsup": "^8.5.0",
+    "tsx": "^4.20.3",
+    "typescript": "5.8.3",
+    "typescript-eslint": "^8.34.1",
+    "zx": "^8.7.0"
+  },
+  "packageManager": "pnpm@10.13.1"
 }
