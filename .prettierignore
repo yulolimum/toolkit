@@ -1,0 +1,6 @@
+.yarn
+.expo
+.tmp
+build
+dist
+node_modules
