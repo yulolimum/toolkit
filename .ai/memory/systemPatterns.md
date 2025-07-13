@@ -2,55 +2,118 @@
 
 ## Architecture Overview
 
-The project follows a **utility-first architecture** with three independent scripts that can be used standalone or together. Each script addresses a specific aspect of the development workflow while maintaining consistency in user experience and error handling.
+The project follows a **prefix-based utility architecture** with independent scripts organized by domain category. Each script addresses specific automation needs while maintaining consistency in user experience and error handling across all domains (development, media, deployment, system administration, personal productivity).
 
 ## Key Technical Decisions
 
 ### Script Organization
 
-#### File Structure
+#### Naming Convention Architecture
 ```
 src/
-├── dev-check-code-quality.mjs  # Interactive code quality runner
-├── dev-clean.sh               # Project cleanup utility
-└── dev-verify-software.sh     # Environment verification
+├── dev-check-code-quality.mjs     # Development: Interactive code quality runner
+├── dev-clean.sh                   # Development: Project cleanup utility
+├── dev-verify-software.sh         # Development: Environment verification
+├── media-organize-library.py      # Media: Library organization (planned)
+├── deploy-to-server.sh           # Deployment: Server deployment (planned)
+├── system-cleanup-logs.sh        # System: Log cleanup (planned)
+└── personal-backup-configs.sh    # Personal: Configuration backup (planned)
 ```
 
-#### Language Choices
-- **JavaScript (ESM)**: For interactive, Node.js-based tooling (`dev-check-code-quality.mjs`)
-- **Bash**: For system-level operations and cross-platform compatibility (`dev-clean.sh`, `dev-verify-software.sh`)
+#### Package.json Script Mapping
+```json
+{
+  "scripts": {
+    "dev:check-code-quality": "npx zx --install ./src/dev-check-code-quality.mjs",
+    "dev:clean": "./src/dev-clean.sh",
+    "dev:verify-software": "./src/dev-verify-software.sh",
+    "media:organize-library": "python ./src/media-organize-library.py",
+    "deploy:to-server": "./src/deploy-to-server.sh",
+    "system:cleanup-logs": "./src/system-cleanup-logs.sh",
+    "personal:backup-configs": "./src/personal-backup-configs.sh"
+  }
+}
+```
+
+#### Language Choices by Domain
+- **JavaScript (ESM)**: Interactive tools, development automation, complex user interfaces
+- **Python**: Data processing, media management, analysis, machine learning tasks
+- **Bash**: System operations, deployment, maintenance, file operations
+- **Mixed Approach**: Choose optimal language for each specific automation need
 
 ### Design Patterns
 
-#### Interactive CLI Pattern (`dev-check-code-quality.mjs`)
+#### Cross-Domain Consistency Patterns
+
+**Unified User Experience**
+- Consistent visual feedback (✅/❌) across all script categories
+- Standardized parameter passing and configuration approaches
+- Common error handling and reporting patterns regardless of implementation language
+- Shared preference caching strategies where applicable
+
+**Prefix-Based Organization**
+```
+Category Prefixes:
+- dev-*     : Development workflow automation
+- media-*   : Media library and content management
+- deploy-*  : Deployment and infrastructure automation
+- system-*  : System administration and maintenance
+- personal-*: Personal productivity and workflow optimization
+```
+
+#### Interactive CLI Pattern (JavaScript/Node.js)
 
 **User Preference Caching**
 ```javascript
-// Cache user selections to reduce decision fatigue
+// Cache user selections to reduce decision fatigue across all interactive scripts
 const cacheFile = path.join(__dirname, ".cache")
-let cache = { checkCodeQuality: {} }
+let cache = { [scriptCategory]: {} }
 
 // Restore previous selections as defaults
-checked: cache.checkCodeQuality.tools?.includes("tsc") ?? true
+checked: cache[scriptCategory].tools?.includes("tool") ?? true
 ```
 
 **Spinner-Based Feedback**
 ```javascript
 // Provide visual feedback during long-running operations
-const output = await spinner(`Running ${tool}...`, async function () {
-  return await $({ nothrow: true })`tsc --noEmit`
+const output = await spinner(`Running ${operation}...`, async function () {
+  return await $({ nothrow: true })`command`
 })
 ```
 
 **Graceful Error Handling**
 ```javascript
-// Continue execution even if individual tools fail
+// Continue execution even if individual operations fail
 if (output.exitCode !== 0) {
-  console.error(`❌ Error running ${tool}: ${output.stdout || output.stderr}`)
+  console.error(`❌ Error running ${operation}: ${output.stdout || output.stderr}`)
   process.exit(1)
 } else {
-  console.log(`✅ ${tool} completed successfully`)
+  console.log(`✅ ${operation} completed successfully`)
 }
+```
+
+#### Batch Processing Pattern (Python)
+
+**File Collection and Processing**
+```python
+# Pattern for media and data processing scripts
+def process_files(input_path, output_path, options):
+    files = collect_files(input_path, file_patterns)
+    for file in files:
+        try:
+            result = process_file(file, options)
+            report_success(file, result)
+        except Exception as e:
+            report_error(file, e)
+            continue  # Graceful degradation
+```
+
+**Progress Reporting**
+```python
+# Consistent progress reporting across batch operations
+from tqdm import tqdm
+for item in tqdm(items, desc="Processing"):
+    process_item(item)
 ```
 
 #### Safe Execution Pattern (Shell Scripts)
@@ -59,100 +122,158 @@ if (output.exitCode !== 0) {
 ```bash
 set -e  # Exit on any error
 
-# Safe execution with fallback
-execute_clean_step() {
+# Safe execution with fallback for system operations
+execute_safe_step() {
   echo "Executing: $1"
-  eval $1 || true 2> /dev/null  # Continue on failure
+  eval $1 || true 2> /dev/null  # Continue on failure for cleanup operations
 }
 ```
 
-**Version Validation Pattern**
+**Resource Validation**
 ```bash
-# Semantic version comparison
+# Check system resources before operations
+check_disk_space() {
+    available=$(df -h . | awk 'NR==2 {print $4}')
+    echo "Available disk space: $available"
+}
+```
+
+**Version and Dependency Validation**
+```bash
+# Semantic version comparison for system tools
 semver_lte() {
     printf '%s\n' "$1" "$2" | sort -C -V
 }
 
 # Flexible version checking with min/max constraints
-if [[ -n "${!min_version}" ]] && ! semver_lte "${!min_version}" "$semver"; then
-    ((version_failures += 1))
-fi
+validate_tool_version() {
+    local tool=$1
+    local min_version=$2
+    local max_version=$3
+    # Implementation for cross-script tool validation
+}
 ```
 
 ## Component Relationships
 
-### Dependency Flow
+### Multi-Domain Architecture Flow
 ```
-package.json scripts → Individual utilities
+package.json scripts → Category-specific utilities
                     ↓
-User Interface ← Tool Execution ← Configuration
+Domain-specific Logic ← Shared Patterns ← Common Configuration
+                    ↓
+User Interface ← Tool/Process Execution ← Category Configuration
 ```
 
 ### Integration Points
 
 #### Package.json Integration
-- Scripts exposed through npm/pnpm commands
-- Consistent naming convention (`dev:*`)
-- Direct execution paths for flexibility
+- Scripts exposed through npm/pnpm commands with category namespacing
+- Consistent naming convention (`category:action`)
+- Direct execution paths for flexibility across different runtimes
+- Support for both interactive and automated execution modes
 
-#### Tool Chain Integration
-- **TypeScript**: `tsc --noEmit` for type checking only
-- **ESLint**: `--fix --cache --format=pretty` for optimal UX
-- **Prettier**: `--write --cache --log-level=error` for clean output
+#### Cross-Domain Tool Integration
+- **Development**: TypeScript, ESLint, Prettier with optimized flags
+- **Media**: FFmpeg, ImageMagick, ExifTool for media processing
+- **Deployment**: SSH, rsync, Docker for deployment automation
+- **System**: System utilities, cron, backup tools for maintenance
+- **Personal**: Custom tools and APIs for productivity automation
+
+#### Multi-Language Coordination
+- **JavaScript/Node.js**: zx for cross-platform shell operations, inquirer for user interaction
+- **Python**: Standard library + domain-specific packages (Pillow, pandas, etc.)
+- **Shell Scripts**: POSIX-compatible commands with macOS-specific optimizations
+- **Configuration Sharing**: JSON-based configuration files readable across languages
 
 #### Cross-Platform Considerations
-- Use of `zx` for cross-platform shell operations in JavaScript
-- Bash scripts with POSIX-compatible commands
-- Graceful handling of missing tools/commands
+- Primary target: macOS with graceful degradation for other Unix systems
+- Language-specific cross-platform libraries (zx for JS, pathlib for Python)
+- Consistent error handling and user feedback across different runtimes
+- Shared configuration and cache management across script categories
 
 ## Critical Implementation Paths
 
-### Code Quality Workflow
-1. **User Selection**: Interactive checkbox interface
-2. **Preference Caching**: Store selections for future runs
-3. **Sequential Execution**: Run tools one at a time with feedback
-4. **Error Aggregation**: Collect and report all failures
-5. **Success Confirmation**: Clear indication of completion
+### Interactive Workflow Pattern (Development, Personal Productivity)
+1. **User Selection**: Interactive interface for tool/option selection
+2. **Preference Caching**: Store selections for future runs across categories
+3. **Sequential Execution**: Run operations with real-time feedback
+4. **Error Aggregation**: Collect and report all failures with actionable guidance
+5. **Success Confirmation**: Clear indication of completion with summary
 
-### Cleanup Workflow
-1. **Safe Discovery**: Find artifacts without affecting source code
-2. **Batch Removal**: Execute cleanup commands with error tolerance
-3. **Progress Reporting**: Show what's being cleaned
-4. **Completion Confirmation**: Simple success message
+### Batch Processing Workflow (Media, System Administration)
+1. **Resource Validation**: Check available disk space, memory, and dependencies
+2. **File/Target Discovery**: Identify items to process with safety checks
+3. **Batch Execution**: Process items with progress reporting and error tolerance
+4. **Result Aggregation**: Collect success/failure statistics
+5. **Cleanup and Reporting**: Clean temporary files and provide detailed summary
 
-### Verification Workflow
-1. **Tool Detection**: Check if required software is installed
-2. **Version Extraction**: Parse version information from tool output
-3. **Range Validation**: Compare against min/max version constraints
-4. **Status Reporting**: Aggregate and display all results
-5. **Exit Code Management**: Fail fast if critical tools are missing
+### Deployment/Automation Workflow (Deployment, System)
+1. **Environment Validation**: Verify target environment and prerequisites
+2. **Configuration Loading**: Load environment-specific configurations
+3. **Pre-flight Checks**: Validate deployment targets and rollback capabilities
+4. **Execution with Monitoring**: Execute with progress tracking and health checks
+5. **Post-deployment Validation**: Verify successful completion and functionality
+
+### Data Processing Workflow (Media, Personal)
+1. **Input Validation**: Verify file formats, permissions, and integrity
+2. **Metadata Extraction**: Gather existing metadata and configuration
+3. **Transformation Pipeline**: Apply processing with intermediate validation
+4. **Quality Assurance**: Verify output quality and completeness
+5. **Organization and Cleanup**: Move files to final locations and clean temporary data
 
 ## Configuration Management
 
-### User Preferences
-- **Location**: `.cache` file in script directory
-- **Format**: JSON with tool-specific sections
-- **Scope**: Per-script configuration with sensible defaults
-- **Persistence**: Automatic save/restore across sessions
+### Cross-Domain Configuration Strategy
 
-### Tool Configuration
-- **ESLint**: Relies on project-level configuration files
-- **Prettier**: Uses project-level configuration with fallback defaults
-- **TypeScript**: Uses project `tsconfig.json`
+#### User Preferences
+- **Location**: `.cache` file in script directory with category-specific sections
+- **Format**: JSON with hierarchical organization by script category
+- **Scope**: Per-category configuration with sensible defaults
+- **Persistence**: Automatic save/restore across sessions and script categories
+- **Sharing**: Common preferences shared across related scripts
+
+#### Category-Specific Configuration
+- **Development**: Project-level tool configurations (ESLint, Prettier, TypeScript)
+- **Media**: Format preferences, quality settings, organization rules
+- **Deployment**: Environment configurations, server credentials, deployment targets
+- **System**: Maintenance schedules, backup locations, monitoring thresholds
+- **Personal**: API keys, personal preferences, workflow customizations
+
+#### Configuration Hierarchy
+```
+Global Defaults → Category Defaults → Script-Specific → User Overrides
+```
+
+#### Multi-Language Configuration Access
+- **JavaScript**: JSON parsing with fs module
+- **Python**: JSON parsing with standard library
+- **Shell**: jq for JSON parsing and manipulation
+- **Shared Schema**: Common configuration structure across languages
 
 ## Error Handling Philosophy
 
-### Graceful Degradation
-- Individual tool failures don't stop the entire process
-- Clear error messages with actionable information
-- Distinction between warnings and critical failures
+### Universal Graceful Degradation
+- Individual operation failures don't stop entire workflows across all domains
+- Clear error messages with actionable information specific to each domain
+- Distinction between warnings and critical failures across different script types
+- Consistent error reporting format regardless of implementation language
 
-### User Feedback
-- **Visual Indicators**: ✅ for success, ❌ for errors
-- **Progress Indication**: Spinners for long-running operations
-- **Detailed Output**: Tool-specific output when relevant
+### Cross-Domain User Feedback
+- **Visual Indicators**: ✅ for success, ❌ for errors, ⚠️ for warnings (all domains)
+- **Progress Indication**: Appropriate feedback for each domain (spinners, progress bars, status updates)
+- **Detailed Output**: Domain-specific output with consistent formatting
+- **Summary Reporting**: Aggregate results across batch operations
 
-### Recovery Strategies
-- Cache corruption handling with fallback to defaults
-- Missing tool detection with clear installation guidance
-- Version mismatch reporting with specific requirements
+### Multi-Domain Recovery Strategies
+- **Configuration Issues**: Fallback to defaults with clear guidance for customization
+- **Missing Dependencies**: Domain-specific installation guidance (dev tools, media codecs, system utilities)
+- **Resource Constraints**: Intelligent handling of disk space, memory, and processing limitations
+- **Network Issues**: Retry logic and offline fallbacks for deployment and update operations
+- **Permission Problems**: Clear guidance for file permissions and system access requirements
+
+### Language-Specific Error Handling
+- **JavaScript**: Promise-based error handling with detailed stack traces
+- **Python**: Exception handling with context-aware error messages
+- **Shell**: Exit code management with descriptive error output
+- **Cross-Language**: Consistent error code conventions for script coordination
