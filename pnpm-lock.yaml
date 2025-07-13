@@ -11,6 +11,9 @@ importers:
       '@eslint/js':
         specifier: ^9.29.0
         version: 9.31.0
+      '@tsconfig/strictest':
+        specifier: ^2.0.5
+        version: 2.0.5
       eslint:
         specifier: ^9.29.0
         version: 9.31.0
@@ -412,6 +415,9 @@ packages:
 
   '@rtsao/scc@1.1.0':
     resolution: {integrity: sha512-zt6OdqaDoOnJ1ZYsCYGt9YmWzDXl4vQdKTyJev62gFhRGKdx7mcT54V9KIjg+d2wi9EXsPvAPKe7i7WjfVWB8g==}
+
+  '@tsconfig/strictest@2.0.5':
+    resolution: {integrity: sha512-ec4tjL2Rr0pkZ5hww65c+EEPYwxOi4Ryv+0MtjeaSQRJyq322Q27eOQiFbuNgw2hpL4hB1/W/HBGk3VKS43osg==}
 
   '@types/eslint@8.56.12':
     resolution: {integrity: sha512-03ruubjWyOHlmljCVoxSuNDdmfZDzsrrz0P2LeJsOXr+ZwFQ+0yQIwNCwt/GYhV7Z31fgtXJTAEs+FYlEL851g==}
@@ -2002,6 +2008,8 @@ snapshots:
     optional: true
 
   '@rtsao/scc@1.1.0': {}
+
+  '@tsconfig/strictest@2.0.5': {}
 
   '@types/eslint@8.56.12':
     dependencies:
