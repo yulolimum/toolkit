@@ -6,11 +6,14 @@
     "dev:check-code-quality": "npx zx --install ./scripts/dev-check-code-quality.mjs",
     "dev:clean": "./scripts/dev-clean.sh",
     "dev:verify-software": "./scripts/dev-verify-software.sh",
-    "eas:build": "npx zx --install ./scripts/eas-build.mjs"
+    "eas:build": "npx zx --install ./scripts/eas-build.mjs",
+    "eas:submit": "npx zx --install ./scripts/eas-submit.mjs",
+    "eas:update": "npx zx --install ./scripts/eas-update.mjs"
   },
   "dependencies": {
     "@eslint/js": "^9.29.0",
     "@inquirer/checkbox": "^4.1.9",
+    "@inquirer/input": "^4.2.0",
     "@inquirer/select": "^4.2.4",
     "@tsconfig/strictest": "^2.0.5",
     "@types/fs-extra": "^11.0.4",
