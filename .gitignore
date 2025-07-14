@@ -1,5 +1,5 @@
 node_modules
 .tmp
 .DS_Store
-src/.cache
+scripts/.cache
 .eslintcache

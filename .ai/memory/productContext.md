@@ -25,6 +25,7 @@ Modern technical workflows involve repetitive tasks across multiple domains that
 ### User Experience Goals
 
 #### Development Category (`dev-*`)
+
 - **Interactive Selection**: Users choose which tools to run (TypeScript, ESLint, Prettier)
 - **Smart Defaults**: Remember user preferences to reduce decision fatigue
 - **Clear Feedback**: Immediate success/failure indication with actionable error messages
@@ -32,6 +33,7 @@ Modern technical workflows involve repetitive tasks across multiple domains that
 - **Environment Validation**: Comprehensive checking of development tool requirements
 
 #### Media Management Category (`media-*`)
+
 - **Batch Processing**: Handle large collections of media files efficiently
 - **Format Flexibility**: Support multiple input/output formats with intelligent conversion
 - **Metadata Preservation**: Maintain and enhance metadata during processing
@@ -39,6 +41,7 @@ Modern technical workflows involve repetitive tasks across multiple domains that
 - **Duplicate Detection**: Identify and handle duplicate files intelligently
 
 #### Deployment Category (`deploy-*`)
+
 - **Environment Awareness**: Understand different deployment targets and requirements
 - **Rollback Capability**: Safe deployment with easy rollback mechanisms
 - **Configuration Management**: Handle environment-specific configurations seamlessly
@@ -46,6 +49,7 @@ Modern technical workflows involve repetitive tasks across multiple domains that
 - **Validation Steps**: Automated verification of successful deployments
 
 #### System Administration Category (`system-*`)
+
 - **Safe Operations**: Never compromise system stability or data integrity
 - **Comprehensive Coverage**: Handle various system maintenance tasks consistently
 - **Resource Monitoring**: Track system resources and performance impact
@@ -53,6 +57,7 @@ Modern technical workflows involve repetitive tasks across multiple domains that
 - **Recovery Procedures**: Built-in safeguards and recovery mechanisms
 
 #### Personal Productivity Category (`personal-*`)
+
 - **Workflow Integration**: Seamlessly integrate with existing personal workflows
 - **Data Processing**: Handle various data formats and transformation needs
 - **Task Automation**: Reduce manual effort for routine personal technical tasks
@@ -61,18 +66,21 @@ Modern technical workflows involve repetitive tasks across multiple domains that
 ### Integration Patterns
 
 #### Package.json Scripts
+
 - Provide npm/pnpm script aliases for easy execution
 - Follow consistent naming conventions (`category:action`)
 - Enable integration with existing workflows across all domains
 - Support both interactive and automated execution modes
 
 #### Cross-Domain Usage
+
 - Scripts should work regardless of project or file structure
 - Minimal assumptions about environment configuration
 - Graceful handling of missing tools or dependencies
 - Consistent user experience patterns across different script categories
 
 #### Multi-Language Coordination
+
 - Seamless execution regardless of underlying implementation language
 - Consistent parameter passing and configuration approaches
 - Unified error handling and reporting across different runtimes
@@ -81,6 +89,7 @@ Modern technical workflows involve repetitive tasks across multiple domains that
 ## Value Proposition
 
 ### For Personal Automation
+
 - **Time Savings**: Reduce repetitive task execution across all technical domains
 - **Consistency**: Same automation patterns for development, media, deployment, and system tasks
 - **Reliability**: Proven, tested procedures for critical operations
@@ -88,12 +97,14 @@ Modern technical workflows involve repetitive tasks across multiple domains that
 - **Knowledge Preservation**: Codify complex procedures for reliable future execution
 
 ### For Multi-Domain Workflows
+
 - **Unified Experience**: Consistent interface and patterns across different types of automation
 - **Cross-Domain Integration**: Scripts that can work together across different domains
 - **Scalable Organization**: Easy to add new automation without complexity overhead
 - **Maintenance Efficiency**: Single repository and approach for all automation needs
 
 ### For Team and Collaboration
+
 - **Standardization**: Consistent automation processes that can be shared
 - **Documentation**: Self-documenting scripts with clear purpose and usage
 - **Onboarding**: New team members can quickly understand and use automation tools
@@ -102,6 +113,7 @@ Modern technical workflows involve repetitive tasks across multiple domains that
 ## Success Metrics
 
 ### User Experience
+
 - Scripts complete successfully on first run across all domains
 - Users remember and prefer using these scripts over manual procedures
 - Minimal learning curve for new script categories
@@ -109,12 +121,14 @@ Modern technical workflows involve repetitive tasks across multiple domains that
 - Consistent experience across different types of automation
 
 ### Technical Performance
+
 - Fast execution times appropriate for each domain (< 30 seconds for most operations)
 - Reliable operation across different environments, file types, and domains
 - Minimal resource consumption across different runtime environments
 - Graceful handling of edge cases and errors across all script categories
 
 ### Adoption Indicators
+
 - Regular usage across multiple domains and projects
 - Integration into daily workflows (development, media management, deployment, system maintenance)
 - Positive feedback on automation experience across different domains

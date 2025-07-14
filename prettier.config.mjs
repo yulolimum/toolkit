@@ -1,8 +1,4 @@
-export default {
-  plugins: ["prettier-plugin-packagejson"],
-  trailingComma: "es5",
-  tabWidth: 2,
-  printWidth: 120,
-  semi: false,
-  singleQuote: false,
-}
+import prettierConfig from "./configs/prettier.config.mjs"
+
+/** @type {import("prettier").Options} */
+export default prettierConfig

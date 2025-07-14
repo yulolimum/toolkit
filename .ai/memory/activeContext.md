@@ -2,15 +2,22 @@
 
 ## Current Work Focus
 
-### Memory Bank Update (Current Session)
-- **Status**: Updating memory bank to reflect broader multi-domain scope
-- **Completed**: Updated project brief, product context, system patterns, tech context
-- **In Progress**: Updating active context and progress documentation
-- **Next**: Finalize memory bank updates with new multi-domain vision
+### Project Organization Refinement (Current Session)
+
+- **Status**: Completed directory restructuring and memory bank updates
+- **Completed**:
+  - Moved scripts from `src/` to `scripts/` directory
+  - Added `configs/` directory for shareable configuration files
+  - Moved configuration files (eslint.config.mjs, prettier.config.mjs, eas.json) to `configs/`
+  - Updated package.json script paths
+  - Updated memory bank documentation to reflect new structure
+- **In Progress**: Finalizing memory bank updates for new organization
+- **Next**: Document the configs/ pattern for shareable, static configuration files
 
 ### Project Vision Evolution
 
 #### Expanded Scope Understanding
+
 The project has evolved from a **development utilities package** to a **comprehensive personal automation and utility collection** covering:
 
 - **Development Workflows**: Code quality, environment setup, project cleanup
@@ -20,6 +27,7 @@ The project has evolved from a **development utilities package** to a **comprehe
 - **Personal Productivity**: Task automation, data processing, workflow optimization
 
 #### Current Implementation Status
+
 **Development Category (Fully Functional)**
 
 1. **dev-check-code-quality.mjs**: Interactive code quality runner
@@ -39,46 +47,66 @@ The project has evolved from a **development utilities package** to a **comprehe
    - Version range checking (Node.js 22.x, Java 17.x, etc.)
    - Comprehensive reporting
 
+**EAS Deployment Category (Partially Implemented)**
+
+1. **eas-build.mjs**: Interactive EAS build automation
+   - Platform selection (iOS, Android, All)
+   - Profile selection (Preview, Production)
+   - Distribution selection (Store, Internal)
+   - EAS server vs local build options
+   - User preference caching
+   - Command preview and confirmation
+
 **Other Categories (Planned)**
-- **media-***: Media library management and processing scripts
-- **deploy-***: Deployment and infrastructure automation
-- **system-***: System maintenance and administration
-- **personal-***: Personal productivity and workflow tools
+
+- **media-\***: Media library management and processing scripts
+- **system-\***: System maintenance and administration
+- **personal-\***: Personal productivity and workflow tools
 
 ## Recent Changes
 
-### Memory Bank Evolution (Current Session)
-- **Scope Expansion**: Updated all memory bank files to reflect multi-domain automation vision
-- **Architecture Documentation**: Documented prefix-based naming convention and multi-language approach
-- **Technology Stack**: Expanded to include Python, enhanced shell scripting, and cross-domain patterns
-- **Future Planning**: Established clear expansion path for new automation categories
+### EAS Deployment Implementation (Current Session)
 
-### Organizational Strategy Clarification
-- **Naming Convention**: Confirmed prefix-based organization (`category-action.extension`)
-- **Package.json Scripts**: Established colon-separated namespacing (`category:action`)
-- **Multi-Language Support**: Documented approach for JavaScript, Python, and shell scripts
-- **Flat Structure**: Confirmed preference for flat directory structure over nested folders
+- **First Category Expansion**: Successfully implemented first script beyond development category
+- **EAS-Specific Naming**: Established `eas-*` prefix for EAS-specific deployment automation
+- **Interactive Patterns**: Validated interactive CLI patterns work across different domains
+- **Package.json Integration**: Added `eas:build` script following established naming convention
+- **Architecture Validation**: Confirmed multi-domain architecture scales effectively
+
+### EAS Deployment Strategy Implementation
+
+- **EAS-Specific Naming**: Implemented `eas-*` prefix for EAS deployment tools (vs generic `deploy-*`)
+- **Interactive CLI Patterns**: Successfully applied established patterns to new domain
+- **Cross-Domain Caching**: Extended `.cache` file pattern to EAS deployment preferences
+- **Command Construction**: Implemented sophisticated EAS CLI command building with conditional flags
+- **User Experience Consistency**: Maintained visual feedback and confirmation patterns
 
 ## Next Steps
 
 ### Immediate (This Session)
-1. ✅ Update memory bank to reflect multi-domain scope
-2. 🔄 Complete `progress.md` updates for broader project vision
-3. 📝 Document organizational patterns and expansion strategy
 
-### Short-term Development Opportunities
-1. **First New Category**: Add initial script from another domain (media, deploy, system, or personal)
-2. **Cross-Language Configuration**: Implement shared configuration system for multi-language scripts
-3. **Enhanced Error Reporting**: Improve error messages with actionable suggestions across all domains
-4. **Template System**: Create templates for new scripts in each category
+1. ✅ Implement first EAS deployment script (`eas-build.mjs`)
+2. ✅ Update package.json with new script and dependencies
+3. 🔄 Update memory bank to reflect successful category expansion
+4. 📝 Document EAS-specific patterns and architecture validation
+
+### Short-term EAS Expansion Opportunities
+
+1. **Additional EAS Scripts**: Add `eas-submit.mjs`, `eas-status.mjs`, `eas-update.mjs`
+2. **EAS Environment Validation**: Extend `dev-verify-software.sh` to include EAS CLI validation
+3. **Enhanced Error Handling**: Add EAS CLI availability checks and better error messages
+4. **Build Artifact Management**: Add scripts for managing and organizing build outputs
 
 ### Medium-term Multi-Domain Expansion
-1. **Media Management**: Scripts for library organization, format conversion, metadata handling
-2. **Deployment Automation**: Server deployment, environment synchronization, rollback procedures
+
+1. **Complete EAS Suite**: Full EAS deployment automation (build, submit, update, status)
+2. **Media Management**: Scripts for library organization, format conversion, metadata handling
 3. **System Administration**: Maintenance schedules, backup automation, monitoring tools
 4. **Personal Productivity**: Data processing, workflow automation, task management
+5. **Cross-Domain Integration**: Scripts that coordinate EAS builds with other automation
 
 ### Long-term Architecture Evolution
+
 1. **Cross-Domain Integration**: Scripts that coordinate across multiple categories
 2. **Plugin Architecture**: Extensible system for custom automation tools
 3. **Configuration Profiles**: Domain-specific and cross-domain configuration management
@@ -87,6 +115,7 @@ The project has evolved from a **development utilities package** to a **comprehe
 ## Active Decisions and Considerations
 
 ### Multi-Domain User Experience Priorities
+
 - **Consistency**: Unified experience across all script categories and languages
 - **Simplicity**: Keep scripts easy to understand regardless of implementation language
 - **Reliability**: Ensure consistent behavior across different environments and domains
@@ -94,6 +123,7 @@ The project has evolved from a **development utilities package** to a **comprehe
 - **Performance**: Maintain appropriate execution times for each domain type
 
 ### Cross-Domain Technical Architecture
+
 - **Independence**: Each script should work standalone while supporting coordination
 - **Consistency**: Shared patterns for error handling and user feedback across languages
 - **Extensibility**: Design for easy addition of new categories without architectural changes
@@ -101,6 +131,7 @@ The project has evolved from a **development utilities package** to a **comprehe
 - **Configuration**: Unified configuration approach accessible from all languages
 
 ### Multi-Domain Quality Standards
+
 - **Code Quality**: All scripts follow domain-appropriate quality standards
 - **Documentation**: Comprehensive documentation for maintenance across all categories
 - **Testing**: Consider automated testing strategies for different script types
@@ -110,6 +141,7 @@ The project has evolved from a **development utilities package** to a **comprehe
 ## Important Patterns and Preferences
 
 ### Cross-Domain Design Patterns
+
 - **Prefix-Based Organization**: `category-action.extension` for file naming
 - **Namespace Scripts**: `category:action` for package.json script naming
 - **Language Selection**: Choose optimal language for each specific automation need
@@ -117,6 +149,7 @@ The project has evolved from a **development utilities package** to a **comprehe
 - **Consistent UX**: Unified visual feedback (✅/❌/⚠️) across all categories
 
 ### Multi-Language CLI Patterns
+
 - **Interactive Selection**: Checkboxes for multi-option choices (JavaScript)
 - **Progress Reporting**: Appropriate feedback for each domain (spinners, progress bars)
 - **Smart Defaults**: Remember user preferences across categories
@@ -124,12 +157,14 @@ The project has evolved from a **development utilities package** to a **comprehe
 - **Graceful Degradation**: Continue operation when individual operations fail
 
 ### Universal Error Handling Philosophy
+
 - **Domain-Appropriate Handling**: Critical vs. recoverable errors vary by domain
 - **Consistent Reporting**: Same visual indicators across all languages
 - **Actionable Guidance**: Provide specific next steps for each domain
 - **Cross-Language Standards**: Consistent exit codes and error formats
 
 ### Multi-Domain Configuration Management
+
 - **Shared Configuration**: JSON-based config accessible from all languages
 - **Category-Specific Sections**: Organized by script category with inheritance
 - **Cross-Language Access**: JavaScript (fs), Python (json), Shell (jq)
@@ -138,30 +173,35 @@ The project has evolved from a **development utilities package** to a **comprehe
 ## Learnings and Project Insights
 
 ### Multi-Domain Automation Strategy
+
 - **Prefix-based organization** scales better than nested directories for mixed-language projects
 - **Colon-separated namespacing** in package.json provides clear categorization
 - **Language selection per domain** optimizes for specific automation needs
 - **Flat structure** simplifies navigation and script discovery
 
 ### Cross-Language Integration Patterns
+
 - **JSON configuration** provides universal access across JavaScript, Python, and shell
 - **Consistent visual feedback** (✅/❌/⚠️) works across all implementation languages
 - **Shared cache directory** enables cross-script preference management
 - **Domain-specific tooling** allows optimization for each automation category
 
 ### Scalability Insights
+
 - **Category expansion** is straightforward with established naming conventions
 - **Multi-language coordination** requires careful attention to configuration sharing
 - **User experience consistency** is achievable across different runtime environments
 - **Performance optimization** strategies vary significantly by domain type
 
 ### Technology Evolution Understanding
+
 - **Development tools** benefit from interactive, caching-enabled approaches
 - **Media processing** requires batch operations with progress reporting
 - **System administration** needs safe execution with comprehensive error handling
 - **Deployment automation** demands validation, rollback, and monitoring capabilities
 
 ### Organizational Effectiveness
+
 - **Flat structure with prefixes** provides better discoverability than nested hierarchies
 - **Package.json script mapping** creates familiar interface regardless of implementation language
 - **Cross-domain patterns** enable knowledge transfer between different automation categories
