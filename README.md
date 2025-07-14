@@ -30,7 +30,7 @@ Personal automation scripts and shareable configs organized by domain with inter
 
 - **[`eas.json`](configs/eas.json)** - EAS deployment configuration
 - **[`eslint.config.mjs`](configs/eslint.config.mjs)** - ESLint rules with React and import sorting
-- **[`prettier.config.mjs`](configs/prettier.config.mjs)** - Code formatting configuration
+- **[`prettier.config.mjs`](configs/prettier.config.mjs)** - Code formatting configuration with shell script and Tailwind CSS support
 
 ## Usage
 
