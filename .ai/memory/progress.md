@@ -210,13 +210,13 @@ The development category is production-ready and the EAS deployment category now
 - **Performance**: 95% complete (efficient API usage with caching)
 - **Documentation**: 100% complete (comprehensive .env.example and README)
 
-**Media Management Category**: 25% complete (first script implemented)
+**Media Management Category**: 50% complete (two scripts implemented)
 
-- **Core Features**: 25% complete (`media-recursively-hardlink.sh` implemented)
-- **User Experience**: 80% complete (shell script with comprehensive documentation)
-- **Error Handling**: 85% complete (safety checks and colored output)
-- **Performance**: 90% complete (efficient file operations)
-- **Documentation**: 100% complete (detailed usage documentation)
+- **Core Features**: 50% complete (`media-recursively-hardlink.sh` and `media-normalize-episode-names.mjs` implemented)
+- **User Experience**: 90% complete (shell script + interactive LLM-powered normalization)
+- **Error Handling**: 90% complete (comprehensive error handling with graceful fallbacks)
+- **Performance**: 95% complete (efficient file operations + optimized API usage)
+- **Documentation**: 100% complete (detailed usage documentation and examples)
 
 **Other Categories**: 0% complete (planned)
 
