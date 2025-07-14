@@ -14,6 +14,9 @@ Personal automation scripts and shareable configs organized by domain with inter
 - **`eas:submit`** - App store submission with local/remote build support
 - **`eas:update`** - Over-the-air updates with channel and messaging options
 
+### Media Management (`media-*`)
+- **`media:recursively-hardlink`** - Create hardlinks for media files to save disk space
+
 ## Configs
 
 ### Shareable (`configs/`)
