@@ -5,24 +5,24 @@ Personal automation scripts and shareable configs organized by domain with inter
 ## Scripts
 
 ### Development (`dev-*`)
-- **`dev:check-code-quality`** - Interactive TypeScript, ESLint, and Prettier runner
-- **`dev:clean`** - Clean project artifacts and build outputs
-- **`dev:verify-software`** - Verify development environment and tool versions
+- **[`dev:check-code-quality`](scripts/dev-check-code-quality.mjs)** - Interactive TypeScript, ESLint, and Prettier runner
+- **[`dev:clean`](scripts/dev-clean.sh)** - Clean project artifacts and build outputs
+- **[`dev:verify-software`](scripts/dev-verify-software.sh)** - Verify development environment and tool versions
 
 ### EAS Deployment (`eas-*`)
-- **`eas:build`** - Interactive EAS build automation with platform/profile selection
-- **`eas:submit`** - App store submission with local/remote build support
-- **`eas:update`** - Over-the-air updates with channel and messaging options
+- **[`eas:build`](scripts/eas-build.mjs)** - Interactive EAS build automation with platform/profile selection
+- **[`eas:submit`](scripts/eas-submit.mjs)** - App store submission with local/remote build support
+- **[`eas:update`](scripts/eas-update.mjs)** - Over-the-air updates with channel and messaging options
 
 ### Media Management (`media-*`)
-- **`media:recursively-hardlink`** - Create hardlinks for media files to save disk space
+- **[`media:recursively-hardlink`](scripts/media-recursively-hardlink.sh)** - Create hardlinks for media files to save disk space
 
 ## Configs
 
 ### Shareable (`configs/`)
-- **`eas.json`** - EAS deployment configuration
-- **`eslint.config.mjs`** - ESLint rules with React and import sorting
-- **`prettier.config.mjs`** - Code formatting configuration
+- **[`eas.json`](configs/eas.json)** - EAS deployment configuration
+- **[`eslint.config.mjs`](configs/eslint.config.mjs)** - ESLint rules with React and import sorting
+- **[`prettier.config.mjs`](configs/prettier.config.mjs)** - Code formatting configuration
 
 ## Usage
 
