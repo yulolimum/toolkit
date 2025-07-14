@@ -47,7 +47,10 @@
   "@inquirer/checkbox": "^4", // Interactive CLI prompts
   "typescript": "5.8.3", // TypeScript compiler
   "eslint": "^9.29.0", // JavaScript/TypeScript linting
-  "prettier": "^3.6.2" // Code formatting
+  "prettier": "^3.6.2", // Code formatting
+  "prettier-plugin-packagejson": "^2.5.18", // Package.json formatting
+  "prettier-plugin-sh": "^0.18.0", // Shell script formatting
+  "prettier-plugin-tailwindcss": "^0.6.14" // Tailwind CSS class sorting
 }
 ```
 
@@ -64,7 +67,7 @@
 
 ```bash
 # EAS CLI (installed via npx)
-npx eas-cli@latest                  // Expo Application Services CLI
+npx eas-cli@latest // Expo Application Services CLI
 ```
 
 #### Linear Integration Category Dependencies
@@ -108,20 +111,20 @@ tqdm>=4.65.0            # Progress bars
 
 ```bash
 # System tools and utilities
-jq                      # JSON processing in shell scripts
-rsync                   # File synchronization
-cron                    # Task scheduling
-find/grep/awk/sed      # Text processing and file operations
+jq                # JSON processing in shell scripts
+rsync             # File synchronization
+cron              # Task scheduling
+find/grep/awk/sed # Text processing and file operations
 ```
 
 #### Deployment Dependencies (Mixed)
 
 ```bash
 # Deployment and infrastructure tools
-ssh/scp                 # Remote access and file transfer
-docker                  # Containerization
-git                     # Version control integration
-curl/wget              # HTTP operations
+ssh/scp   # Remote access and file transfer
+docker    # Containerization
+git       # Version control integration
+curl/wget # HTTP operations
 ```
 
 **Development Tooling**
@@ -195,8 +198,8 @@ curl/wget              # HTTP operations
 #### JavaScript/Node.js Integration
 
 ```javascript
-import { $, fs, minimist, spinner } from "zx"
-import checkbox from "@inquirer/checkbox"
+import { $, fs, minimist, spinner } from 'zx'
+import checkbox from '@inquirer/checkbox'
 
 // Cross-platform shell command execution
 const output = await $({ nothrow: true })`command`
@@ -207,7 +210,7 @@ await fs.writeJson(cacheFile, data)
 
 // Interactive user prompts with caching
 const tools = await checkbox({
-  message: "Select options:",
+  message: 'Select options:',
   choices: [
     /* ... */
   ],
@@ -245,24 +248,24 @@ args = parser.parse_args()
 ```bash
 # JSON configuration parsing
 parse_config() {
-    local config_file="$1"
-    jq -r '.key' "$config_file"
+  local config_file="$1"
+  jq -r '.key' "$config_file"
 }
 
 # Cross-script communication
 source_common_functions() {
-    # Load shared functions and variables
-    source "$(dirname "$0")/common.sh"
+  # Load shared functions and variables
+  source "$(dirname "$0")/common.sh"
 }
 
 # Error handling and logging
 log_error() {
-    echo "❌ Error: $1" >&2
-    exit 1
+  echo "❌ Error: $1" >&2
+  exit 1
 }
 
 log_success() {
-    echo "✅ Success: $1"
+  echo "✅ Success: $1"
 }
 ```
 
@@ -382,7 +385,7 @@ def process_files(files):
 #### Shell Scripts
 
 ```bash
-set -e  # Fail fast on critical errors
+set -e # Fail fast on critical errors
 
 # Safe execution with error tolerance for cleanup operations
 execute_safe_step() {
@@ -449,10 +452,10 @@ execute_critical_step() {
 
 ```javascript
 // JavaScript
-import path, { dirname } from "path"
-import { fileURLToPath } from "url"
+import path, { dirname } from 'path'
+import { fileURLToPath } from 'url'
 const __dirname = dirname(fileURLToPath(import.meta.url))
-const cacheFile = path.join(__dirname, ".cache")
+const cacheFile = path.join(__dirname, '.cache')
 ```
 
 ```python

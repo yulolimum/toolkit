@@ -81,7 +81,7 @@
 - **Package Management**: pnpm with lockfile for Node.js dependencies
 - **TypeScript Configuration**: Strictest settings for maximum type safety
 - **ESLint Integration**: Modern flat config with React and import sorting support
-- **Prettier Integration**: Consistent formatting with ESLint compatibility
+- **Prettier Integration**: Multi-language formatting (JS/TS, shell scripts, Tailwind CSS) with modern standards (single quotes, trailing commas)
 - **Build Tools**: tsup and tsx for TypeScript compilation and execution
 - **Python Support**: Framework for virtual environments and dependency management
 - **Shell Validation**: shellcheck integration for script quality assurance

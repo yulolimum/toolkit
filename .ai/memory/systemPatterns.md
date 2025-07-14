@@ -157,12 +157,12 @@ for item in tqdm(items, desc="Processing"):
 **Error Handling Strategy**
 
 ```bash
-set -e  # Exit on any error
+set -e # Exit on any error
 
 # Safe execution with fallback for system operations
 execute_safe_step() {
   echo "Executing: $1"
-  eval $1 || true 2> /dev/null  # Continue on failure for cleanup operations
+  eval $1 || true 2> /dev/null # Continue on failure for cleanup operations
 }
 ```
 
@@ -171,8 +171,8 @@ execute_safe_step() {
 ```bash
 # Check system resources before operations
 check_disk_space() {
-    available=$(df -h . | awk 'NR==2 {print $4}')
-    echo "Available disk space: $available"
+  available=$(df -h . | awk 'NR==2 {print $4}')
+  echo "Available disk space: $available"
 }
 ```
 
@@ -181,15 +181,15 @@ check_disk_space() {
 ```bash
 # Semantic version comparison for system tools
 semver_lte() {
-    printf '%s\n' "$1" "$2" | sort -C -V
+  printf '%s\n' "$1" "$2" | sort -C -V
 }
 
 # Flexible version checking with min/max constraints
 validate_tool_version() {
-    local tool=$1
-    local min_version=$2
-    local max_version=$3
-    # Implementation for cross-script tool validation
+  local tool=$1
+  local min_version=$2
+  local max_version=$3
+  # Implementation for cross-script tool validation
 }
 ```
 
@@ -322,9 +322,9 @@ Global Defaults → Category Defaults → Script-Specific → User Overrides
 ```javascript
 // EAS-specific configuration structure
 cache.easBuild = {
-  platform: "all", // "ios", "android", "all"
-  profile: "preview", // "preview", "production"
-  distribution: "internal", // "store", "internal"
+  platform: 'all', // "ios", "android", "all"
+  profile: 'preview', // "preview", "production"
+  distribution: 'internal', // "store", "internal"
   runOnEAS: true, // true for EAS servers, false for local
 }
 ```
