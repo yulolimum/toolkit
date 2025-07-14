@@ -8,6 +8,6 @@
     "exactOptionalPropertyTypes": false,
     "jsx": "react-jsx"
   },
-  "exclude": ["node_modules"],
+  "exclude": ["node_modules", "**/*.mjs"],
   "include": ["scripts", "configs"]
 }
