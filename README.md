@@ -35,5 +35,8 @@ Scripts are standalone and can be run independently. Install dependencies as nee
 # .mjs scripts can be run without dependencies
 npx zx --install ./scripts/script-name.mjs
 
+# .ts scripts can be run via tsx
+npx tsx ./scripts/script-name.ts
+
 # Shell scripts can be run directly
 ./scripts/script-name.sh
