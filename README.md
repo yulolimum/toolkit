@@ -14,6 +14,9 @@ Personal automation scripts and shareable configs organized by domain with inter
 - **[`eas:submit`](scripts/eas-submit.mjs)** - App store submission with local/remote build support
 - **[`eas:update`](scripts/eas-update.mjs)** - Over-the-air updates with channel and messaging options
 
+### Linear Integration (`linear-*`)
+- **[`linear:start-clockify-timer`](scripts/linear-start-clockify-timer.ts)** - Start Clockify timer for Linear issues with workspace/project selection and smart caching
+
 ### Media Management (`media-*`)
 - **[`media:recursively-hardlink`](scripts/media-recursively-hardlink.sh)** - Create hardlinks for media files to save disk space
 
