@@ -10,6 +10,7 @@
     "eas:submit": "npx zx --install ./scripts/eas-submit.mjs",
     "eas:update": "npx zx --install ./scripts/eas-update.mjs",
     "linear:start-clockify-timer": "tsx ./scripts/linear-start-clockify-timer.ts",
+    "media:normalize-episode-names": "npx zx --install ./scripts/media-normalize-episode-names.mjs",
     "media:recursively-hardlink": "./scripts/media-recursively-hardlink.sh"
   },
   "dependencies": {
