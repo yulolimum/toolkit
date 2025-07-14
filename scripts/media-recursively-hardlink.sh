@@ -20,6 +20,7 @@
 # Examples:
 #   ./media-recursively-hardlink.sh /movies/action/movie.mkv /backup/movies
 #   ./media-recursively-hardlink.sh /tv-shows/season1 /backup/tv-shows/season1
+#   pnpm media:recursively-hardlink "/Volumes/media/torrents/unmanaged/Ulicy.razbityh.fonarej.Menty.(1.sezon.31.serija.iz.31).1997.DivX.DVDRip" "/Volumes/media/media/for-mom/Улицы разбитых фонарей {kp-77052}"
 #
 # Requirements:
 #   - Source and destination must be on the same filesystem
