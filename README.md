@@ -22,6 +22,7 @@ Personal automation scripts and shareable configs organized by domain with inter
 
 ### Media Management (`media-*`)
 
+- **[`media:normalize-episode-names`](scripts/media-normalize-episode-names.mjs)** - Normalize TV episode filenames using OpenRouter LLM with Russian translation support
 - **[`media:recursively-hardlink`](scripts/media-recursively-hardlink.sh)** - Create hardlinks for media files to save disk space
 
 ## Configs
