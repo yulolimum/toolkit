@@ -4,7 +4,8 @@
   "scripts": {
     "dev:check-code-quality": "npx zx --install ./src/dev-check-code-quality.mjs",
     "dev:clean": "./src/dev-clean.sh",
-    "dev:verify-software": "./src/dev-verify-software.sh"
+    "dev:verify-software": "./src/dev-verify-software.sh",
+    "eas:build": "npx zx --install ./src/eas-build.mjs"
   },
   "dependencies": {
     "@eslint/js": "^9.29.0",
