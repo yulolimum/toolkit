@@ -3,8 +3,8 @@
 set -e
 
 function execute_clean_step {
-  echo "Executing: $1"
-  eval $1 || true 2> /dev/null
+	echo "Executing: $1"
+	eval $1 || true 2> /dev/null
 }
 
 execute_clean_step "find . -name '.DS_Store' -delete"

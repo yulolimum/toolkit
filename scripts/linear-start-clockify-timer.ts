@@ -1,18 +1,18 @@
-import confirm from "@inquirer/confirm"
-import input from "@inquirer/input"
-import select from "@inquirer/select"
-import { LinearClient } from "@linear/sdk"
-import axios from "axios"
-import path, { dirname } from "path"
-import { fileURLToPath } from "url"
-import { dotenv, fs, minimist, sleep, spinner } from "zx"
+import confirm from '@inquirer/confirm'
+import input from '@inquirer/input'
+import select from '@inquirer/select'
+import { LinearClient } from '@linear/sdk'
+import axios from 'axios'
+import path, { dirname } from 'path'
+import { fileURLToPath } from 'url'
+import { dotenv, fs, minimist, sleep, spinner } from 'zx'
 
-dotenv.config(".env")
+dotenv.config('.env')
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
-const cacheFile = path.join(__dirname, ".cache")
+const cacheFile = path.join(__dirname, '.cache')
 let cache
 
 try {
@@ -23,7 +23,7 @@ try {
 }
 
 const { url } = minimist(process.argv.slice(2), {
-  string: ["url"],
+  string: ['url'],
   default: { url: null },
 })
 
@@ -32,26 +32,26 @@ const CLOCKIFY_API_KEY = process.env.CLOCKIFY_API_KEY
 
 // Validate required environment variables
 if (!LINEAR_API_KEY) {
-  console.error("❌ LINEAR_API_KEY is required. Please add it to your .env file.")
+  console.error('❌ LINEAR_API_KEY is required. Please add it to your .env file.')
   process.exit(1)
 }
 
 if (!CLOCKIFY_API_KEY) {
-  console.error("❌ CLOCKIFY_API_KEY is required. Please add it to your .env file.")
+  console.error('❌ CLOCKIFY_API_KEY is required. Please add it to your .env file.')
   process.exit(1)
 }
 
 // Initialize API clients
 const linear = new LinearClient({ apiKey: LINEAR_API_KEY })
 const clockify = axios.create({
-  baseURL: "https://api.clockify.me/api/v1",
-  headers: { "X-Api-Key": CLOCKIFY_API_KEY },
+  baseURL: 'https://api.clockify.me/api/v1',
+  headers: { 'X-Api-Key': CLOCKIFY_API_KEY },
 })
 
 // Get Linear issue URL (first step)
 const linearUrl = await input({
-  message: "Enter the Linear issue URL:",
-  default: url ?? cache.linearClockifyTimer.url ?? "",
+  message: 'Enter the Linear issue URL:',
+  default: url ?? cache.linearClockifyTimer.url ?? '',
   required: true,
 })
 
@@ -59,7 +59,7 @@ const linearUrl = await input({
 const linearIssueId = linearUrl.match(/linear\.app\/[^/]+\/issue\/([^/]+)/)?.[1]
 
 if (!linearIssueId) {
-  console.error("❌ Invalid Linear issue URL. Please provide a valid URL.")
+  console.error('❌ Invalid Linear issue URL. Please provide a valid URL.')
   process.exit(1)
 }
 
@@ -76,17 +76,17 @@ let workspaceId = cache.linearClockifyTimer.workspaceId
 
 if (!workspaceId) {
   // Fetch available workspaces from Clockify
-  const workspacesResponse = await clockify.get("/workspaces")
+  const workspacesResponse = await clockify.get('/workspaces')
   const workspaces = workspacesResponse.data
 
   if (!workspaces || workspaces.length === 0) {
-    console.error("❌ No workspaces found. Please check your Clockify API key.")
+    console.error('❌ No workspaces found. Please check your Clockify API key.')
     process.exit(1)
   }
 
   // Present workspaces to user for selection
   workspaceId = await select({
-    message: "Select a Clockify workspace:",
+    message: 'Select a Clockify workspace:',
     choices: workspaces.map((workspace: any) => ({
       name: `${workspace.name} (${workspace.id})`,
       value: workspace.id,
@@ -108,15 +108,15 @@ const projectsResponse = await clockify.get(`/workspaces/${workspaceId}/projects
 const projects = projectsResponse.data
 
 if (!projects || projects.length === 0) {
-  console.error("❌ No projects found in the selected workspace.")
+  console.error('❌ No projects found in the selected workspace.')
   process.exit(1)
 }
 
 // Present projects to user for selection (always prompt, but use cache as default)
 const projectId = await select({
-  message: "Select a project:",
+  message: 'Select a project:',
   choices: projects.map((project: any) => ({
-    name: `${project.name} (${project.clientName || "No client"})`,
+    name: `${project.name} (${project.clientName || 'No client'})`,
     value: project.id,
   })),
   default: cache.linearClockifyTimer.projectId ?? null,
@@ -144,13 +144,13 @@ const clockifyParams = {
   description: `[${linearId}] ${linearTitle} - ${issueUrl}`,
   projectId,
   start: new Date(startTime).toISOString(),
-  type: "REGULAR",
+  type: 'REGULAR',
 }
 
 const startTimerResponse = await clockify.post(`/workspaces/${workspaceId}/time-entries`, clockifyParams)
 
-if (startTimerResponse.statusText !== "Created") {
-  console.error("❌ Failed to start timer:", startTimerResponse)
+if (startTimerResponse.statusText !== 'Created') {
+  console.error('❌ Failed to start timer:', startTimerResponse)
   process.exit(1)
 }
 
@@ -167,7 +167,7 @@ function calculateElapsedTime() {
   if (hours > 0) parts.push(`${hours}h`)
   if (remainingMinutes > 0 || hours > 0) parts.push(`${remainingMinutes}m`)
   parts.push(`${remainingSeconds}s`)
-  return parts.join(" ")
+  return parts.join(' ')
 }
 
 async function logTime() {
@@ -176,13 +176,13 @@ async function logTime() {
 
 let stopSpinner = true
 
-process.on("SIGINT", async () => {
+process.on('SIGINT', async () => {
   stopSpinner = false
-  process.stdout.write("\r")
+  process.stdout.write('\r')
   await sleep(1000)
-  process.stdout.write("\r")
+  process.stdout.write('\r')
 
-  const stopTracking = await confirm({ message: "Stop time tracking?", default: true })
+  const stopTracking = await confirm({ message: 'Stop time tracking?', default: true })
 
   if (stopTracking) {
     await clockify.put(`/workspaces/${workspaceId}/time-entries/${timerId}`, {
