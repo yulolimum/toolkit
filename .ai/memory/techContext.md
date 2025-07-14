@@ -67,6 +67,32 @@
 npx eas-cli@latest                  // Expo Application Services CLI
 ```
 
+#### Linear Integration Category Dependencies
+
+```json
+{
+  "@inquirer/confirm": "^5.1.13", // Confirmation prompts
+  "@inquirer/input": "^4.2.0", // Text input prompts
+  "@inquirer/select": "^4.2.4", // Selection prompts
+  "@linear/sdk": "^50.0.0", // Linear API client
+  "axios": "^1.10.0", // HTTP client for Clockify API
+  "zx": "^8.7.0" // Shell scripting and environment variables
+}
+```
+
+**Environment Variables**
+
+```bash
+# Required API keys (stored in .env)
+LINEAR_API_KEY=your_linear_api_key_here
+CLOCKIFY_API_KEY=your_clockify_api_key_here
+```
+
+**External APIs**
+
+- **Linear API**: Issue fetching and validation
+- **Clockify API**: Workspace/project fetching, timer management
+
 #### Media Management Dependencies (Python)
 
 ```python
