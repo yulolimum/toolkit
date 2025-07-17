@@ -25,11 +25,6 @@ try {
   cache = { easUpdate: {} }
 }
 
-if (repeat && cache.easUpdate.lastCmd) {
-  await executeCommand(cache.easUpdate.lastCmd)
-  process.exit(0)
-}
-
 async function executeCommand(cmd) {
   console.log(`\n> ${cmd}\n`)
 
@@ -50,36 +45,40 @@ async function executeCommand(cmd) {
   spawn(cmd, { stdio: 'inherit', shell: true })
 }
 
-const platform = await select({
-  message: 'Select platform',
-  default: cache.easUpdate.platform ?? 'all',
-  choices: [
-    { name: 'All', value: 'all' },
-    { name: 'iOS', value: 'ios' },
-    { name: 'Android', value: 'android' },
-  ],
-})
+if (repeat && cache.easUpdate.lastCmd) {
+  await executeCommand(cache.easUpdate.lastCmd)
+} else {
+  const platform = await select({
+    message: 'Select platform',
+    default: cache.easUpdate.platform ?? 'all',
+    choices: [
+      { name: 'All', value: 'all' },
+      { name: 'iOS', value: 'ios' },
+      { name: 'Android', value: 'android' },
+    ],
+  })
 
-const channel = await select({
-  message: 'Select channel',
-  default: cache.easUpdate.channel ?? 'preview',
-  choices: [
-    { name: 'Preview', value: 'preview' },
-    { name: 'Production', value: 'production' },
-  ],
-})
+  const channel = await select({
+    message: 'Select channel',
+    default: cache.easUpdate.channel ?? 'preview',
+    choices: [
+      { name: 'Preview', value: 'preview' },
+      { name: 'Production', value: 'production' },
+    ],
+  })
 
-const message = await input({ message: 'Provide a summary/description for this update', required: false })
+  const message = await input({ message: 'Provide a summary/description for this update', required: false })
 
-const messageFlag = message ? `--message "${message}"` : '--auto'
+  const messageFlag = message ? `--message "${message}"` : '--auto'
 
-const cmd = `npx eas-cli@latest update --platform ${platform} --channel ${channel} --environment ${channel} --clear-cache ${messageFlag} --non-interactive`
+  const cmd = `npx eas-cli@latest update --platform ${platform} --channel ${channel} --environment ${channel} --clear-cache ${messageFlag} --non-interactive`
 
-fs.writeJson(cacheFile, {
-  ...cache,
-  easUpdate: { ...cache.easUpdate, platform, channel, lastCmd: cmd },
-})
+  fs.writeJson(cacheFile, {
+    ...cache,
+    easUpdate: { ...cache.easUpdate, platform, channel, lastCmd: cmd },
+  })
 
-await executeCommand(cmd)
+  await executeCommand(cmd)
+}
 
 export {}
