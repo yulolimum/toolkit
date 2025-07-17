@@ -5,7 +5,12 @@ import select from '@inquirer/select' // @^4
 import { spawn } from 'child_process'
 import path, { dirname } from 'path'
 import { fileURLToPath } from 'url'
-import { fs } from 'zx' // @^8
+import { fs, minimist } from 'zx' // @^8
+
+const { repeat } = minimist(process.argv.slice(2), {
+  boolean: ['repeat'],
+  default: { repeat: false },
+})
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
@@ -18,6 +23,31 @@ try {
   cache.easUpdate = cache.easUpdate ?? {}
 } catch (_error) {
   cache = { easUpdate: {} }
+}
+
+if (repeat && cache.easUpdate.lastCmd) {
+  await executeCommand(cache.easUpdate.lastCmd)
+  process.exit(0)
+}
+
+async function executeCommand(cmd) {
+  console.log(`\n> ${cmd}\n`)
+
+  const confirm = await select({
+    message: 'Proceed?',
+    default: true,
+    choices: [
+      { name: 'No', value: false },
+      { name: 'Yes', value: true },
+    ],
+  })
+
+  if (!confirm) {
+    console.log('Aborted')
+    process.exit(0)
+  }
+
+  spawn(cmd, { stdio: 'inherit', shell: true })
 }
 
 const platform = await select({
@@ -45,26 +75,11 @@ const messageFlag = message ? `--message "${message}"` : '--auto'
 
 const cmd = `npx eas-cli@latest update --platform ${platform} --channel ${channel} --environment ${channel} --clear-cache ${messageFlag} --non-interactive`
 
-console.log(`\n> ${cmd}\n`)
-const confirm = await select({
-  message: 'Proceed?',
-  default: true,
-  choices: [
-    { name: 'No', value: false },
-    { name: 'Yes', value: true },
-  ],
-})
-
-if (!confirm) {
-  console.log('Aborted')
-  process.exit(0)
-}
-
 fs.writeJson(cacheFile, {
   ...cache,
-  easUpdate: { platform, channel },
+  easUpdate: { ...cache.easUpdate, platform, channel, lastCmd: cmd },
 })
 
-spawn(cmd, { stdio: 'inherit', shell: true })
+await executeCommand(cmd)
 
 export {}
