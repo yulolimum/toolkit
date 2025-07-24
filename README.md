@@ -47,7 +47,7 @@ _Coming soon - this section will be populated with reusable utility functions._
 
 Pre-configured library instances and setup patterns. Ready-to-use configurations for common libraries and frameworks.
 
-_Coming soon - this section will be populated with library configuration patterns._
+- **[`mmkv.ts`](lib/mmkv.ts)** - Pre-configured MMKV instance for React Native persistent storage
 
 ## Services
 
@@ -55,7 +55,7 @@ _Coming soon - this section will be populated with library configuration pattern
 
 Custom service implementations and extensions. Reusable service patterns for common application needs.
 
-_Coming soon - this section will be populated with service implementation patterns._
+- **[`storage.ts`](services/storage.ts)** - Type-safe persistent storage service with imperative and reactive APIs built on MMKV
 
 ## Usage
 

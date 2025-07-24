@@ -12,6 +12,30 @@
 - **Cross-Language Configuration**: JSON-based shared configuration system
 - **Unified User Experience**: Consistent visual feedback (✅/❌/⚠️) across all domains
 
+### ✅ Reusable Code Registry (Lib & Services)
+
+#### Library Configuration Pattern (`lib/`)
+
+**MMKV Configuration (`lib/mmkv.ts`)**
+
+- **Pre-configured Instance**: Ready-to-use MMKV instance with toolkit-specific ID
+- **Simple Export Pattern**: Clean, minimal configuration for copy-paste usage
+- **React Native Integration**: Proper MMKV setup for persistent storage
+- **Reusable Foundation**: Base configuration for building storage services
+
+#### Service Implementation Pattern (`services/`)
+
+**Type-Safe Storage Service (`services/storage.ts`)**
+
+- **Schema-Driven Architecture**: BaseStorage type system for type-safe storage definitions
+- **Dual API Design**: Both imperative (`get/set`) and reactive (`useStorage` hook) interfaces
+- **Full TypeScript Support**: Complete type inference and compile-time safety
+- **Comprehensive Documentation**: Proper TSDoc with usage examples and API reference
+- **Error Handling**: Graceful fallbacks and automatic default value management
+- **Multi-Type Support**: String, boolean, number, and object storage with proper serialization
+- **React Integration**: Custom hook for reactive storage updates in components
+- **Production Ready**: Complete error handling, type safety, and performance optimization
+
 #### Development Category Implementation
 
 **Code Quality Management (`dev-check-code-quality.mjs`)**
