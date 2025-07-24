@@ -1,6 +1,7 @@
 {
-  "name": "@yulolimum/scripts",
+  "name": "@yulolimum/toolkit",
   "private": true,
+  "description": "Personal development toolkit and reusable code registry organized by domain with interactive CLI interfaces and preference caching.",
   "type": "module",
   "scripts": {
     "dev:check-code-quality": "npx zx --install ./scripts/dev-check-code-quality.mjs",
