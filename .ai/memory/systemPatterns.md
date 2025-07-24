@@ -1,4 +1,4 @@
-# System Patterns: @yulolimum/scripts
+# System Patterns: @yulolimum/toolkit
 
 ## Architecture Overview
 
@@ -25,6 +25,15 @@ configs/                           # Static, shareable configuration files
 ├── eas.json                       # EAS deployment configuration
 ├── eslint.config.mjs             # ESLint configuration
 └── prettier.config.mjs           # Prettier configuration
+
+utils/                             # Reusable utility functions and modules
+└── (empty - ready for expansion)  # Copy-paste registry for common development utilities
+
+lib/                               # Library configuration and instantiation
+└── (empty - ready for expansion)  # Pre-configured library instances and setup patterns
+
+services/                          # Service implementations and extensions
+└── (empty - ready for expansion)  # Custom service patterns for common application needs
 ```
 
 #### Directory Purpose and Patterns

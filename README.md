@@ -1,6 +1,6 @@
-# @yulolimum/scripts
+# @yulolimum/toolkit
 
-Personal automation scripts and shareable configs organized by domain with interactive CLI interfaces and preference caching.
+Personal development toolkit and reusable code registry organized by domain with interactive CLI interfaces and preference caching.
 
 ## Scripts
 
@@ -32,6 +32,30 @@ Personal automation scripts and shareable configs organized by domain with inter
 - **[`eas.json`](configs/eas.json)** - EAS deployment configuration
 - **[`eslint.config.mjs`](configs/eslint.config.mjs)** - ESLint rules with React and import sorting
 - **[`prettier.config.mjs`](configs/prettier.config.mjs)** - Code formatting configuration with shell script and Tailwind CSS support
+
+## Utils
+
+### Reusable Code (`utils/`)
+
+Utility functions and modules for common development tasks. Copy and paste into your projects as needed.
+
+_Coming soon - this section will be populated with reusable utility functions._
+
+## Lib
+
+### Library Configuration (`lib/`)
+
+Pre-configured library instances and setup patterns. Ready-to-use configurations for common libraries and frameworks.
+
+_Coming soon - this section will be populated with library configuration patterns._
+
+## Services
+
+### Service Extensions (`services/`)
+
+Custom service implementations and extensions. Reusable service patterns for common application needs.
+
+_Coming soon - this section will be populated with service implementation patterns._
 
 ## Usage
 

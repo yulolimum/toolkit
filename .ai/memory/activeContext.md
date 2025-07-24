@@ -1,8 +1,23 @@
-# Active Context: @yulolimum/scripts
+# Active Context: @yulolimum/toolkit
 
 ## Current Work Focus
 
-### Media Script LLM Integration (Current Session)
+### Project Evolution to Toolkit (Current Session)
+
+- **Status**: Completed transformation from `@yulolimum/scripts` to `@yulolimum/toolkit`
+- **Completed**:
+  - Updated package.json name from `@yulolimum/scripts` to `@yulolimum/toolkit`
+  - Added comprehensive description reflecting expanded scope as "Personal development toolkit and reusable code registry"
+  - Updated README.md header and tagline to match new project identity
+  - Added Utils, Lib, and Services sections to README with placeholders for future code
+  - Created empty `utils/`, `lib/`, and `services/` directories to establish foundation for reusable code registry
+  - Updated project brief to reflect expanded scope including scripts, configs, utils, lib, and services
+  - Updated system patterns and tech context to include new directory structure
+  - Documented the evolution from simple scripts collection to comprehensive development toolkit
+- **Rationale**: Project naturally evolved beyond just scripts to include configs and planned utils, requiring name and positioning that reflects true scope
+- **Next**: Begin populating utils directory with reusable utility functions as needed
+
+### Previous Session: Media Script LLM Integration
 
 - **Status**: Completed comprehensive OpenRouter LLM integration for episode name normalization
 - **Completed**:

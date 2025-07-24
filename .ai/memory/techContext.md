@@ -1,4 +1,4 @@
-# Tech Context: @yulolimum/scripts
+# Tech Context: @yulolimum/toolkit
 
 ## Technology Stack
 
@@ -140,7 +140,7 @@ curl/wget # HTTP operations
 ### Multi-Domain Project Structure
 
 ```
-@yulolimum/scripts/
+@yulolimum/toolkit/
 ├── package.json              # Node.js dependencies and npm scripts
 ├── requirements.txt          # Python dependencies (planned)
 ├── tsconfig.json            # TypeScript configuration
@@ -152,6 +152,9 @@ curl/wget # HTTP operations
 ├── .python-version         # Python version specification (planned)
 ├── .ai/                    # Memory bank and documentation
 ├── configs/                # Configuration files and templates
+├── utils/                  # Reusable utility functions and modules
+├── lib/                    # Library configuration and instantiation
+├── services/               # Service implementations and extensions
 └── scripts/                # Script directory (flat structure)
     ├── dev-check-code-quality.mjs    # Development automation
     ├── dev-clean.sh                  # Development cleanup

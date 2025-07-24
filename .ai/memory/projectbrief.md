@@ -1,8 +1,8 @@
-# Project Brief: @yulolimum/scripts
+# Project Brief: @yulolimum/toolkit
 
 ## Overview
 
-`@yulolimum/scripts` is a comprehensive personal automation and utility collection that provides essential scripts for development workflows, build automation, deployment, media library management, system administration, and personal productivity tasks. This project serves as a centralized toolkit for all technical automation needs.
+`@yulolimum/toolkit` is a comprehensive personal development toolkit and reusable code registry that provides essential scripts, configurations, and utilities for development workflows, build automation, deployment, media library management, system administration, and personal productivity tasks. This project serves as a centralized toolkit for all technical automation needs and reusable code components.
 
 ## Core Purpose
 
@@ -13,7 +13,9 @@
 
 ## Key Components
 
-### Current Implementation (Development Category)
+### Current Implementation
+
+#### Scripts (Automation Tools)
 
 #### 1. Code Quality Management (`dev-check-code-quality.mjs`)
 
@@ -35,6 +37,19 @@
 - Supports version range checking (min/max constraints)
 - Comprehensive software detection (Node.js, Java, Xcode, Android tools)
 - Clear success/failure reporting
+
+#### Configs (Shareable Configurations)
+
+- **EAS Configuration**: Deployment settings for Expo Application Services
+- **ESLint Configuration**: Code linting rules with React and import sorting
+- **Prettier Configuration**: Code formatting with multi-language support
+- **TypeScript Configuration**: Strict type checking settings
+
+#### Utils (Reusable Code Registry)
+
+- **Foundation Established**: Empty utils directory ready for reusable utility functions
+- **Copy-Paste Approach**: Registry model for easy integration into projects
+- **Future Expansion**: Will include common development utilities and helper functions
 
 ### Planned Expansion Categories
 
