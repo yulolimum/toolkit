@@ -17,7 +17,7 @@
  *   exampleString: { type: 'string', default: 'defaultString' as string },
  *   exampleBoolean: { type: 'boolean', default: false as boolean },
  *   exampleNumber: { type: 'number', default: 0 as number },
- *   exampleObject: { type: 'object', default: { key: 'value' } as Record<string, any> },
+ *   exampleObject: { type: 'object', default: { key: 'value' } as Record<string, any>, version: "2.0" },
  * } satisfies BaseStorage
  * ```
  *
@@ -32,6 +32,7 @@
  * storage.set("exampleString", "newValue")
  * const [exampleString, setExampleString] = storage.useStorage("exampleString")
  * ```
+ *
  */
 
 import { useMemo, useRef } from 'react'
@@ -39,8 +40,9 @@ import * as MMKV from 'react-native-mmkv'
 
 import { mmkv } from '../lib/mmkv'
 
-export type BaseStorage = Record<string, { type: StorageTypes; default: any }>
+export type BaseStorage = Record<string, { type: StorageTypes; default: any; version?: string | number }>
 type StorageTypes = 'object' | 'string' | 'boolean' | 'number'
+type StorageMetadata = Record<string, string | number>
 type GetStorageKey<S extends BaseStorage> = keyof S
 type GetStorageValue<S extends BaseStorage, K extends GetStorageKey<S>> = S[K]['default']
 
@@ -49,6 +51,25 @@ export class Storage<T extends BaseStorage> {
 
   constructor(storage: T) {
     this.storage = storage
+    this.validateAndMigrateVersions()
+  }
+
+  private validateAndMigrateVersions() {
+    const metadataJson = mmkv.getString('__storage_metadata')
+    const metadata: StorageMetadata = metadataJson ? JSON.parse(metadataJson) : {}
+
+    Object.entries(this.storage).forEach(([key, config]) => {
+      if (config.version !== undefined) {
+        const storedVersion = metadata[key]
+
+        if (storedVersion !== config.version) {
+          this.remove(key as keyof T)
+          metadata[key] = config.version
+        }
+      }
+    })
+
+    mmkv.set('__storage_metadata', JSON.stringify(metadata))
   }
 
   get = <K extends GetStorageKey<typeof this.storage>>(key: K): GetStorageValue<typeof this.storage, K> => {
