@@ -16,7 +16,7 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 const cacheFile = path.join(__dirname, '.cache')
 
-type Consts = {
+type State = {
   linearApiKey?: string
   linearUrl?: string
   linearIssue?: Issue
@@ -34,7 +34,7 @@ type Cache = { linearClockifyTimer: { linearUrl?: string; clockifyWorkspaceId?: 
 
 class LinearStartClockifyTimer {
   private cache: Cache = { linearClockifyTimer: {} }
-  private state: Consts = {
+  private state: State = {
     linearApiKey: process.env.LINEAR_API_KEY,
     clockifyApiKey: process.env.CLOCKIFY_API_KEY,
     clockifyProjects: [],
