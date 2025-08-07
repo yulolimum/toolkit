@@ -47,18 +47,22 @@ type GetStorageKey<S extends BaseStorage> = keyof S
 type GetStorageValue<S extends BaseStorage, K extends GetStorageKey<S>> = S[K]['default']
 
 export class Storage<T extends BaseStorage> {
-  storage: T = {} as T
+  config: T = {} as T
+  storage: MMKV.MMKV = mmkv
 
-  constructor(storage: T) {
+  constructor(config: T, opts?: { storage?: MMKV.MMKV }) {
+    const { storage = mmkv } = opts ?? {}
+
     this.storage = storage
+    this.config = config
     this.validateAndMigrateVersions()
   }
 
   private validateAndMigrateVersions() {
-    const metadataJson = mmkv.getString('__storage_metadata')
-    const metadata: StorageMetadata = metadataJson ? JSON.parse(metadataJson) : {}
+    const metadataJson = this.storage.getString('__storage_metadata')
+    const metadata: StorageMetadata = (metadataJson ? JSON.parse(metadataJson) : {}) as StorageMetadata
 
-    Object.entries(this.storage).forEach(([key, config]) => {
+    Object.entries(this.config).forEach(([key, config]) => {
       if (config.version !== undefined) {
         const storedVersion = metadata[key]
 
@@ -69,30 +73,30 @@ export class Storage<T extends BaseStorage> {
       }
     })
 
-    mmkv.set('__storage_metadata', JSON.stringify(metadata))
+    this.storage.set('__storage_metadata', JSON.stringify(metadata))
   }
 
-  get = <K extends GetStorageKey<typeof this.storage>>(key: K): GetStorageValue<typeof this.storage, K> => {
-    type Value = GetStorageValue<typeof this.storage, K>
+  get = <K extends GetStorageKey<typeof this.config>>(key: K): GetStorageValue<typeof this.config, K> => {
+    type Value = GetStorageValue<typeof this.config, K>
 
-    const defaultValue = this.storage[key]?.default
-    const persistenceType = this.storage[key]?.type as StorageTypes
+    const defaultValue = this.config[key]?.default
+    const persistenceType = this.config[key]?.type as StorageTypes
 
     try {
-      if (!mmkv.contains(key as string)) {
+      if (!this.storage.contains(key as string)) {
         return defaultValue
       }
       if (persistenceType === 'string') {
-        return (mmkv.getString(key as string) || defaultValue) as Value
+        return (this.storage.getString(key as string) || defaultValue) as Value
       }
       if (persistenceType === 'boolean') {
-        return (mmkv.getBoolean(key as string) ?? defaultValue) as Value
+        return (this.storage.getBoolean(key as string) ?? defaultValue) as Value
       }
       if (persistenceType === 'number') {
-        return (mmkv.getNumber(key as string) ?? defaultValue) as Value
+        return (this.storage.getNumber(key as string) ?? defaultValue) as Value
       }
       if (persistenceType === 'object') {
-        const jsonValue = mmkv.getString(key as string)
+        const jsonValue = this.storage.getString(key as string)
         return jsonValue ? JSON.parse(jsonValue) : defaultValue
       }
       return defaultValue
@@ -102,41 +106,41 @@ export class Storage<T extends BaseStorage> {
     }
   }
 
-  set = <K extends GetStorageKey<typeof this.storage>>(key: K, value: GetStorageValue<typeof this.storage, K>) => {
+  set = <K extends GetStorageKey<typeof this.config>>(key: K, value: GetStorageValue<typeof this.config, K>) => {
     try {
       if (value === null || value === undefined) {
-        mmkv.delete(key as string)
+        this.storage.delete(key as string)
       }
       // Primitives can be stored directly
       else if (typeof value === 'string' || typeof value === 'boolean' || typeof value === 'number') {
-        mmkv.set(key as string, value)
+        this.storage.set(key as string, value)
       }
       // For complex objects, use JSON
       else {
-        mmkv.set(key as string, JSON.stringify(value))
+        this.storage.set(key as string, JSON.stringify(value))
       }
     } catch (error) {
       console.warn(`Error setting value for key ${String(key)}:`, error)
     }
   }
 
-  remove = <K extends GetStorageKey<typeof this.storage>>(key: K) => {
-    mmkv.delete(key as string)
+  remove = <K extends GetStorageKey<typeof this.config>>(key: K) => {
+    this.storage.delete(key as string)
   }
 
   clear = () => {
-    mmkv.clearAll()
+    this.storage.clearAll()
   }
 
   /**
    * React hook for accessing and updating a value in persistent storage.
    * This hook provides a reactive interface to MMKV storage, automatically updating when the value changes.
    */
-  useStorage = <K extends GetStorageKey<typeof this.storage>>(
+  useStorage = <K extends GetStorageKey<typeof this.config>>(
     key: K,
-  ): [GetStorageValue<typeof this.storage, K>, (value: GetStorageValue<typeof this.storage, K>) => void] => {
-    const defaultValue = useRef(this.storage[key]?.default).current
-    const persistenceType = useRef(this.storage[key]?.type).current as StorageTypes
+  ): [GetStorageValue<typeof this.config, K>, (value: GetStorageValue<typeof this.config, K>) => void] => {
+    const defaultValue = useRef(this.config[key]?.default).current
+    const persistenceType = useRef(this.config[key]?.type).current as StorageTypes
 
     const useReactiveValue = useMemo(() => {
       if (persistenceType === 'string') {
@@ -155,7 +159,7 @@ export class Storage<T extends BaseStorage> {
       return MMKV.useMMKVString
     }, [persistenceType])
 
-    const [value, setValue] = useReactiveValue(key as string, mmkv)
+    const [value, setValue] = useReactiveValue(key as string, this.storage)
 
     const valueOrDefault = useMemo(() => {
       if (persistenceType === 'string') {
