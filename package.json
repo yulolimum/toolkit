@@ -21,6 +21,7 @@
     "@inquirer/input": "^4.2.0",
     "@inquirer/select": "^4.2.4",
     "@linear/sdk": "^50.0.0",
+    "@react-navigation/native": "^7.1.17",
     "@tsconfig/strictest": "^2.0.5",
     "@types/fs-extra": "^11.0.4",
     "@types/node": "^24.0.13",
