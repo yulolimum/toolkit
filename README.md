@@ -57,6 +57,14 @@ Custom service implementations and extensions. Reusable service patterns for com
 
 - **[`storage.ts`](services/storage.ts)** - Type-safe persistent storage service with imperative and reactive APIs built on MMKV
 
+## Hooks
+
+### React Hooks (`hooks/`)
+
+Reusable React hooks for common patterns and functionality. Copy and paste into your React/React Native projects as needed.
+
+- **[`useScreenPreventRemove.ts`](hooks/useScreenPreventRemove.ts)** - React Navigation hook to prevent screen unmounting based on conditions (unsaved changes, loading states, etc.)
+
 ## Usage
 
 Scripts are standalone and can be run independently. Install dependencies as needed.
