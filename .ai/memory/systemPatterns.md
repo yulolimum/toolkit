@@ -30,10 +30,16 @@ utils/                             # Reusable utility functions and modules
 └── (empty - ready for expansion)  # Copy-paste registry for common development utilities
 
 lib/                               # Library configuration and instantiation
-└── (empty - ready for expansion)  # Pre-configured library instances and setup patterns
+├── mmkv.ts                        # Pre-configured MMKV instance for React Native storage
+└── (ready for expansion)          # Additional pre-configured library instances
 
 services/                          # Service implementations and extensions
-└── (empty - ready for expansion)  # Custom service patterns for common application needs
+├── storage.ts                     # Type-safe persistent storage service with imperative and reactive APIs
+└── (ready for expansion)          # Additional custom service patterns
+
+hooks/                             # React hooks for common patterns
+├── useScreenPreventRemove.ts      # React Navigation hook for preventing screen unmounting
+└── (ready for expansion)          # Additional React hooks for common functionality
 ```
 
 #### Directory Purpose and Patterns
@@ -49,6 +55,30 @@ services/                          # Service implementations and extensions
   - Deployment configurations (EAS, Docker, CI/CD)
   - Template configurations for new projects
   - Shareable across teams and projects
+
+- **utils/**: Reusable utility functions and modules
+  - Copy-paste registry for common development utilities
+  - Framework-agnostic helper functions
+  - Data processing and manipulation utilities
+  - Cross-project reusable code patterns
+
+- **lib/**: Pre-configured library instances and setup patterns
+  - Ready-to-use configurations for common libraries
+  - Standardized setup patterns for frameworks
+  - Optimized configurations with sensible defaults
+  - Foundation configurations for building services
+
+- **services/**: Custom service implementations and extensions
+  - Reusable service patterns for common application needs
+  - Type-safe service implementations with comprehensive APIs
+  - Production-ready services with error handling and documentation
+  - Framework-specific service patterns and integrations
+
+- **hooks/**: React hooks for common patterns and functionality
+  - Reusable React hooks for common UI patterns
+  - React Navigation specific hooks and utilities
+  - State management and lifecycle hooks
+  - Copy-paste registry for React/React Native projects
 
 #### Package.json Script Mapping
 

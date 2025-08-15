@@ -12,7 +12,7 @@
 - **Cross-Language Configuration**: JSON-based shared configuration system
 - **Unified User Experience**: Consistent visual feedback (✅/❌/⚠️) across all domains
 
-### ✅ Reusable Code Registry (Lib & Services)
+### ✅ Reusable Code Registry (Lib, Services & Hooks)
 
 #### Library Configuration Pattern (`lib/`)
 
@@ -35,6 +35,18 @@
 - **Multi-Type Support**: String, boolean, number, and object storage with proper serialization
 - **React Integration**: Custom hook for reactive storage updates in components
 - **Production Ready**: Complete error handling, type safety, and performance optimization
+
+#### React Hooks Pattern (`hooks/`)
+
+**Screen Prevention Hook (`hooks/useScreenPreventRemove.ts`)**
+
+- **Conditional Prevention**: Prevents screen unmounting based on boolean dependencies array
+- **Custom Callback Logic**: Supports custom prevention logic through callback function (alerts, confirmations)
+- **Force Navigation**: Provides `forceGoBack()` function to bypass prevention after user confirmation
+- **Proper Cleanup**: Handles navigation listener cleanup and state management correctly
+- **TypeScript Support**: Full type safety with proper parameter and return type definitions
+- **React Navigation Integration**: Built specifically for React Navigation's beforeRemove event
+- **Production Ready**: Comprehensive TSDoc documentation with usage examples and best practices
 
 #### Development Category Implementation
 

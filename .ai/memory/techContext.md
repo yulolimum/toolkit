@@ -96,6 +96,23 @@ CLOCKIFY_API_KEY=your_clockify_api_key_here
 - **Linear API**: Issue fetching and validation
 - **Clockify API**: Workspace/project fetching, timer management
 
+#### Reusable Code Registry Dependencies
+
+```json
+{
+  "react": "^18.3.1", // React library for hooks and components
+  "@types/react": "^18.3.17", // TypeScript definitions for React
+  "react-native-mmkv": "^3.1.0", // Fast key-value storage for React Native
+  "@react-navigation/native": "^7.1.17" // React Navigation for screen management hooks
+}
+```
+
+**Library Integrations**
+
+- **MMKV**: High-performance key-value storage for React Native applications
+- **React Navigation**: Navigation library for React Native screen management
+- **TypeScript**: Full type safety across all reusable code components
+
 #### Media Management Dependencies (Python)
 
 ```python
@@ -155,6 +172,7 @@ curl/wget # HTTP operations
 ├── utils/                  # Reusable utility functions and modules
 ├── lib/                    # Library configuration and instantiation
 ├── services/               # Service implementations and extensions
+├── hooks/                  # React hooks for common patterns
 └── scripts/                # Script directory (flat structure)
     ├── dev-check-code-quality.mjs    # Development automation
     ├── dev-clean.sh                  # Development cleanup
