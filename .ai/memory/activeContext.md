@@ -2,7 +2,28 @@
 
 ## Current Work Focus
 
-### Hooks Directory Addition (Current Session)
+### Media Script Conversion (Current Session)
+
+- **Status**: Completed conversion of `media-accelarate-video.sh` to `media-accelerate-video.mjs` using zx
+- **Completed**:
+  - **Shell to MJS Conversion**: Successfully converted shell script functions to interactive zx-based script
+  - **Interactive CLI Implementation**: Added `@inquirer/select` for audio inclusion choice and `@inquirer/input` for speed selection
+  - **EAS-Style Caching**: Implemented preference caching system following established EAS script patterns
+  - **FFmpeg Logic Preservation**: Maintained original speedo/speedov functionality with proper filter chains
+  - **Package.json Integration**: Added `media:accelerate-video` script following naming conventions
+  - **User Experience Enhancement**: Simplified interface asking "Include audio?" instead of technical speedo/speedov terms
+  - **Error Handling**: Added file validation and FFmpeg error handling with spinner feedback
+  - **Cleanup**: Removed original shell script after successful conversion
+- **Key Features**:
+  - **Audio Choice**: Simple Yes/No selection for including audio in accelerated output
+  - **Speed Input**: Validated numeric input for speed multiplier with cached defaults
+  - **Smart Caching**: Remembers user preferences for audio inclusion and speed settings
+  - **File Processing**: Single file input via CLI argument with proper path handling
+  - **Output Naming**: Generates files with speed suffix (e.g., `_2_0x`) matching original behavior
+- **Achievement**: Successfully modernized media processing script with interactive UX while preserving core functionality
+- **Impact**: Provides consistent user experience across all media scripts with improved usability
+
+### Previous Session: Hooks Directory Addition
 
 - **Status**: Completed addition of new `hooks/` directory to the reusable code registry
 - **Completed**:
@@ -189,6 +210,16 @@ The project has evolved from a **development utilities package** to a **comprehe
    - Dynamic API cost tracking and performance monitoring with console.table
    - Real-world examples including complex Russian show names
    - Safe file renaming with duplicate detection and error reporting
+
+3. **media-accelerate-video.mjs**: Interactive video acceleration with FFmpeg
+   - Interactive audio inclusion choice (Yes/No) with EAS-style preference caching
+   - Speed multiplier input with validation and cached defaults
+   - Preserves original speedo/speedov FFmpeg logic (video+audio vs video-only)
+   - Single file processing with CLI argument input
+   - Spinner feedback during FFmpeg processing
+   - Smart output naming with speed suffix (e.g., `_2_0x`)
+   - Comprehensive error handling and file validation
+   - Seamless conversion from shell script to modern interactive zx-based tool
 
 **Other Categories (Planned)**
 

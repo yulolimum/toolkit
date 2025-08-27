@@ -22,6 +22,7 @@ Personal development toolkit and reusable code registry organized by domain with
 
 ### Media Management (`media-*`)
 
+- **[`media:accelerate-video`](scripts/media-accelerate-video.mjs)** - Interactive video acceleration with FFmpeg, supports audio inclusion choice and speed multiplier with preference caching
 - **[`media:normalize-episode-names`](scripts/media-normalize-episode-names.mjs)** - Normalize TV episode filenames using OpenRouter LLM with Russian translation support
 - **[`media:recursively-hardlink`](scripts/media-recursively-hardlink.sh)** - Create hardlinks for media files to save disk space
 
