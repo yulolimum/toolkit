@@ -4,3 +4,8 @@ node_modules
 scripts/.cache
 .eslintcache
 .env
+
+
+
+#tmp
+scripts/media-join-video.sh
