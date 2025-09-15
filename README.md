@@ -76,6 +76,14 @@ Reusable React hooks for common patterns and functionality. Copy and paste into 
 - **[`useQueryRefreshControlProps.ts`](hooks/useQueryRefreshControlProps.ts)** - React hook that provides RefreshControl props for automatically refetching React Query queries on pull-to-refresh
 - **[`useScreenPreventRemove.ts`](hooks/useScreenPreventRemove.ts)** - React Navigation hook to prevent screen unmounting based on conditions (unsaved changes, loading states, etc.)
 
+## Docs
+
+### Development (`dev-*`)
+
+- **[`dev-eas.md`](docs/dev-eas.md)** - Complete guide to Expo Application Services (EAS) including builds, submissions, OTA updates, and deployment workflows
+- **[`dev-environment-setup.md`](docs/dev-environment-setup.md)** - Step-by-step environment setup guide for React Native development including tools, languages, and IDEs
+- **[`dev-push-notifications.md`](docs/dev-push-notifications.md)** - Comprehensive guide to push notification concepts and implementation approaches for React Native apps
+
 ## Usage
 
 Scripts are standalone and can be run independently. Install dependencies as needed.
