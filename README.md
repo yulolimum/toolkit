@@ -58,6 +58,14 @@ Custom service implementations and extensions. Reusable service patterns for com
 
 - **[`storage.ts`](services/storage.ts)** - Type-safe persistent storage service with imperative and reactive APIs built on MMKV
 
+## Components
+
+### React Components (`components/`)
+
+Reusable React components for common UI patterns and functionality. Copy and paste into your React/React Native projects as needed.
+
+- **[`TSQueryOutput.tsx`](components/TSQueryOutput.tsx)** - React component that handles different states of Tanstack Query results with customizable UI for loading, error, empty, and success states
+
 ## Hooks
 
 ### React Hooks (`hooks/`)
