@@ -42,6 +42,16 @@
 
 #### React Hooks Pattern (`hooks/`)
 
+**Multi-Count Press Hook (`hooks/useMultiCountPress.ts`)**
+
+- **Multi-Press Detection**: Detects multiple consecutive presses within a configurable time threshold
+- **Configurable Parameters**: Takes callback, count, and threshold parameters for flexibility
+- **Simple API**: Returns `{ onPress }` handler for easy integration with pressable components
+- **Automatic Reset**: Press count resets after threshold timeout for reliable behavior
+- **Use Cases**: Debug modes, secret features, easter eggs, and similar multi-press patterns
+- **TypeScript Support**: Full type safety with proper parameter and return type definitions
+- **Production Ready**: Comprehensive TSDoc documentation with usage examples and best practices
+
 **Screen Prevention Hook (`hooks/useScreenPreventRemove.ts`)**
 
 - **Conditional Prevention**: Prevents screen unmounting based on boolean dependencies array
