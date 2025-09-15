@@ -4,22 +4,27 @@
 
 ### Hook Addition (Current Session)
 
-- **Status**: Completed addition of `useMultiCountPress` React hook to the reusable code registry
+- **Status**: Completed addition of two React hooks to the reusable code registry
 - **Completed**:
-  - **Hook Implementation**: Created `useMultiCountPress.ts` with comprehensive TSDoc documentation
-  - **Multi-Press Detection**: Implements consecutive press counting within configurable time threshold
-  - **Proper Location**: Initially placed in utils/ but correctly moved to hooks/ directory
-  - **README Documentation**: Added entry in Hooks section with clear description and use cases
+  - **First Hook**: `useMultiCountPress.ts` with comprehensive TSDoc documentation
+    - **Multi-Press Detection**: Implements consecutive press counting within configurable time threshold
+    - **Proper Location**: Initially placed in utils/ but correctly moved to hooks/ directory
+    - **Use Cases**: Debug modes, secret features, easter eggs, and similar multi-press patterns
+  - **Second Hook**: `useQueryRefreshControlProps.ts` for React Query integration
+    - **React Query Integration**: Provides RefreshControl props that automatically refetch multiple queries
+    - **Pull-to-Refresh**: Simplifies implementing pull-to-refresh functionality with React Query
+    - **Multiple Query Support**: Can refetch multiple useQuery or useInfiniteQuery results simultaneously
+  - **README Documentation**: Added entries for both hooks in Hooks section with clear descriptions
   - **Project Structure**: Maintained established patterns with function declarations and named exports
+  - **Dependency Management**: Added @tanstack/react-query and react-native dependencies to package.json
   - **Cleanup**: Removed empty utils/ directory to keep project structure clean
 - **Key Features**:
-  - **Configurable Parameters**: Takes callback, count, and threshold parameters for flexibility
-  - **Simple API**: Returns `{ onPress }` handler for easy integration with pressable components
-  - **Automatic Reset**: Press count resets after threshold timeout for reliable behavior
-  - **Use Cases**: Debug modes, secret features, easter eggs, and similar multi-press patterns
-  - **TypeScript Support**: Full type safety with proper parameter and return type definitions
-- **Achievement**: Successfully expanded the hooks registry with production-ready multi-press detection
-- **Impact**: Provides reusable pattern for implementing hidden features and debug modes in React/React Native apps
+  - **useMultiCountPress**: Configurable parameters, simple API, automatic reset, TypeScript support
+  - **useQueryRefreshControlProps**: React Query integration, RefreshControl props generation, async refetch handling
+  - **Production Ready**: Both hooks include comprehensive TSDoc documentation with usage examples
+  - **Type Safety**: Full TypeScript support with proper parameter and return type definitions
+- **Achievement**: Successfully expanded the hooks registry with two production-ready hooks for different use cases
+- **Impact**: Provides reusable patterns for hidden features/debug modes and React Query pull-to-refresh functionality
 
 ### Previous Session: Storage Service Enhancement
 

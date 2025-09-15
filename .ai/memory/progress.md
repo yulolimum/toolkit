@@ -52,6 +52,17 @@
 - **TypeScript Support**: Full type safety with proper parameter and return type definitions
 - **Production Ready**: Comprehensive TSDoc documentation with usage examples and best practices
 
+**Query Refresh Control Hook (`hooks/useQueryRefreshControlProps.ts`)**
+
+- **React Query Integration**: Provides RefreshControl props that automatically refetch multiple queries
+- **Pull-to-Refresh**: Simplifies implementing pull-to-refresh functionality with React Query
+- **Multiple Query Support**: Can refetch multiple useQuery or useInfiniteQuery results simultaneously
+- **Async Handling**: Properly manages refreshing state during async refetch operations
+- **Props Merging**: Merges additional RefreshControl props with generated onRefresh and refreshing
+- **Error Resilience**: Uses try/finally to ensure refreshing state is reset even if refetch fails
+- **TypeScript Support**: Full type safety with React Query and React Native type definitions
+- **Production Ready**: Comprehensive TSDoc documentation with usage examples for ScrollView and FlatList
+
 **Screen Prevention Hook (`hooks/useScreenPreventRemove.ts`)**
 
 - **Conditional Prevention**: Prevents screen unmounting based on boolean dependencies array
