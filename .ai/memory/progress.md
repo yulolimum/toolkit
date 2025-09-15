@@ -12,7 +12,7 @@
 - **Cross-Language Configuration**: JSON-based shared configuration system
 - **Unified User Experience**: Consistent visual feedback (✅/❌/⚠️) across all domains
 
-### ✅ Reusable Code Registry (Lib, Services & Hooks)
+### ✅ Reusable Code Registry (Lib, Services, Hooks & Components)
 
 #### Library Configuration Pattern (`lib/`)
 
@@ -72,6 +72,20 @@
 - **TypeScript Support**: Full type safety with proper parameter and return type definitions
 - **React Navigation Integration**: Built specifically for React Navigation's beforeRemove event
 - **Production Ready**: Comprehensive TSDoc documentation with usage examples and best practices
+
+#### React Components Pattern (`components/`)
+
+**Query State Output Component (`components/TSQueryOutput.tsx`)**
+
+- **Query State Handling**: Declarative component for loading, error, empty, and success states of React Query results
+- **Customizable UI**: Supports both string and ReactNode content for each state (loading, error, empty, success)
+- **React Native Integration**: Uses standard React Native components (Text, View, ActivityIndicator)
+- **Flexible Empty Detection**: Configurable predicate function for determining when data should be considered empty
+- **Default State Styling**: Built-in styling with appropriate colors (gray for loading/empty, red for errors)
+- **TypeScript Generics**: Full type safety with generic support for different data types
+- **Configurable Height**: Adjustable minimum height for state containers with sensible defaults
+- **Props Merging**: Seamlessly integrates with additional props while maintaining core functionality
+- **Production Ready**: Comprehensive TSDoc documentation with usage examples for different scenarios
 
 #### Development Category Implementation
 
