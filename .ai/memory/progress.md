@@ -87,6 +87,50 @@
 - **Props Merging**: Seamlessly integrates with additional props while maintaining core functionality
 - **Production Ready**: Comprehensive TSDoc documentation with usage examples for different scenarios
 
+### ✅ Client Documentation Registry (Docs)
+
+#### Client-Facing Documentation Pattern (`docs/`)
+
+**Development Documentation (`dev-*`)**
+
+- **EAS Guide (`docs/dev-eas.md`)**: Complete guide to Expo Application Services (EAS)
+  - **Build Management**: Comprehensive coverage of EAS build profiles, environments, and channels
+  - **Submission Workflows**: App store submission processes for iOS and Android
+  - **OTA Updates**: Over-the-air update strategies with runtime version management
+  - **Deployment Workflows**: Branching strategies, release processes, and hotfix flows
+  - **Convenience Scripts**: Integration with toolkit's interactive EAS scripts
+  - **Professional Quality**: Client-ready technical documentation with flow diagrams
+  - **Generalized Content**: Updated intro language, version examples (1.0.0/1.0.1), and clarified branching as example strategy
+
+- **Environment Setup Guide (`docs/dev-environment-setup.md`)**: Step-by-step React Native development setup
+  - **Utilities Setup**: Comprehensive coverage of brew, watchman, asdf for version management
+  - **Language Installation**: Node.js, PNPM, Java, and CocoaPods setup instructions
+  - **IDE Configuration**: VS Code, Xcode, and Android Studio setup with recommended extensions
+  - **Platform Requirements**: iOS and Android development environment preparation
+  - **Verification Process**: Generic verification approaches suitable for any project
+  - **Architecture Support**: Instructions for both Intel and Apple Silicon Macs
+  - **Generalized Content**: Removed project-specific script references, date-specific information, added version checking guidance
+
+- **Push Notifications Guide (`docs/dev-push-notifications.md`)**: Technical deep-dive into push notifications
+  - **Conceptual Foundation**: How push notifications work with flow diagrams
+  - **Implementation Options**: Expo Push Service vs Firebase Cloud Messaging comparison
+  - **Server-Side Patterns**: Token management, payload structure, and error handling
+  - **Client-Side Integration**: Expo Notifications vs Firebase Messaging w/ Notifee
+  - **Cross-Platform Considerations**: iOS and Android specific requirements and behaviors
+  - **Production Guidance**: Rate limits, best practices, and troubleshooting
+  - **Generalized Content**: Updated trigger examples, business events, and flow diagrams to be universally applicable
+
+#### Documentation Organization
+
+- **Prefix-Based Structure**: Follows same organizational pattern as scripts with `dev-*` categorization
+- **Scalable Architecture**: Ready for additional document categories (client-_, business-_, system-\*)
+- **Markdown Format**: Version-controlled, easily editable documentation format
+- **Professional Quality**: Client-ready technical documentation suitable for sharing without modification
+- **README Integration**: Properly documented in README with descriptive summaries
+- **Universal Applicability**: All documents generalized to remove client-specific references and project dependencies
+- **Future-Proof**: Removed date-specific and version-specific information that would become outdated
+- **Technical Accuracy**: Preserved all essential technical content while making it broadly applicable
+
 #### Development Category Implementation
 
 **Code Quality Management (`dev-check-code-quality.mjs`)**
