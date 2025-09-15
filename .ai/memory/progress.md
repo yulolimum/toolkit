@@ -29,12 +29,16 @@
 
 - **Schema-Driven Architecture**: BaseStorage type system for type-safe storage definitions
 - **Dual API Design**: Both imperative (`get/set`) and reactive (`useStorage` hook) interfaces
+- **Version Migration System**: Automatic schema versioning with `version` field and metadata tracking
+- **Configurable Storage Backend**: Injectable MMKV instances via constructor options for testing and multi-tenant scenarios
+- **Native MMKV Integration**: Uses react-native-mmkv's built-in reactive hooks (`useMMKVString`, `useMMKVBoolean`, etc.)
+- **Storage Instance Consistency**: Both imperative and reactive APIs use the same configurable storage instance
 - **Full TypeScript Support**: Complete type inference and compile-time safety
 - **Comprehensive Documentation**: Proper TSDoc with usage examples and API reference
 - **Error Handling**: Graceful fallbacks and automatic default value management
 - **Multi-Type Support**: String, boolean, number, and object storage with proper serialization
-- **React Integration**: Custom hook for reactive storage updates in components
-- **Production Ready**: Complete error handling, type safety, and performance optimization
+- **React Integration**: Native reactive hooks for optimal performance in components
+- **Production Ready**: Complete error handling, type safety, version migration, and performance optimization
 
 #### React Hooks Pattern (`hooks/`)
 
