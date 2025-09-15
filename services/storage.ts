@@ -35,7 +35,7 @@
  *
  */
 
-import { useMemo, useRef } from 'react'
+import { useCallback, useMemo, useRef } from 'react'
 import * as MMKV from 'react-native-mmkv'
 
 import { mmkv } from '../lib/mmkv'
@@ -106,18 +106,25 @@ export class Storage<T extends BaseStorage> {
     }
   }
 
-  set = <K extends GetStorageKey<typeof this.config>>(key: K, value: GetStorageValue<typeof this.config, K>) => {
+  set = <K extends GetStorageKey<typeof this.config>>(
+    key: K,
+    value:
+      | GetStorageValue<typeof this.config, K>
+      | ((current: GetStorageValue<typeof this.config, K>) => GetStorageValue<typeof this.config, K>),
+  ) => {
+    const nextValue = typeof value === 'function' ? (value as any)(this.get(key)) : value
+
     try {
-      if (value === null || value === undefined) {
+      if (nextValue === null || nextValue === undefined) {
         this.storage.delete(key as string)
       }
       // Primitives can be stored directly
-      else if (typeof value === 'string' || typeof value === 'boolean' || typeof value === 'number') {
-        this.storage.set(key as string, value)
+      else if (typeof nextValue === 'string' || typeof nextValue === 'boolean' || typeof nextValue === 'number') {
+        this.storage.set(key as string, nextValue)
       }
       // For complex objects, use JSON
       else {
-        this.storage.set(key as string, JSON.stringify(value))
+        this.storage.set(key as string, JSON.stringify(nextValue))
       }
     } catch (error) {
       console.warn(`Error setting value for key ${String(key)}:`, error)
@@ -138,7 +145,15 @@ export class Storage<T extends BaseStorage> {
    */
   useStorage = <K extends GetStorageKey<typeof this.config>>(
     key: K,
-  ): [GetStorageValue<typeof this.config, K>, (value: GetStorageValue<typeof this.config, K>) => void] => {
+  ): [
+    GetStorageValue<typeof this.config, K>,
+    (
+      value:
+        | GetStorageValue<typeof this.config, K>
+        | ((current: GetStorageValue<typeof this.config, K>) => GetStorageValue<typeof this.config, K>),
+    ) => void,
+    () => void,
+  ] => {
     const defaultValue = useRef(this.config[key]?.default).current
     const persistenceType = useRef(this.config[key]?.type).current as StorageTypes
 
@@ -169,6 +184,16 @@ export class Storage<T extends BaseStorage> {
       }
     }, [value, defaultValue, persistenceType])
 
-    return [valueOrDefault, setValue] as any
+    const setValueMemo = useCallback(
+      (v: any) => {
+        const next = typeof v === 'function' ? v(valueOrDefault) : v
+        setValue(next)
+      },
+      [valueOrDefault, persistenceType, setValue],
+    )
+
+    const reset = useCallback(() => this.remove(key), [])
+
+    return [valueOrDefault, setValueMemo, reset] as any
   }
 }
