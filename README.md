@@ -64,6 +64,7 @@ Custom service implementations and extensions. Reusable service patterns for com
 
 Reusable React hooks for common patterns and functionality. Copy and paste into your React/React Native projects as needed.
 
+- **[`useMultiCountPress.ts`](hooks/useMultiCountPress.ts)** - React hook for detecting multiple consecutive presses within a time threshold (useful for debug modes, secret features, etc.)
 - **[`useScreenPreventRemove.ts`](hooks/useScreenPreventRemove.ts)** - React Navigation hook to prevent screen unmounting based on conditions (unsaved changes, loading states, etc.)
 
 ## Usage
