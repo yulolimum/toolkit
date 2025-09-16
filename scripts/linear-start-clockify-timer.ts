@@ -92,10 +92,9 @@ class LinearStartClockifyTimer {
   }
 
   parseFlags() {
-    const { url } = minimist(process.argv.slice(2), {
-      string: ['url'],
-      default: { url: undefined },
-    })
+    const {
+      _: [url],
+    } = minimist(process.argv.slice(2))
 
     this.flags.linearUrl = url
   }
