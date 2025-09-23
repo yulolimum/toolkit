@@ -34,6 +34,7 @@ Shareable LLM rules and prompts for development projects. Copy and paste into yo
 
 - **[`01-memory-bank.md`](ai/rules/01-memory-bank.md)** - Comprehensive memory bank system for Cline with project registry, core file structure, and documentation workflows
 - **[`02-general-programming-rules.md`](ai/rules/02-general-programming-rules.md)** - General programming guidelines covering comments, naming conventions, exports, function definitions, and codebase exploration
+- **[`03-react-rules.md`](ai/rules/03-react-rules.md)** - React component best practices covering prop types, function declarations, exports, destructuring, and hook imports
 - **[`.memory-registry.example`](ai/rules/.memory-registry.example)** - Example project-to-memory-bank mapping registry for cross-project memory management (copy to `.memory-registry` and customize for your projects)
 
 ## Configs
