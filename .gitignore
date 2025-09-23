@@ -4,6 +4,8 @@ node_modules
 scripts/.cache
 .eslintcache
 .env
+ai/memory
+ai/rules/.memory-registry
 
 
 

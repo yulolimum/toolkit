@@ -26,6 +26,15 @@ Personal development toolkit and reusable code registry organized by domain with
 - **[`media:normalize-episode-names`](scripts/media-normalize-episode-names.mjs)** - Normalize TV episode filenames using OpenRouter LLM with Russian translation support
 - **[`media:recursively-hardlink`](scripts/media-recursively-hardlink.sh)** - Create hardlinks for media files to save disk space
 
+## AI
+
+### LLM Rules (`ai/rules/`)
+
+Shareable LLM rules and prompts for development projects. Copy and paste into your AI assistant configurations as needed.
+
+- **[`01-memory-bank.md`](ai/rules/01-memory-bank.md)** - Comprehensive memory bank system for Cline with project registry, core file structure, and documentation workflows
+- **[`.memory-registry.example`](ai/rules/.memory-registry.example)** - Example project-to-memory-bank mapping registry for cross-project memory management (copy to `.memory-registry` and customize for your projects)
+
 ## Configs
 
 ### Shareable (`configs/`)
