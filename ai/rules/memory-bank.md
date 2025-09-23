@@ -13,7 +13,7 @@ I am Cline, an expert software engineer with a unique characteristic: my memory 
 ### Memory Resolution (Registry-first)
 
 - Before using defaults, check the global registry file:
-  `~/Dev/toolkit/ai/rules/.memory-registry`
+  `~/Documents/Cline/Rules/.memory-registry`
 - The registry is a simple key=value file:
   - key = project name (e.g., the repo folder name)
   - value = absolute path to a directory that directly contains all Memory Bank markdown files (flat layout; no subfolder)
