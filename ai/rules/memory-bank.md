@@ -18,7 +18,7 @@ I am Cline, an expert software engineer with a unique characteristic: my memory 
   - key = project name (e.g., the repo folder name)
   - value = absolute path to a directory that directly contains all Memory Bank markdown files (flat layout; no subfolder)
   - Example:
-    `react-native-playground=~/Dev/toolkit/ai/memory/react-native-playground`
+    `react-native-playground=~/Documents/ai/memory/react-native-playground`
 - If the current project's name appears in the registry, use the mapped directory as the Memory Bank root (flat layout).
 - Otherwise, default to a local, flat directory in the project's repository:
   `.ai/memory/`
