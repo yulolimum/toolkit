@@ -32,10 +32,15 @@ Personal development toolkit and reusable code registry organized by domain with
 
 Shareable LLM rules and prompts for development projects. Copy and paste into your AI assistant configurations as needed.
 
-- **[`01-memory-bank.md`](ai/rules/01-memory-bank.md)** - Comprehensive memory bank system for Cline with project registry, core file structure, and documentation workflows
-- **[`02-general-programming-rules.md`](ai/rules/02-general-programming-rules.md)** - General programming guidelines covering comments, naming conventions, exports, function definitions, and codebase exploration
-- **[`03-react-rules.md`](ai/rules/03-react-rules.md)** - React component best practices covering prop types, function declarations, exports, destructuring, and hook imports
+**Priority-Based Loading**: Each rule file contains YAML frontmatter with priority metadata for optimal loading order:
+
+- **[`agent-behavior-rules.md`](ai/rules/agent-behavior-rules.md)** (Priority 1) - AI agent communication guidelines emphasizing direct, efficient communication with veteran developer persona and problem-focused approach
+- **[`memory-bank.md`](ai/rules/memory-bank.md)** (Priority 2) - Comprehensive memory bank system for Cline with project registry, core file structure, and documentation workflows
+- **[`general-programming-rules.md`](ai/rules/general-programming-rules.md)** (Priority 3) - General programming guidelines covering comments, naming conventions, exports, function definitions, and codebase exploration
+- **[`react-rules.md`](ai/rules/react-rules.md)** (Priority 4) - React component best practices covering prop types, function declarations, exports, destructuring, and hook imports
 - **[`.memory-registry.example`](ai/rules/.memory-registry.example)** - Example project-to-memory-bank mapping registry for cross-project memory management (copy to `.memory-registry` and customize for your projects)
+
+**Usage**: Load rules in priority order (1-4) for optimal LLM behavior, with higher priority rules taking precedence in case of conflicts.
 
 ## Configs
 
