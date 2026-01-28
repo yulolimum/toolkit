@@ -4,7 +4,7 @@ import type { TextStyle, ViewStyle } from 'react-native'
 
 import { ActivityIndicator, Text, View } from 'react-native'
 
-type TSQueryOutputProps<T> = {
+type QueryStateProps<T> = {
   query?: UseQueryResult<T, any>
   queries?: UseQueryResult<any, any>[]
   empty?: ReactNode
@@ -52,9 +52,9 @@ function isEmptyData(data: any): boolean {
  * const usersQuery = useQuery({ queryKey: ['users'], queryFn: fetchUsers })
  *
  * return (
- *   <TSQueryOutput query={usersQuery}>
+ *   <QueryState query={usersQuery}>
  *     {usersQuery.data?.map(user => <UserCard key={user.id} user={user} />)}
- *   </TSQueryOutput>
+ *   </QueryState>
  * )
  * ```
  *
@@ -65,9 +65,9 @@ function isEmptyData(data: any): boolean {
  * const postsQuery = useQuery({ queryKey: ['posts'], queryFn: fetchPosts })
  *
  * return (
- *   <TSQueryOutput query={usersQuery} queries={[postsQuery]}>
+ *   <QueryState query={usersQuery} queries={[postsQuery]}>
  *     <UserPostsList users={usersQuery.data} posts={postsQuery.data} />
- *   </TSQueryOutput>
+ *   </QueryState>
  * )
  * ```
  *
@@ -75,13 +75,13 @@ function isEmptyData(data: any): boolean {
  * Custom empty predicate with multiple queries:
  * ```typescript
  * return (
- *   <TSQueryOutput
+ *   <QueryState
  *     queries={[usersQuery, postsQuery]}
  *     emptyPredicate={() => !usersQuery.data?.length && !postsQuery.data?.length}
  *     empty="No users or posts found"
  *   >
  *     <Content />
- *   </TSQueryOutput>
+ *   </QueryState>
  * )
  * ```
  *
@@ -89,7 +89,7 @@ function isEmptyData(data: any): boolean {
  * Custom styling with styles prop:
  * ```typescript
  * return (
- *   <TSQueryOutput
+ *   <QueryState
  *     query={dataQuery}
  *     styles={{
  *       loadingContainer: { backgroundColor: '#f0f0f0', borderRadius: 8 },
@@ -99,11 +99,11 @@ function isEmptyData(data: any): boolean {
  *     }}
  *   >
  *     <DataList data={dataQuery.data} />
- *   </TSQueryOutput>
+ *   </QueryState>
  * )
  * ```
  */
-export function TSQueryOutput<T>(props: TSQueryOutputProps<T>) {
+export function QueryState<T>(props: QueryStateProps<T>) {
   const {
     query,
     queries = [],

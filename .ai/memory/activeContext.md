@@ -84,7 +84,7 @@
 - **Completed**:
   - **First Hook**: `useMultiCountPress.ts` with comprehensive TSDoc documentation
   - **Second Hook**: `useQueryRefreshControlProps.ts` for React Query integration
-  - **First Component**: `TSQueryOutput.tsx` for React Query state management with style overrides
+  - **First Component**: `QueryState.tsx` for React Query state management with style overrides
   - **Component Optimization**: Refactored with useMemo/useCallback and extracted style constants
   - **New Components Directory**: Established components/ directory following reusable code registry pattern
   - **README Documentation**: Added new Components section and entries for all hooks and component

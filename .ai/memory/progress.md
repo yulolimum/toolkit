@@ -75,7 +75,7 @@
 
 #### React Components Pattern (`components/`)
 
-**Query State Output Component (`components/TSQueryOutput.tsx`)**
+**Query State Output Component (`components/QueryState.tsx`)**
 
 - **Query State Handling**: Declarative component for loading, error, empty, and success states of React Query results
 - **Customizable UI**: Supports both string and ReactNode content for each state (loading, error, empty, success)

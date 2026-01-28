@@ -81,7 +81,7 @@ Custom service implementations and extensions. Reusable service patterns for com
 
 Reusable React components for common UI patterns and functionality. Copy and paste into your React/React Native projects as needed.
 
-- **[`TSQueryOutput.tsx`](components/TSQueryOutput.tsx)** - React component that handles different states of single or multiple Tanstack Query results with customizable UI for loading, error, empty, and success states
+- **[`QueryState.tsx`](components/QueryState.tsx)** - React component that handles different states of single or multiple Tanstack Query results with customizable UI for loading, error, empty, and success states
 
 ## Hooks
 
