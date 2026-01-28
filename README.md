@@ -12,7 +12,7 @@ Personal development toolkit and reusable code registry organized by domain with
 
 ### EAS Deployment (`eas-*`)
 
-- **[`eas:build`](scripts/eas-build.mjs)** - Interactive EAS build automation with platform/profile selection
+- **[`eas:build`](scripts/eas-build.mts)** - Interactive EAS build automation with platform/profile selection
 - **[`eas:submit`](scripts/eas-submit.mjs)** - App store submission with local/remote build support
 - **[`eas:update`](scripts/eas-update.mjs)** - Over-the-air updates with channel and messaging options
 
