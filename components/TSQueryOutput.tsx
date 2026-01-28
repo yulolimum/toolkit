@@ -2,13 +2,13 @@ import type { UseQueryResult } from '@tanstack/react-query'
 import type { ReactNode } from 'react'
 import type { TextStyle, ViewStyle } from 'react-native'
 
-import { useCallback, useMemo } from 'react'
 import { ActivityIndicator, Text, View } from 'react-native'
 
 type TSQueryOutputProps<T> = {
-  query: UseQueryResult<T, any>
+  query?: UseQueryResult<T, any>
+  queries?: UseQueryResult<any, any>[]
   empty?: ReactNode
-  emptyPredicate?: (data: T) => boolean
+  emptyPredicate?: () => boolean
   loading?: ReactNode
   error?: ReactNode
   success?: ReactNode
@@ -24,14 +24,22 @@ type TSQueryOutputProps<T> = {
   }
 }
 
+function isEmptyData(data: any): boolean {
+  if (!data) return true
+  if (Array.isArray(data)) return !data.length
+  return false
+}
+
 /**
- * A React component that handles different states of a React Query result with customizable UI for each state.
- * Provides a declarative way to render loading, error, empty, and success states for query results.
+ * A React component that handles different states of React Query results with customizable UI for each state.
+ * Supports both single query and multiple queries, providing a declarative way to render loading, error,
+ * empty, and success states.
  *
- * @param query - The React Query result object (from useQuery or useInfiniteQuery)
+ * @param query - Optional single React Query result object (from useQuery or useInfiniteQuery)
+ * @param queries - Optional array of React Query results for handling multiple queries together
  * @param empty - Content to show when data is empty (default: "No data found")
- * @param emptyPredicate - Function to determine if data should be considered empty
- * @param loading - Content to show while loading (default: ActivityIndicator with "Loading..." text)
+ * @param emptyPredicate - Function to determine if data should be considered empty (overrides default check)
+ * @param loading - Content to show while loading (default: ActivityIndicator)
  * @param error - Content to show on error (default: "Error loading data")
  * @param success - Content to show on successful load (takes precedence over children)
  * @param children - Content to show on successful load (used if success is not provided)
@@ -39,7 +47,7 @@ type TSQueryOutputProps<T> = {
  * @param styles - Optional style overrides for containers and text in each state
  *
  * @example
- * Basic usage with default states:
+ * Basic usage with single query:
  * ```typescript
  * const usersQuery = useQuery({ queryKey: ['users'], queryFn: fetchUsers })
  *
@@ -51,34 +59,28 @@ type TSQueryOutputProps<T> = {
  * ```
  *
  * @example
- * Custom empty and loading states:
+ * Multiple queries - waits for all to load, shows error if any fail:
  * ```typescript
+ * const usersQuery = useQuery({ queryKey: ['users'], queryFn: fetchUsers })
  * const postsQuery = useQuery({ queryKey: ['posts'], queryFn: fetchPosts })
  *
  * return (
- *   <TSQueryOutput
- *     query={postsQuery}
- *     empty={<CustomEmptyState />}
- *     loading={<CustomLoader />}
- *     emptyPredicate={(data) => !data || data.length === 0}
- *   >
- *     <PostsList posts={postsQuery.data} />
+ *   <TSQueryOutput query={usersQuery} queries={[postsQuery]}>
+ *     <UserPostsList users={usersQuery.data} posts={postsQuery.data} />
  *   </TSQueryOutput>
  * )
  * ```
  *
  * @example
- * String-based states with custom styling:
+ * Custom empty predicate with multiple queries:
  * ```typescript
  * return (
  *   <TSQueryOutput
- *     query={articlesQuery}
- *     empty="No articles available"
- *     loading="Loading articles..."
- *     error="Failed to load articles"
- *     defaultHeight={200}
+ *     queries={[usersQuery, postsQuery]}
+ *     emptyPredicate={() => !usersQuery.data?.length && !postsQuery.data?.length}
+ *     empty="No users or posts found"
  *   >
- *     <ArticleList articles={articlesQuery.data} />
+ *     <Content />
  *   </TSQueryOutput>
  * )
  * ```
@@ -93,8 +95,6 @@ type TSQueryOutputProps<T> = {
  *       loadingContainer: { backgroundColor: '#f0f0f0', borderRadius: 8 },
  *       emptyContainer: { padding: 20 },
  *       errorContainer: { backgroundColor: '#ffe6e6' },
- *       loadingText: { fontSize: 16, fontWeight: 'bold' },
- *       emptyText: { color: '#666', fontStyle: 'italic' },
  *       errorText: { color: '#d32f2f', fontSize: 14 }
  *     }}
  *   >
@@ -104,65 +104,71 @@ type TSQueryOutputProps<T> = {
  * ```
  */
 export function TSQueryOutput<T>(props: TSQueryOutputProps<T>) {
-  const { query, empty, loading, error, success, children, emptyPredicate, defaultHeight = 125, styles = {} } = props
+  const {
+    query,
+    queries = [],
+    empty = 'No data found',
+    loading,
+    error = 'Error loading data',
+    success = null,
+    children = null,
+    emptyPredicate,
+    defaultHeight = 125,
+    styles = {},
+  } = props
 
-  const emptyResolved = useMemo(() => empty ?? 'No data found', [empty])
+  const allQueries = query ? [query, ...queries] : queries
 
-  const loadingResolved = useMemo(
-    () =>
-      loading ?? (
-        <View style={[$blockContainer, styles.loadingContainer, { height: defaultHeight }]}>
+  if (allQueries.length === 0) return null
+
+  const isLoading = allQueries.some((q) => q.isLoading)
+  const isError = allQueries.some((q) => q.isError)
+  const isFetched = allQueries.every((q) => q.isFetched || (!q.isLoading && !q.isFetching))
+
+  const emptyStrType = typeof empty === 'string'
+  const loadingStrType = typeof loading === 'string'
+  const errorStrType = typeof error === 'string'
+
+  if (isLoading) {
+    if (loading === undefined) {
+      return (
+        <View style={[$blockContainer, styles.loadingContainer, { minHeight: defaultHeight }]}>
           <ActivityIndicator size="large" />
         </View>
-      ),
-    [loading, defaultHeight, styles.loadingContainer],
-  )
-
-  const errorResolved = useMemo(() => error ?? 'Error loading data', [error])
-
-  const emptyPredicateResolved = useCallback(
-    emptyPredicate ??
-      ((d: any) => {
-        if (!d) return true
-        if (Array.isArray(d)) return !d.length
-        return false
-      }),
-    [emptyPredicate],
-  )
-
-  if (!query) return null
-
-  const emptyStrType = typeof emptyResolved === 'string'
-  const loadingStrType = typeof loadingResolved === 'string'
-  const errorStrType = typeof errorResolved === 'string'
-
-  if (!query.isLoading && emptyPredicateResolved(query.data as any)) {
-    return !emptyStrType ? (
-      emptyResolved
-    ) : (
-      <View style={[$blockContainer, styles.emptyContainer, { minHeight: defaultHeight }]}>
-        <Text style={[{ color: 'gray' }, styles.emptyText]}>{emptyResolved}</Text>
-      </View>
-    )
-  } else if (query.isLoading) {
+      )
+    }
     return !loadingStrType ? (
-      loadingResolved
+      loading
     ) : (
       <View style={[$blockContainer, styles.loadingContainer, { minHeight: defaultHeight }]}>
-        <Text style={[{ color: 'gray' }, styles.loadingText]}>{loadingResolved}</Text>
+        <Text style={[{ color: 'gray' }, styles.loadingText]}>{loading}</Text>
       </View>
     )
-  } else if (query.isError) {
+  }
+
+  if (isError) {
     return !errorStrType ? (
-      errorResolved
+      error
     ) : (
       <View style={[$blockContainer, styles.errorContainer, { minHeight: defaultHeight }]}>
-        <Text style={[{ color: 'red' }, styles.errorText]}>{errorResolved}</Text>
+        <Text style={[{ color: 'red' }, styles.errorText]}>{error}</Text>
       </View>
     )
-  } else {
-    return success ?? children ?? null
   }
+
+  const shouldShowEmpty = isFetched && (emptyPredicate?.() ?? isEmptyData(allQueries[0]?.data))
+
+  if (shouldShowEmpty) {
+    return !emptyStrType ? (
+      empty
+    ) : (
+      <View style={[$blockContainer, styles.emptyContainer, { minHeight: defaultHeight }]}>
+        <Text style={[{ color: 'gray' }, styles.emptyText]}>{empty}</Text>
+      </View>
+    )
+  }
+
+  return success ?? children ?? null
 }
 
 const $blockContainer: ViewStyle = {
