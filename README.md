@@ -77,6 +77,8 @@ Custom service implementations and extensions. Reusable service patterns for com
 
 Reusable React components for common UI patterns and functionality. Copy and paste into your React/React Native projects as needed.
 
+- **[`AspectImage.tsx`](components/AspectImage.tsx)** - Expo Image wrapper that displays images at natural aspect ratio with optional max width/height constraints
+- **[`MeasuringView.tsx`](components/MeasuringView.tsx)** - React Native View wrapper that measures its layout and passes dimensions to a render function child
 - **[`QueryState.tsx`](components/QueryState.tsx)** - React component that handles different states of single or multiple Tanstack Query results with customizable UI for loading, error, empty, and success states
 
 ## Hooks
