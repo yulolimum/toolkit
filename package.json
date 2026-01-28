@@ -13,6 +13,7 @@
     "linear:start-clockify-timer": "tsx ./scripts/linear-start-clockify-timer.ts",
     "media:accelerate-video": "npx zx --install ./scripts/media-accelerate-video.mjs",
     "media:normalize-episode-names": "npx zx --install ./scripts/media-normalize-episode-names.mjs",
+    "media:play-twitch-stream": "npx zx --install ./scripts/media-play-twitch-stream.mjs",
     "media:recursively-hardlink": "./scripts/media-recursively-hardlink.sh"
   },
   "dependencies": {
