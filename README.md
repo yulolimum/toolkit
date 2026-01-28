@@ -91,6 +91,7 @@ Reusable React hooks for common patterns and functionality. Copy and paste into 
 
 - **[`useAppState.ts`](hooks/useAppState.ts)** - React Native hook for tracking app state (active/background/inactive) with transition callbacks
 - **[`useAuthorization.tsx`](hooks/useAuthorization.tsx)** - Authorization context system with hook and component for role/permission-based UI rendering with AND/OR logic support
+- **[`useDebouncedValue.ts`](hooks/useDebouncedValue.ts)** - Debounce a value with configurable delay, leading mode, force update, and cancel (adapted from Mantine)
 - **[`useMultiCountPress.ts`](hooks/useMultiCountPress.ts)** - React hook for detecting multiple consecutive presses within a time threshold (useful for debug modes, secret features, etc.)
 - **[`useQueryRefreshControlProps.ts`](hooks/useQueryRefreshControlProps.ts)** - React hook that provides RefreshControl props for automatically refetching React Query queries on pull-to-refresh
 - **[`useScreenPreventRemove.ts`](hooks/useScreenPreventRemove.ts)** - React Navigation hook to prevent screen unmounting based on conditions (unsaved changes, loading states, etc.)
