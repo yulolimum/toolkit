@@ -10,7 +10,7 @@ import { $, fs, minimist } from 'zx'
 // Constants
 //
 const scriptName = 'eas-build'
-const scriptCommand = 'tsx scripts/eas-build.mts'
+const scriptCommand = 'pnpm eas:build'
 
 //
 // Arguments

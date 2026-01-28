@@ -204,16 +204,13 @@ export function getObjectEntries<Obj extends object>(obj: Obj): Array<[keyof Obj
  * ```
  */
 export function pickBy<T extends object>(obj: T, predicate: (value: T[keyof T], key: keyof T) => boolean): Partial<T> {
-  return Object.entries(obj).reduce(
-    (acc, [key, value]) => {
-      const k = key as keyof T
-      if (predicate(value, k)) {
-        acc[k] = value
-      }
-      return acc
-    },
-    {} as Partial<T>,
-  )
+  return Object.entries(obj).reduce((acc, [key, value]) => {
+    const k = key as keyof T
+    if (predicate(value, k)) {
+      acc[k] = value
+    }
+    return acc
+  }, {} as Partial<T>)
 }
 
 export function removeNullishValues<T extends object>(obj: T): Partial<T> {

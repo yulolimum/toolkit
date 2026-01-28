@@ -29,7 +29,7 @@ export default tseslint.config(
 
   // global plugins
   {
-    files: ['**/*.{js,jsx,mjs,cjs,ts,tsx}'],
+    files: ['**/*.{js,jsx,mjs,cjs,ts,tsx,mts}'],
     languageOptions: { globals: { ...globals.node } },
     settings: { react: { version: 'detect' } },
     plugins: {
