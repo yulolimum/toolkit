@@ -1,0 +1,143 @@
+# EAS Preview Deploy Workflow
+#
+# Automatically builds and deploys preview builds for pull requests.
+# Uses EAS fingerprinting to avoid unnecessary rebuilds.
+#
+# Required secrets:
+#   - EXPO_TOKEN: Expo access token for EAS CLI
+#   - SENTRY_AUTH_TOKEN: (Optional) Sentry auth token for sourcemap uploads
+#
+# Placeholders to replace:
+#   - @placeholder/mobile: Your monorepo workspace package name
+#   - <--EXPO_ACCOUNT_NAME-->: Your Expo account name
+#   - <--EXPO_PROJECT_NAME-->: Your Expo project name
+#   - <--EXPO_PROJECT_ID-->: Your Expo project ID (UUID)
+
+name: Deploy Mobile Preview to EAS
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+    paths:
+      - 'apps/mobile/**'
+
+permissions:
+  contents: read
+  pull-requests: write
+
+concurrency:
+  group: fingerprint-${{ github.event_name != 'pull_request' && 'dev' || github.run_id }}
+  cancel-in-progress: true
+
+jobs:
+  deploy-preview:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Setup repo
+        uses: actions/checkout@v6
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.x.x
+          run_install: false
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 'lts/*'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build mobile dependencies
+        run: pnpm --filter "@placeholder/mobile^..." build
+
+      - name: Setup EAS
+        uses: expo/expo-github-action@main
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+          packager: npm
+
+      - name: Replace PR placeholders in eas.json
+        shell: bash
+        run: sed -i "s/__pr_number__/${{ github.event.pull_request.number }}/g" apps/mobile/eas.json
+
+      - name: Check EAS For Builds
+        id: fingerprint
+        uses: expo/expo-github-action/continuous-deploy-fingerprint-info@main
+        with:
+          profile: preview:pr-${{ github.event.pull_request.number }}
+          platform: all
+          working-directory: 'apps/mobile'
+          environment: preview
+
+      - name: Create iOS Build If Fingerprint Changed
+        id: build-ios
+        uses: expo/expo-github-action/preview-build@main
+        if: steps.fingerprint.outputs.ios-build-id == ''
+        with:
+          command: eas build --profile preview:pr-${{ github.event.pull_request.number }} --platform ios --non-interactive
+          working-directory: 'apps/mobile'
+          comment-id: 'eas-ios-build-information'
+          packager: npm
+          comment: false
+
+      - name: Create Android Build If Fingerprint Changed
+        id: build-android
+        uses: expo/expo-github-action/preview-build@main
+        if: steps.fingerprint.outputs.android-build-id == ''
+        with:
+          command: eas build --profile preview:pr-${{ github.event.pull_request.number }} --platform android --non-interactive
+          working-directory: 'apps/mobile'
+          comment-id: 'eas-android-build-information'
+          packager: npm
+          comment: false
+
+      - name: Creates EAS Android Update
+        id: update-android
+        uses: expo/expo-github-action/preview@main
+        with:
+          command: eas update --platform android --branch pr-${{ github.event.pull_request.number }} --environment preview --branch pr-${{ github.event.pull_request.number }} --auto
+          working-directory: 'apps/mobile'
+          comment: false
+
+      - name: Creates EAS iOS Update
+        id: update-ios
+        uses: expo/expo-github-action/preview@main
+        with:
+          command: eas update --platform ios --branch pr-${{ github.event.pull_request.number }} --environment preview --branch pr-${{ github.event.pull_request.number }} --auto
+          working-directory: 'apps/mobile'
+          comment: false
+
+      # Optional: Upload sourcemaps to Sentry
+      # - name: Upload Sourcemaps to Sentry
+      #   run: (cd apps/mobile && npx sentry-expo-upload-sourcemaps dist)
+      #   env:
+      #     SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+
+      - name: Comment PR
+        uses: thollander/actions-comment-pull-request@v3
+        with:
+          reactions: rocket
+          comment-tag: 'eas-build-and-update-information'
+          message: |
+            ## EAS Preview
+
+            A preview build has been created for this PR. Click the build links below to download and test the mobile app changes on your device.
+
+            **How to Test:**
+            1. Click the build link or scan the QR Code for your platform (iOS or Android)
+            2. Download and install the preview build on your device
+            3. Launch the app - the latest code changes are automatically available via OTA updates
+
+            |             | iOS | Android |
+            |-------------|-----|---------|
+            | Build Link  | [View iOS Build](https://expo.dev/accounts/<--EXPO_ACCOUNT_NAME-->/projects/<--EXPO_PROJECT_NAME-->/builds/${{ steps.fingerprint.outputs.ios-build-id || steps.build-ios.outputs.iosBuildId }}) | [View Android Build](https://expo.dev/accounts/<--EXPO_ACCOUNT_NAME-->/projects/<--EXPO_PROJECT_NAME-->/builds/${{ steps.fingerprint.outputs.android-build-id || steps.build-android.outputs.androidBuildId }}) |
+            | Fingerprint | ${{ steps.fingerprint.outputs.ios-fingerprint }} | ${{ steps.fingerprint.outputs.android-fingerprint }} |
+            | Build ID    | ${{ steps.fingerprint.outputs.ios-build-id || steps.build-ios.outputs.iosBuildId }} | ${{ steps.fingerprint.outputs.android-build-id || steps.build-android.outputs.androidBuildId }} |
+            | Update ID   | ${{ steps.update-ios.outputs.iosId }} | ${{ steps.update-android.outputs.androidId }} |
+            | QR Code     | ![iOS QR](https://qr.moonbunny.io/qr/yulolimum/default?content=itms-services://?action=download-manifest;url=https://api.expo.dev/v2/projects/<--EXPO_PROJECT_ID-->/builds/${{ steps.fingerprint.outputs.ios-build-id || steps.build-ios.outputs.iosBuildId }}/manifest.plist) | ![Android QR](https://qr.moonbunny.io/qr/yulolimum/default?content=https://expo.dev/accounts/<--EXPO_ACCOUNT_NAME-->/projects/<--EXPO_PROJECT_NAME-->/builds/${{ steps.fingerprint.outputs.android-build-id || steps.build-android.outputs.androidBuildId }}) |

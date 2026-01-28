@@ -27,6 +27,14 @@ Personal development toolkit and reusable code registry organized by domain with
 - **[`media:play-twitch-stream`](scripts/media-play-twitch-stream.mjs)** - Interactive Twitch stream launcher with OAuth device flow, fetches followed channels, filters live streams, and launches via streamlink
 - **[`media:recursively-hardlink`](scripts/media-recursively-hardlink.sh)** - Create hardlinks for media files to save disk space
 
+## Workflows
+
+### GitHub Actions (`workflows/`)
+
+Reusable GitHub Actions workflows for CI/CD automation. Copy into your `.github/workflows/` directory.
+
+- **[`eas-preview-deploy.yml`](workflows/eas-preview-deploy.yml)** - Automatic EAS preview builds for PRs with fingerprint-based caching, OTA updates, and PR comments with QR codes
+
 ## Configs
 
 ### Shareable (`configs/`)
