@@ -57,6 +57,7 @@ Shareable LLM rules and prompts for development projects. Copy and paste into yo
 
 Utility functions and modules for common development tasks. Copy and paste into your projects as needed.
 
+- **[`provider-registry.tsx`](utils/provider-registry.tsx)** - Compose multiple React providers without deep nesting, with conditional inclusion and typed props
 - **[`safe-try-catch.ts`](utils/safe-try-catch.ts)** - `safeResolve` and `safeExec` functions for error handling without try/catch blocks, returning `{ ok, value }` result objects
 
 ## Lib
