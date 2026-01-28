@@ -1,59 +1,63 @@
-import { useEffect, useRef, useState } from 'react'
+import { useRef } from 'react'
 
 /**
  * A React hook that detects multiple consecutive presses within a time threshold.
  * Useful for implementing features like "press 5 times to enable debug mode" or similar patterns.
  *
  * @param callback - Function to execute when the target press count is reached
- * @param count - Number of presses required to trigger the callback
- * @param threshold - Time window in milliseconds to reset the press count
- * @returns Object with onPress handler to attach to pressable components
+ * @param opts - Configuration options
+ * @param opts.count - Number of presses required to trigger the callback (default: 10)
+ * @param opts.threshold - Time window in milliseconds to reset the press count (default: 500)
+ * @param opts.enabled - Whether the hook is enabled (default: true). Returns undefined when disabled.
+ * @returns The press handler function, or undefined if disabled
  *
  * @example
  * ```tsx
  * function DebugButton() {
- *   const debugPressProps = useMultiCountPress(
+ *   const handleDebugPress = useMultiCountPress(
  *     () => console.log('Debug mode activated!'),
- *     5,
- *     1000
+ *     { count: 5, threshold: 1000 }
  *   )
  *
- *   return <Pressable {...debugPressProps}><Text>Press me 5 times</Text></Pressable>
+ *   return <Pressable onPress={handleDebugPress}><Text>Press me 5 times</Text></Pressable>
  * }
  * ```
  *
  * @example
  * ```tsx
  * function SecretFeature() {
- *   const secretPressProps = useMultiCountPress(
+ *   const handleSecretPress = useMultiCountPress(
  *     () => setShowSecretMenu(true),
- *     3,
- *     500
+ *     { count: 3, enabled: isDevMode }
  *   )
  *
- *   return <TouchableOpacity {...secretPressProps}><Text>Logo</Text></TouchableOpacity>
+ *   return <TouchableOpacity onPress={handleSecretPress}><Text>Logo</Text></TouchableOpacity>
  * }
  * ```
  */
-export function useMultiCountPress(callback: () => void, count: number, threshold: number) {
+export function useMultiCountPress(
+  callback: () => void,
+  opts?: { count?: number; threshold?: number; enabled?: boolean },
+) {
+  const { count = 10, threshold = 500, enabled = true } = opts ?? {}
+
   const pressTimeout = useRef<NodeJS.Timeout>(undefined)
-
-  const [pressCount, setPressCount] = useState(0)
-
-  useEffect(() => {
-    clearTimeout(pressTimeout.current)
-
-    if (pressCount === count) {
-      setPressCount(0)
-      callback()
-    } else if (pressCount > 0) {
-      pressTimeout.current = setTimeout(() => setPressCount(0), threshold)
-    }
-  }, [pressCount])
+  const pressCount = useRef(0)
 
   function handleClick() {
-    setPressCount((prev) => prev + 1)
+    clearTimeout(pressTimeout.current)
+
+    pressCount.current += 1
+
+    if (pressCount.current === count) {
+      pressCount.current = 0
+      callback()
+    } else {
+      pressTimeout.current = setTimeout(() => {
+        pressCount.current = 0
+      }, threshold)
+    }
   }
 
-  return { onPress: handleClick }
+  return enabled ? handleClick : undefined
 }
