@@ -4,10 +4,8 @@
   },
   "build": {
     "base": {
-      "node": "22.16.0",
-      "pnpm": "10.17.1",
-      "autoIncrement": true,
-      "channel": "base",
+      "node": "22.x.x",
+      "pnpm": "10.x.x",
       "android": {
         "buildType": "app-bundle",
         "gradleCommand": ":app:bundleRelease"
@@ -16,8 +14,33 @@
         "buildConfiguration": "Release",
         "simulator": false
       },
+      "autoIncrement": true,
       "env": {
         "NODE_ENV": "production"
+      },
+      "channel": "base"
+    },
+    "development": {
+      "extends": "base",
+      "developmentClient": true,
+      "environment": "development",
+      "autoIncrement": false,
+      "android": {
+        "buildType": "apk",
+        "gradleCommand": ":app:assembleRelease"
+      },
+      "env": {
+        "NODE_ENV": "development"
+      }
+    },
+    "preview:pr-__pr_number__": {
+      "extends": "base",
+      "distribution": "internal",
+      "environment": "preview",
+      "channel": "pr-__pr_number__",
+      "android": {
+        "buildType": "apk",
+        "gradleCommand": ":app:assembleRelease"
       }
     },
     "preview:internal": {
