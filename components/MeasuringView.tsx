@@ -17,9 +17,7 @@ export function MeasuringView(
   return (
     <View
       {...props}
-      onLayout={(event) =>
-        setSize({ width: event.nativeEvent.layout.width, height: event.nativeEvent.layout.height })
-      }
+      onLayout={(event) => setSize({ width: event.nativeEvent.layout.width, height: event.nativeEvent.layout.height })}
     >
       {props.children?.(size)}
     </View>
