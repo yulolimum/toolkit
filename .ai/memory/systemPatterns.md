@@ -39,6 +39,7 @@
 - Schema entries declare their persistence type, default value, and optional version. The service stores version metadata under `__storage_metadata` and removes stale values when a version changes.
 - Imperative methods read, write, remove, and clear values. Object values are serialized; primitive values are stored natively.
 - `useStorage` adapts MMKV's native reactive hooks to the configured storage instance and returns the default when a value is absent.
+- `SecureStorage` is the asynchronous adapter for small sensitive strings. It uses an Expo SecureStore-compatible implementation, returns schema defaults for unavailable reads, and clears only schema keys.
 
 ## Utility patterns
 

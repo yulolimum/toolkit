@@ -26,6 +26,7 @@ catalog:
   eslint-plugin-simple-import-sort: 14.0.0
   expo: 57.0.10
   expo-image: 57.0.2
+  expo-secure-store: 57.0.1
   globals: 17.9.0
   parse-duration: 2.1.8
   prettier: 3.9.6

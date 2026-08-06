@@ -41,6 +41,7 @@
     "eslint-plugin-simple-import-sort": "catalog:",
     "expo": "catalog:",
     "expo-image": "catalog:",
+    "expo-secure-store": "catalog:",
     "globals": "catalog:",
     "parse-duration": "catalog:",
     "prettier": "catalog:",

@@ -72,6 +72,7 @@ Pre-configured library instances and setup patterns. Ready-to-use configurations
 
 Custom service implementations and extensions. Reusable service patterns for common application needs.
 
+- **[`secure-storage.ts`](services/secure-storage.ts)** - Typed asynchronous storage for small sensitive strings through Expo SecureStore
 - **[`storage.ts`](services/storage.ts)** - Type-safe persistent storage service with imperative and reactive APIs built on MMKV
 
 ## Components

@@ -2,7 +2,7 @@
 
 ## Current focus
 
-This branch modernizes the toolkit's React Native storage support, dependency management, local tooling, CI setup, and reusable utility registry. The completed work is committed through `a7821aa`; current work adds a React Native Maps region helper.
+This branch modernizes the toolkit's React Native storage support, dependency management, local tooling, CI setup, and reusable utility registry. It includes typed secure storage for sensitive strings.
 
 ## Completed on this branch
 
@@ -12,6 +12,7 @@ This branch modernizes the toolkit's React Native storage support, dependency ma
 - `services/storage.ts` uses MMKV v4's `remove` API, keeps schema-version migration metadata, and continues to support an injected MMKV instance.
 - Storage defaults are `unknown` instead of `any`, and functional updates are typed without widening through `any`.
 - The reactive storage hook continues to choose the appropriate native MMKV hook and uses the instance configured for the storage service.
+- `services/secure-storage.ts` adds a schema-typed Expo SecureStore adapter for asynchronous credential storage, with injectable storage for testing and configured-key-only clearing.
 
 ### Dependency and tooling refresh
 

@@ -2,7 +2,7 @@
 
 ## Current branch status
 
-The branch is functionally complete through `a7821aa`. It contains eleven focused implementation commits against `origin/master`; current work adds a typed React Native Maps region helper.
+The branch contains focused implementation commits against `origin/master`. Its latest addition is typed secure storage for sensitive strings.
 
 ## Delivered work
 
@@ -13,8 +13,9 @@ The branch is functionally complete through `a7821aa`. It contains eleven focuse
 | Tooling               | Pinned Node.js `24.19.0` and pnpm `11.20.0` locally, updated environment setup guidance, and aligned CI with those pins.                                                                                                            |
 | Script compatibility  | Updated EAS, media, and quality-check scripts for the upgraded Inquirer and TypeScript ecosystem.                                                                                                                                   |
 | Shared utilities      | Expanded array and object helpers, added elapsed-time and date-range containment helpers, rebuilt color handling around WCAG contrast, added the documented string helper module, and introduced a React Native Maps region helper. |
+| Secure storage        | Added schema-typed, asynchronous storage for small sensitive strings, with injectable storage for testing and configured-key-only clearing.                                                                                         |
 
-## Commit sequence
+## Prior commit sequence
 
 1. `692ef96` updates persistent storage behavior.
 2. `5ca8374` prepares the shared MMKV setup for the mobile upgrade.
@@ -27,6 +28,8 @@ The branch is functionally complete through `a7821aa`. It contains eleven focuse
 9. `13aa6fe` improves shared color handling.
 10. `08e0a32` adds shared text helpers.
 11. `a7821aa` refreshes shared toolkit guidance and documents the latest utility patterns.
+12. `8673c05` adds a shared map-region helper.
+13. `3d0767e` keeps shared map support consistent with dependency conventions.
 
 ## Verification completed during implementation
 
