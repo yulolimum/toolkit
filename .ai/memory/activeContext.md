@@ -2,7 +2,7 @@
 
 ## Current focus
 
-This branch modernizes the toolkit's React Native storage support, dependency management, local tooling, CI setup, and reusable utility registry. It includes typed secure storage for sensitive strings.
+This branch modernizes the toolkit's React Native storage support, dependency management, local tooling, CI setup, and reusable utility registry. It includes typed secure storage for sensitive strings and shared image, timer, search, and SemVer helpers.
 
 ## Completed on this branch
 
@@ -31,11 +31,13 @@ This branch modernizes the toolkit's React Native storage support, dependency ma
 
 ### Reusable utility registry
 
-- `utils/arrays.ts` now covers scalar normalization, toggling, shuffling, random selection, deduplication, and locale-aware sorting.
+- `utils/arrays.ts` now covers scalar normalization, toggling, shuffling, random selection, deduplication, locale-aware sorting, and typed fuzzy object search that returns direct matches first.
 - `utils/objects.ts` has more precise typed entries and adds `pick`.
 - `utils/dates.ts` formats elapsed durations and checks inclusive date-range containment with optional bounds.
 - `utils/colors.ts` parses supported color strings, calculates WCAG luminance and contrast, and selects readable black or white text. Transparent colors use the caller's fallback because the background is unknown.
-- `utils/strings.ts` adds documented helpers for pluralization, regular-expression escaping, truncation, compact list summaries, SemVer-core comparison, and character filtering with preserved exclusions.
+- `utils/strings.ts` adds documented helpers for pluralization, regular-expression escaping, truncation, compact list summaries, SemVer construction and core comparison, and character filtering with preserved exclusions.
+- `utils/images.ts` builds configurable placehold.co image URLs.
+- `utils/timers.ts` provides validated promise delays and intervals that can be stopped and restarted without duplicate schedules.
 - `utils/geo.ts` calculates a `react-native-maps` region that contains a set of coordinates. React Native Maps follows the toolkit's direct-dependency convention.
 - The README catalogs each utility module so consumers can discover copy-and-paste source files quickly.
 

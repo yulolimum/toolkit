@@ -49,14 +49,16 @@ Reusable GitHub Actions workflows for CI/CD automation. Copy into your `.github/
 
 Utility functions and modules for common development tasks. Copy and paste into your projects as needed.
 
-- **[`arrays.ts`](utils/arrays.ts)** - Array helpers for normalization, toggling, shuffling, selection, deduplication, and sorting
+- **[`arrays.ts`](utils/arrays.ts)** - Array helpers for normalization, toggling, shuffling, selection, deduplication, sorting, and fuzzy object search
 - **[`colors.ts`](utils/colors.ts)** - Parse color strings, calculate WCAG contrast, and choose readable black or white text
 - **[`dates.ts`](utils/dates.ts)** - Date helpers for compact elapsed-time labels and inclusive range containment
 - **[`geo.ts`](utils/geo.ts)** - React Native Maps region calculation for a set of coordinates
+- **[`images.ts`](utils/images.ts)** - Build configurable placehold.co image URLs for UI loading and preview states
 - **[`objects.ts`](utils/objects.ts)** - Object utilities: `getObjPath`, `isObjEmpty`, type-safe `getObjectKeys`/`Values`/`Entries`, `pick`, `pickBy`, `removeNullishValues`, `omit`, `getRootLevelObject`
 - **[`provider-registry.tsx`](utils/provider-registry.tsx)** - Compose multiple React providers without deep nesting, with conditional inclusion and typed props
 - **[`safe-try-catch.ts`](utils/safe-try-catch.ts)** - `safeResolve` and `safeExec` functions for error handling without try/catch blocks, returning `{ ok, value }` result objects
-- **[`strings.ts`](utils/strings.ts)** - String helpers for pluralization, regex escaping, truncation, list summaries, SemVer-core comparison, and character filtering
+- **[`strings.ts`](utils/strings.ts)** - String helpers for pluralization, regex escaping, truncation, list summaries, SemVer building and core comparison, and character filtering
+- **[`timers.ts`](utils/timers.ts)** - Promise delays and controllable recursive intervals that prevent duplicate timer scheduling
 
 ## Lib
 

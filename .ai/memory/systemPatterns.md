@@ -43,11 +43,13 @@
 
 ## Utility patterns
 
-- Array helpers normalize values, avoid accidental source mutation, and use locale-aware comparison when sorting display strings.
+- Array helpers normalize values, avoid accidental source mutation, use locale-aware comparison when sorting display strings, and can prefer direct matches before weighted fuzzy search.
 - Object helpers preserve key and value relationships where TypeScript's built-in object methods would otherwise widen them.
 - Date helpers format elapsed durations and make inclusive range-containment semantics explicit.
 - Color helpers parse only supported hex and comma-separated RGB formats, calculate WCAG contrast, and return fallbacks for invalid or transparent colors.
-- String helpers make their edge cases explicit: the truncation limit includes the ellipsis, list summaries use an item count, SemVer comparison supports only normalized core versions, and character filtering allows explicit preserved characters.
+- String helpers make their edge cases explicit: the truncation limit includes the ellipsis, list summaries use an item count, SemVer construction leaves validation to the caller, SemVer comparison supports only normalized core versions, and character filtering allows explicit preserved characters.
+- Image helpers should build remote URLs when callers do not need local processing.
+- Timer helpers validate durations and make starting and stopping behavior explicit so duplicate schedules cannot occur.
 - Geo helpers that use React Native Maps should declare that dependency and make map-projection limitations explicit.
 
 ## Script pattern

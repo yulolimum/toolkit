@@ -14,6 +14,7 @@
 - React Native MMKV `4.3.2` with React Native Nitro Modules `0.36.5`.
 - React Native Maps `1.29.0` supplies the `utils/geo.ts` type contract and follows the toolkit's direct-dependency convention.
 - Expo SecureStore `57.0.1` supports typed asynchronous storage for small sensitive strings.
+- Pico Search `0.6.0` supports the typed fuzzy-search fallback in `utils/arrays.ts`.
 - TypeScript is catalog-managed alongside TypeScript Native; strict project settings extend `@tsconfig/strictest`.
 - ESLint `10.8.0`, Prettier `3.9.6`, tsx `4.23.8`, tsup `8.5.1`, and zx `8.8.5` support development and script execution.
 - Inquirer packages are catalog-managed at their v5 and v6 releases, so callers should use their current generic prompt APIs where inference needs help.

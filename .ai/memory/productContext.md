@@ -8,7 +8,7 @@ This repository is a personal toolkit of reusable development automation, config
 
 - Interactive scripts for code quality checks, environment verification, EAS builds, submissions, updates, Linear and Clockify time tracking, and media tasks.
 - Shareable configuration for ESLint, Prettier, and Expo Application Services.
-- Reusable TypeScript and React Native source files for arrays, objects, strings, colors, storage, hooks, components, and provider composition.
+- Reusable TypeScript and React Native source files for arrays, objects, strings, colors, images, timers, storage, hooks, components, and provider composition.
 - General development documentation that explains the required environment and EAS workflows without assuming a client-specific application.
 
 ## Primary user experience

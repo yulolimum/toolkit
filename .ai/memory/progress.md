@@ -2,18 +2,18 @@
 
 ## Current branch status
 
-The branch contains focused implementation commits against `origin/master`. Its latest addition is typed secure storage for sensitive strings.
+The branch contains focused implementation commits against `origin/master`. Its latest additions include typed secure storage and reusable image, timer, search, and SemVer helpers.
 
 ## Delivered work
 
-| Area                  | Current state                                                                                                                                                                                                                       |
-| --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Persistent storage    | Migrated the shared MMKV setup and storage service to MMKV v4 while retaining schema version migration, configurable storage instances, and imperative plus reactive APIs.                                                          |
-| Dependency management | Moved all direct dependency versions to the root pnpm catalog and upgraded the catalog to the current project baseline.                                                                                                             |
-| Tooling               | Pinned Node.js `24.19.0` and pnpm `11.20.0` locally, updated environment setup guidance, and aligned CI with those pins.                                                                                                            |
-| Script compatibility  | Updated EAS, media, and quality-check scripts for the upgraded Inquirer and TypeScript ecosystem.                                                                                                                                   |
-| Shared utilities      | Expanded array and object helpers, added elapsed-time and date-range containment helpers, rebuilt color handling around WCAG contrast, added the documented string helper module, and introduced a React Native Maps region helper. |
-| Secure storage        | Added schema-typed, asynchronous storage for small sensitive strings, with injectable storage for testing and configured-key-only clearing.                                                                                         |
+| Area                  | Current state                                                                                                                                                                                                                                        |
+| --------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Persistent storage    | Migrated the shared MMKV setup and storage service to MMKV v4 while retaining schema version migration, configurable storage instances, and imperative plus reactive APIs.                                                                           |
+| Dependency management | Moved all direct dependency versions to the root pnpm catalog and upgraded the catalog to the current project baseline.                                                                                                                              |
+| Tooling               | Pinned Node.js `24.19.0` and pnpm `11.20.0` locally, updated environment setup guidance, and aligned CI with those pins.                                                                                                                             |
+| Script compatibility  | Updated EAS, media, and quality-check scripts for the upgraded Inquirer and TypeScript ecosystem.                                                                                                                                                    |
+| Shared utilities      | Expanded array and object helpers, added elapsed-time and date-range containment helpers, rebuilt color handling around WCAG contrast, added documented string, image, and timer helpers, typed fuzzy search, and a React Native Maps region helper. |
+| Secure storage        | Added schema-typed, asynchronous storage for small sensitive strings, with injectable storage for testing and configured-key-only clearing.                                                                                                          |
 
 ## Prior commit sequence
 
