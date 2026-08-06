@@ -49,9 +49,9 @@
  * ```
  */
 export function getContrastingColor(color: string, fallback: string = '#ffffff'): string {
-  let r = 0,
-    g = 0,
-    b = 0
+  let r: number
+  let g: number
+  let b: number
 
   if (color.startsWith('#')) {
     const hex = color.replace('#', '')

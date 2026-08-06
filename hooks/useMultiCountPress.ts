@@ -41,7 +41,7 @@ export function useMultiCountPress(
 ) {
   const { count = 10, threshold = 500, enabled = true } = opts ?? {}
 
-  const pressTimeout = useRef<NodeJS.Timeout>(undefined)
+  const pressTimeout = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
   const pressCount = useRef(0)
 
   function handleClick() {

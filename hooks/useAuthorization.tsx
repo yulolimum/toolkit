@@ -3,20 +3,14 @@ import type { PropsWithChildren, ReactNode } from 'react'
 import { createContext, useContext, useMemo } from 'react'
 
 type Authorization =
-  | 'ExampleUserLoggedIn'
-  | 'ExampleUserPro'
-  | 'ExampleUserAdmin'
-  | 'ExampleCanEdit'
-  | 'ExampleCanDelete'
+  'ExampleUserLoggedIn' | 'ExampleUserPro' | 'ExampleUserAdmin' | 'ExampleCanEdit' | 'ExampleCanDelete'
 
 type BaseAuthorizationRequest = {
   [K in Authorization]?: boolean
 }
 
 type AuthorizationRequest =
-  | BaseAuthorizationRequest
-  | { and: BaseAuthorizationRequest }
-  | { or: BaseAuthorizationRequest }
+  BaseAuthorizationRequest | { and: BaseAuthorizationRequest } | { or: BaseAuthorizationRequest }
 
 /**
  * Computes authorization flags from your app's auth state.
