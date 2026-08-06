@@ -27,6 +27,9 @@ catalogs:
     '@react-navigation/native':
       specifier: 7.3.15
       version: 7.3.15
+    '@scmmishra/pico-search':
+      specifier: 0.6.0
+      version: 0.6.0
     '@tanstack/react-query':
       specifier: 5.101.4
       version: 5.101.4
@@ -155,6 +158,9 @@ importers:
       '@react-navigation/native':
         specifier: 'catalog:'
         version: 7.3.15(react-native@0.86.2(@babel/core@7.29.7)(@types/react@19.2.18)(react@19.2.8))(react@19.2.8)
+      '@scmmishra/pico-search':
+        specifier: 'catalog:'
+        version: 0.6.0
       '@tanstack/react-query':
         specifier: 'catalog:'
         version: 5.101.4(react@19.2.8)
@@ -1474,6 +1480,9 @@ packages:
 
   '@rtsao/scc@1.1.0':
     resolution: {integrity: sha512-zt6OdqaDoOnJ1ZYsCYGt9YmWzDXl4vQdKTyJev62gFhRGKdx7mcT54V9KIjg+d2wi9EXsPvAPKe7i7WjfVWB8g==}
+
+  '@scmmishra/pico-search@0.6.0':
+    resolution: {integrity: sha512-1zC2cAwPWuv38VEh0It90fdUWkvX75OwBUjgTj+d5LTltARnf3ydbpcN2Ucl0aATBMmaNqPMcVvT25IOCAqCEA==}
 
   '@sinclair/typebox@0.27.12':
     resolution: {integrity: sha512-hhyNJ+nbR6ZR7pToHvllEFun9TL0sbL+tk/ON75lo+Xas054uez98qRbsuNt7MBCyZKK4+8Yli/OAGZhmfBZ/g==}
@@ -5616,6 +5625,8 @@ snapshots:
     optional: true
 
   '@rtsao/scc@1.1.0': {}
+
+  '@scmmishra/pico-search@0.6.0': {}
 
   '@sinclair/typebox@0.27.12': {}
 

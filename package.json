@@ -24,6 +24,7 @@
     "@inquirer/select": "catalog:",
     "@linear/sdk": "catalog:",
     "@react-navigation/native": "catalog:",
+    "@scmmishra/pico-search": "catalog:",
     "@tanstack/react-query": "catalog:",
     "@tsconfig/strictest": "catalog:",
     "@types/fs-extra": "catalog:",
