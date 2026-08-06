@@ -85,7 +85,7 @@ asdf
 
 When installing different runtimes with `asdf`, you have 2 options for setting the version of a language used. `asdf set -u [runtime] [version]` will set it globally for the entire system - this can be useful for certain languages like [node](#node) where certain tools will need it globally set (e.g. extensions in VS Code, Xcode build, etc). `asdf set [runtime] [version]` will create a `.tool-versions` file in your current directory that will be referenced while in that directory or its children.
 
-If a `.tool-versions` file is present in the directory you're in, as long as you have all of the necessary asdf plugins (see individual steps for [node](#node) and [java](#java)), you can run `asdf install` and it will automatically install any missing runtime versions.
+If a `.tool-versions` file is present in the directory you're in and you have the necessary asdf plugins (see [Node](#node), [pnpm](#pnpm), and [Java](#java)), `asdf install` installs any missing runtime versions.
 
 If at any point you want to know which version you're currently using, you can run `asdf current`.
 
@@ -93,7 +93,7 @@ If at any point you want to know which version you're currently using, you can r
 
 ## Languages
 
-Now that we have the utilities installed/configured, we can proceed with installing the required languages. We'll need Java and Node. You can set the installed language version globally if you prefer; however, the project will probably have its own `.tool-versions` file which will dictate the required versions at the time.
+Now that the utilities are installed and configured, we can install Node, pnpm, and Java. You can set versions globally if you prefer, but the project's `.tool-versions` file determines the required versions in this directory.
 
 Note: Most plugins support builds for different architectures automatically. When installing the languages, keep an eye on the logs and make sure the correct arch is being installed for your system.
 
@@ -108,23 +108,39 @@ asdf plugin add nodejs https://github.com/asdf-vm/asdf-nodejs.git
 # optional, see available node versions (LTS version recommended)
 asdf plugin list all nodejs
 
-# install node LTS (check for latest LTS version)
-asdf install nodejs 22.16.0
+# if the pinned release is unavailable, refresh the plugin first
+asdf plugin update nodejs
+
+# install the Node LTS version pinned by this repository
+asdf install nodejs 24.19.0
 # or, if within a dir with a .tool-versions file
 asdf install
 
 # optional, set global node version and confirm installation
-asdf set -u nodejs 22.16.0
+asdf set -u nodejs 24.19.0
 node --version
 ```
 
-Note: The version shown (22.16.0) is an example - check for the latest LTS version at [nodejs.org](https://nodejs.org/) for your project.
+Note: This repository currently pins Node 24.19.0. Check [nodejs.org](https://nodejs.org/) before changing the pin to a newer LTS release.
 
 Note: As mentioned in the [asdf](#asdf) section, if you want different tools in your editor to work, you're going to need at least some version of node to be set globally on your system.
 
-Note: As of May 2025, running LTS versions of node will most likely show a `punnycode` warning. This is a known issue and can be ignored. Untill all packages are updated to not reference this deprecated module, this warning will keep popping up.
+Note: As of May 2025, running LTS versions of Node may show a `punycode` warning. This is a known issue and can be ignored until packages stop referencing the deprecated module.
 
 ### PNPM
+
+#### via **asdf**
+
+```bash
+asdf plugin add pnpm https://github.com/jonathanmorley/asdf-pnpm.git
+
+# if the pinned release is unavailable, refresh the plugin first
+asdf plugin update pnpm
+
+asdf install
+```
+
+Note: This repository pins pnpm 11.20.0 in `.tool-versions` and `package.json`.
 
 #### via **corepack**
 
@@ -132,10 +148,10 @@ Corepack is a package manager that comes bundled with Node.js starting from vers
 
 ```bash
 corepack enable pnpm
-corepack use pnpm@latest-10
+corepack use pnpm@11.20.0
 ```
 
-Note: Check [pnpm.io](https://pnpm.io/) for the latest version. The example shows `latest-10` which refers to the latest version in the 10.x series.
+Note: This repository pins pnpm 11.20.0 in `package.json`. Check [pnpm.io](https://pnpm.io/) before updating that pin.
 
 #### via **npm**
 
