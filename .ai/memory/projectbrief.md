@@ -1,128 +1,48 @@
-# Project Brief: @yulolimum/toolkit
+# Project brief: @yulolimum/toolkit
 
 ## Overview
 
-`@yulolimum/toolkit` is a comprehensive personal development toolkit and reusable code registry that provides essential scripts, configurations, and utilities for development workflows, build automation, deployment, media library management, system administration, and personal productivity tasks. This project serves as a centralized toolkit for all technical automation needs and reusable code components.
+`@yulolimum/toolkit` is a private, source-first development toolkit. It combines interactive automation with reusable TypeScript and React Native patterns that can be copied into other projects.
 
-## Core Purpose
+## Core purpose
 
-- **Comprehensive Automation**: Provide consistent, reusable scripts for all aspects of technical workflows
-- **Multi-Domain Coverage**: Support development, media management, deployment, system administration, and personal productivity
-- **Streamlined Execution**: Interactive and automated tools with consistent user experience
-- **Personal Efficiency**: Reduce manual repetition across all technical tasks
+- Reduce repeated setup work for development, EAS delivery, media tasks, and time tracking.
+- Keep shared implementation patterns in one searchable repository.
+- Document code well enough that a consumer can adopt an individual file without reading the whole repository.
+- Maintain a current local and CI toolchain through explicit version pins and catalog-managed dependencies.
 
-## Key Components
+## Current components
 
-### Current Implementation
+### Scripts
 
-#### Scripts (Automation Tools)
+- `dev-*`: code quality checks, cleanup, and environment verification.
+- `eas-*`: interactive EAS build, submission, and update workflows.
+- `linear-*`: Linear issue to Clockify timer workflow.
+- `media-*`: video acceleration, episode-name normalization, Twitch playback, and recursive hardlinking.
 
-#### 1. Code Quality Management (`dev-check-code-quality.mjs`)
+### Shareable configuration
 
-- Interactive TypeScript, ESLint, and Prettier runner
-- User preference caching for workflow efficiency
-- Selective tool execution based on user choice
-- Comprehensive error reporting and success feedback
+- `configs/`: ESLint, Prettier, and EAS configuration templates.
+- `workflows/`: reusable GitHub Actions workflow for EAS preview deployment.
+- `docs/`: environment setup and EAS or push-notification guidance.
 
-#### 2. Project Cleanup (`dev-clean.sh`)
+### Reusable source registry
 
-- Removes common development artifacts (.DS_Store, caches, node_modules)
-- Cleans build outputs (dist, build, .next, .expo)
-- Safe execution with error handling
-- Cross-platform compatibility
+- `utils/`: arrays, dates, objects, strings, colors, safe error handling, and React provider composition.
+- `lib/`: a configured MMKV v4 instance.
+- `services/`: a typed storage service with schema version migration and reactive access.
+- `hooks/` and `components/`: reusable React and React Native patterns.
 
-#### 3. Environment Verification (`dev-verify-software.sh`)
+## Organization rules
 
-- Validates required development tools and versions
-- Supports version range checking (min/max constraints)
-- Comprehensive software detection (Node.js, Java, Xcode, Android tools)
-- Clear success/failure reporting
+- Use descriptive, direct file names and import source files directly rather than through barrel exports.
+- Keep scripts flat and categorize them with package-script prefixes.
+- Update the README catalog when adding a reusable module or workflow.
+- Keep memory documents concise, current, and limited to actual repository behavior.
 
-#### Configs (Shareable Configurations)
+## Technical constraints
 
-- **EAS Configuration**: Deployment settings for Expo Application Services
-- **ESLint Configuration**: Code linting rules with React and import sorting
-- **Prettier Configuration**: Code formatting with multi-language support
-- **TypeScript Configuration**: Strict type checking settings
-
-#### Utils (Reusable Code Registry)
-
-- **Foundation Established**: Empty utils directory ready for reusable utility functions
-- **Copy-Paste Approach**: Registry model for easy integration into projects
-- **Future Expansion**: Will include common development utilities and helper functions
-
-### Planned Expansion Categories
-
-#### Media Management (`media-*`)
-
-- Media library organization and metadata management
-- File format conversion and optimization
-- Duplicate detection and cleanup
-- Automated sorting and cataloging
-
-#### Deployment Automation (`deploy-*`)
-
-- Server deployment and configuration
-- Build and release automation
-- Environment synchronization
-- Rollback and recovery procedures
-
-#### System Administration (`system-*`)
-
-- System maintenance and cleanup
-- Backup and synchronization
-- Performance monitoring and optimization
-- Security and update management
-
-#### Personal Productivity (`personal-*`)
-
-- Task automation and scheduling
-- Data processing and analysis
-- File organization and management
-- Workflow optimization tools
-
-## Target Users
-
-- **Primary**: Personal automation across all technical domains
-- **Secondary**: Team environments requiring consistent tooling and processes
-- **Scope**: Development workflows, media management, deployment automation, system administration, personal productivity
-
-## Organizational Strategy
-
-### Naming Convention
-
-- **File Naming**: Prefix-based organization (`category-action.extension`)
-  - `dev-check-code-quality.mjs`
-  - `media-organize-library.py`
-  - `deploy-to-server.sh`
-  - `system-cleanup-logs.sh`
-
-- **Package.json Scripts**: Colon-separated namespacing (`category:action`)
-  - `dev:check-code-quality`
-  - `media:organize-library`
-  - `deploy:to-server`
-  - `system:cleanup-logs`
-
-### Multi-Language Support
-
-- **JavaScript/Node.js**: Interactive tools, development automation
-- **Python**: Data processing, media management, analysis
-- **Shell Scripts**: System operations, deployment, maintenance
-- **Mixed Approach**: Choose the best tool for each specific task
-
-## Success Criteria
-
-- Scripts execute reliably across different environments and domains
-- User experience is intuitive and efficient across all categories
-- Maintenance overhead is minimal despite multi-domain scope
-- Scripts integrate well with existing workflows (development, media, deployment, etc.)
-- Clear feedback and error handling for all operations
-- Consistent patterns across different script categories
-
-## Technical Constraints
-
-- Must work on macOS (primary target)
-- Support for multiple runtime environments (Node.js, Python, shell)
-- Minimal external dependencies per script category
-- Consistent user experience patterns across different languages
-- Scalable organization without complex folder structures
+- The repository is an ESM pnpm workspace.
+- Node.js `24.19.0` and pnpm `11.20.0` are pinned in `.tool-versions`.
+- Direct package versions belong in the root pnpm catalog, not individual dependency declarations.
+- React Native examples target the catalog's current stack, including MMKV v4.
