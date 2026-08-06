@@ -1,4 +1,28 @@
 /**
+ * The direction used by locale-aware sorting helpers.
+ */
+export type SortDirection = 'asc' | 'desc'
+
+/**
+ * Ensures a nullable scalar-or-array value is represented as an array.
+ * Returns a new array so callers can safely modify the result.
+ *
+ * @param value - A single value, an array of values, or a nullish value
+ * @returns An array containing the value, the array's values, or an empty array
+ *
+ * @example
+ * ```typescript
+ * ensureArray('featured') // ['featured']
+ * ensureArray(['featured', 'recent']) // ['featured', 'recent']
+ * ensureArray(null) // []
+ * ```
+ */
+export function ensureArray<T>(value: T | ReadonlyArray<T> | null | undefined): T[] {
+  if (value === null || value === undefined) return []
+  return ([] as T[]).concat(value)
+}
+
+/**
  * Toggles an item in an array - adds it if not present, removes it if present.
  * Also deduplicates the array.
  *
@@ -46,6 +70,32 @@ export function toggleStringItem<T>(array: T[], item: T): T[] {
 }
 
 /**
+ * Returns a shuffled copy of an array using the Fisher-Yates algorithm.
+ * The source array is never modified.
+ *
+ * @param array - The source array
+ * @returns A new array containing every source item in random order
+ *
+ * @example
+ * ```typescript
+ * shuffleArray(['a', 'b', 'c']) // e.g., ['c', 'a', 'b']
+ * ```
+ */
+export function shuffleArray<T>(array: ReadonlyArray<T>): T[] {
+  const shuffled = [...array]
+
+  for (let index = shuffled.length - 1; index > 0; index -= 1) {
+    const randomIndex = Math.floor(Math.random() * (index + 1))
+    const currentItem = shuffled[index]!
+
+    shuffled[index] = shuffled[randomIndex]!
+    shuffled[randomIndex] = currentItem
+  }
+
+  return shuffled
+}
+
+/**
  * Returns a random item from an array.
  *
  * @param array - The source array
@@ -74,8 +124,8 @@ export function randomArrayItem<T>(array: T[]): T | undefined {
 }
 
 /**
- * Returns multiple random items from an array (without duplicates).
- * Uses Fisher-Yates-like shuffle approach.
+ * Returns multiple random items from an array without reusing a source position.
+ * Uses a Fisher-Yates shuffle.
  *
  * @param array - The source array
  * @param count - Number of items to return
@@ -98,8 +148,7 @@ export function randomArrayItems<T>(array: T[], count: number): T[] {
   if (count <= 0) return []
   if (array.length === 0) return []
 
-  const shuffled = [...array].sort(() => 0.5 - Math.random())
-  return shuffled.slice(0, Math.min(count, array.length))
+  return shuffleArray(array).slice(0, Math.min(count, array.length))
 }
 
 /**
@@ -136,4 +185,71 @@ export function dedupeByKey<T extends object>(arr: T[], key: keyof T): T[] {
     seen.add(value)
     return true
   })
+}
+
+/**
+ * Sorts a copy of an array with locale-aware string comparison.
+ * Comparison ignores letter case and orders embedded numbers naturally.
+ *
+ * @param array - The source array
+ * @param accessor - Returns the string used to compare each item
+ * @param direction - Sort order, ascending by default
+ * @returns A sorted copy of the source array
+ *
+ * @example
+ * ```typescript
+ * localeSort(users, user => user.name, 'desc')
+ * ```
+ */
+export function localeSort<T>(
+  array: ReadonlyArray<T>,
+  accessor: (item: T) => string,
+  direction: SortDirection = 'asc',
+): T[] {
+  return [...array].sort((a, b) => {
+    const comparison = accessor(a).localeCompare(accessor(b), undefined, {
+      sensitivity: 'base',
+      numeric: true,
+    })
+
+    return direction === 'asc' ? comparison : -comparison
+  })
+}
+
+/**
+ * Sorts a copy of an array of strings with locale-aware comparison.
+ *
+ * @param array - The source strings
+ * @param direction - Sort order, ascending by default
+ * @returns A sorted copy of the source strings
+ *
+ * @example
+ * ```typescript
+ * localeSortStrings(['item 10', 'item 2']) // ['item 2', 'item 10']
+ * ```
+ */
+export function localeSortStrings(array: ReadonlyArray<string>, direction: SortDirection = 'asc'): string[] {
+  return localeSort(array, (item) => item, direction)
+}
+
+/**
+ * Sorts a copy of an array of objects by one property with locale-aware comparison.
+ * Nullish property values sort as empty strings.
+ *
+ * @param array - The source objects
+ * @param key - The property to compare
+ * @param direction - Sort order, ascending by default
+ * @returns A sorted copy of the source objects
+ *
+ * @example
+ * ```typescript
+ * localeSortByKey(users, 'name')
+ * ```
+ */
+export function localeSortByKey<T extends object>(
+  array: ReadonlyArray<T>,
+  key: keyof T,
+  direction: SortDirection = 'asc',
+): T[] {
+  return localeSort(array, (item) => String(item[key] ?? ''), direction)
 }

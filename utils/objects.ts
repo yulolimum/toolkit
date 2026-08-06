@@ -78,10 +78,10 @@ export function getObjectValues<Obj extends object>(obj: Obj): Array<Obj[keyof O
 }
 
 /**
- * Type-safe Object.entries that returns properly typed entries.
+ * Type-safe Object.entries that preserves each returned string key and its matching value type.
  *
  * @param obj - The object to get entries from
- * @returns Array of [key, value] tuples with proper types
+ * @returns Array of [key, value] tuples with matching key and value types
  *
  * @example
  * ```typescript
@@ -93,8 +93,12 @@ export function getObjectValues<Obj extends object>(obj: Obj): Array<Obj[keyof O
  * })
  * ```
  */
-export function getObjectEntries<Obj extends object>(obj: Obj): Array<[keyof Obj, Obj[keyof Obj]]> {
-  return Object.entries(obj) as Array<[keyof Obj, Obj[keyof Obj]]>
+type ObjectEntry<Obj extends object> = {
+  [Key in keyof Obj]-?: Key extends string | number ? [`${Key}`, Obj[Key]] : never
+}[keyof Obj]
+
+export function getObjectEntries<Obj extends object>(obj: Obj): Array<ObjectEntry<Obj>> {
+  return Object.entries(obj) as Array<ObjectEntry<Obj>>
 }
 
 /**
@@ -230,6 +234,35 @@ export function omit<O extends object, K extends keyof O>(object: O, ...keys: K[
   for (const key of keys) {
     delete result[key]
   }
+  return result
+}
+
+/**
+ * Creates a new object containing only the specified keys.
+ *
+ * @param object - The source object
+ * @param keys - Keys to include in the result
+ * @returns New object containing only the specified properties
+ *
+ * @example
+ * ```typescript
+ * const user = { id: 1, name: 'John', password: 'secret' }
+ * pick(user, 'id', 'name') // { id: 1, name: 'John' }
+ * ```
+ *
+ * @example
+ * Selecting fields for a request payload:
+ * ```typescript
+ * const payload = pick(formData, 'name', 'email')
+ * ```
+ */
+export function pick<O extends object, K extends keyof O>(object: O, ...keys: K[]): Pick<O, K> {
+  const result = {} as Pick<O, K>
+
+  for (const key of keys) {
+    result[key] = object[key]
+  }
+
   return result
 }
 
