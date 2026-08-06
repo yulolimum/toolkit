@@ -49,9 +49,9 @@ Reusable GitHub Actions workflows for CI/CD automation. Copy into your `.github/
 
 Utility functions and modules for common development tasks. Copy and paste into your projects as needed.
 
-- **[`arrays.ts`](utils/arrays.ts)** - Array utilities: `toggleStringItem`, `randomArrayItem`, `randomArrayItems`, `dedupeByKey`
-- **[`colors.ts`](utils/colors.ts)** - `getContrastingColor` returns black or white based on background brightness (supports hex and rgb)
-- **[`objects.ts`](utils/objects.ts)** - Object utilities: `getObjPath`, `isObjEmpty`, type-safe `getObjectKeys`/`Values`/`Entries`, `pickBy`, `removeNullishValues`, `omit`, `getRootLevelObject`
+- **[`arrays.ts`](utils/arrays.ts)** - Array helpers for normalization, toggling, shuffling, selection, deduplication, and sorting
+- **[`colors.ts`](utils/colors.ts)** - Parse color strings, calculate WCAG contrast, and choose readable black or white text
+- **[`objects.ts`](utils/objects.ts)** - Object utilities: `getObjPath`, `isObjEmpty`, type-safe `getObjectKeys`/`Values`/`Entries`, `pick`, `pickBy`, `removeNullishValues`, `omit`, `getRootLevelObject`
 - **[`provider-registry.tsx`](utils/provider-registry.tsx)** - Compose multiple React providers without deep nesting, with conditional inclusion and typed props
 - **[`safe-try-catch.ts`](utils/safe-try-catch.ts)** - `safeResolve` and `safeExec` functions for error handling without try/catch blocks, returning `{ ok, value }` result objects
 
