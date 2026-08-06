@@ -1,6 +1,6 @@
 process.env.FORCE_COLOR = '1'
 
-import checkbox from '@inquirer/checkbox' // @^4
+import checkbox from '@inquirer/checkbox' // @^5
 import path, { dirname } from 'path'
 import { fileURLToPath } from 'url'
 import { $, fs, minimist, spinner } from 'zx' // @^8
