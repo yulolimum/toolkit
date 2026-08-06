@@ -47,7 +47,7 @@ const repoRoot = process.cwd()
 const cacheDir = path.join(repoRoot, 'node_modules', '.cache', scriptName)
 const cacheFile = path.join(cacheDir, 'cache.json')
 
-async function readCache(): Promise<Cache> {
+async function readCache() {
   try {
     const cache = (await fs.readJson(cacheFile)) as Cache
     cache.args = cache.args || {}
@@ -99,7 +99,7 @@ const platform = await (async function () {
   if (parsedArgs.platform !== undefined) {
     response = parsedArgs.platform
   } else {
-    response = await select({
+    response = await select<string>({
       message: 'Select platform',
       default: cache.args.platform ?? 'ios',
       choices: [
@@ -124,7 +124,7 @@ const profile = await (async function () {
   if (parsedArgs.profile !== undefined) {
     response = parsedArgs.profile
   } else {
-    response = await select({
+    response = await select<string>({
       message: 'Select profile',
       default: cache.args.profile ?? 'preview',
       choices: [
