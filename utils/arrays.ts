@@ -1,7 +1,21 @@
+import { picoSearch } from '@scmmishra/pico-search'
+
 /**
  * The direction used by locale-aware sorting helpers.
  */
 export type SortDirection = 'asc' | 'desc'
+
+export type FuzzySearchKey<T extends object> =
+  Extract<keyof T, string> | Readonly<{ name: Extract<keyof T, string>; weight: number }>
+
+export type FuzzySearchOptions = Readonly<{
+  threshold?: number
+}>
+
+type FuzzySearchIndexItem<T extends object> = Readonly<{
+  item: T
+}> &
+  Record<string, string | T>
 
 /**
  * Ensures a nullable scalar-or-array value is represented as an array.
@@ -252,4 +266,66 @@ export function localeSortByKey<T extends object>(
   direction: SortDirection = 'asc',
 ): T[] {
   return localeSort(array, (item) => String(item[key] ?? ''), direction)
+}
+
+/**
+ * Searches object properties with a direct text match before falling back to weighted fuzzy matching.
+ * A blank query returns a new array containing every source item. Direct matches are preferred so
+ * predictable substring matches do not lose their natural order to fuzzy-match scoring.
+ *
+ * @param items - Objects to search without modifying the source array
+ * @param query - Text to find in the configured object properties
+ * @param keys - Object keys to search, optionally with fuzzy-match weights
+ * @param options - Fuzzy-search configuration
+ * @returns Direct matches when present, otherwise fuzzy matches ordered by relevance
+ *
+ * @example
+ * ```typescript
+ * const users = [
+ *   { email: 'ada@example.com', name: 'Ada Lovelace' },
+ *   { email: 'grace@example.com', name: 'Grace Hopper' },
+ * ]
+ *
+ * fuzzySearch(users, 'ada', ['name', { name: 'email', weight: 0.5 }])
+ * // [{ email: 'ada@example.com', name: 'Ada Lovelace' }]
+ * ```
+ */
+export function fuzzySearch<T extends object>(
+  items: ReadonlyArray<T>,
+  query: string,
+  keys: ReadonlyArray<FuzzySearchKey<T>>,
+  options: FuzzySearchOptions = {},
+): T[] {
+  const normalizedQuery = query.trim().toLowerCase()
+  if (!normalizedQuery) return [...items]
+
+  const directMatches = items.filter((item) =>
+    keys.some((key) => {
+      const value = item[typeof key === 'string' ? key : key.name]
+
+      return String(value ?? '')
+        .toLowerCase()
+        .includes(normalizedQuery)
+    }),
+  )
+
+  if (directMatches.length) return directMatches
+
+  const indexedItems: Array<FuzzySearchIndexItem<T>> = items.map((item) => ({
+    item,
+    ...Object.fromEntries(
+      keys.map((key) => {
+        const name = typeof key === 'string' ? key : key.name
+
+        return [`value:${name}`, String(item[name] ?? '')]
+      }),
+    ),
+  }))
+  const fuzzyKeys = keys.map((key) =>
+    typeof key === 'string' ? `value:${key}` : { name: `value:${key.name}`, weight: key.weight },
+  )
+
+  return picoSearch(indexedItems, normalizedQuery, fuzzyKeys, {
+    threshold: options.threshold ?? 0.8,
+  }).map((searchItem) => searchItem.item)
 }

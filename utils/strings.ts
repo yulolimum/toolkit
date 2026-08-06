@@ -106,6 +106,44 @@ export function joinArrayWithRemainingCount(values: ReadonlyArray<string>, visib
   return joinedVisibleValues ? `${joinedVisibleValues}, +${remainingCount}` : `+${remainingCount}`
 }
 
+export type SemverStringOptions = Readonly<{
+  version?: string | null
+  preRelease?: string | null
+  build?: string | null
+  sha?: string | null
+  env?: string | null
+}>
+
+/**
+ * Builds a SemVer string from a core version, optional prerelease, and build metadata.
+ * The supplied values are concatenated without validation, so callers should provide
+ * SemVer-safe identifiers when the result will be consumed by a strict parser.
+ *
+ * @param options - Version components to assemble
+ * @returns A SemVer string, defaulting to `0.0.0` when no core version is supplied
+ *
+ * @example
+ * ```typescript
+ * semverString({ version: '1.2.3', preRelease: 'rc.1', build: '42', sha: 'abc123' })
+ * // '1.2.3-rc.1+42.abc123'
+ *
+ * semverString({ env: 'preview' }) // '0.0.0+preview'
+ * ```
+ */
+export function semverString(options: SemverStringOptions): string {
+  let version = options.version ?? '0.0.0'
+
+  if (options.preRelease) {
+    version += `-${options.preRelease}`
+  }
+
+  const metadata = [options.build, options.sha, options.env]
+    .filter((value): value is string => Boolean(value))
+    .join('.')
+
+  return metadata ? `${version}+${metadata}` : version
+}
+
 /**
  * Determines whether one normalized SemVer core version is greater than another.
  * This intentionally supports only MAJOR.MINOR.PATCH strings, without prerelease
