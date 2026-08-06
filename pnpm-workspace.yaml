@@ -1,0 +1,43 @@
+packages:
+  - .
+
+catalog:
+  '@eslint/js': 10.0.1
+  '@inquirer/checkbox': 5.2.1
+  '@inquirer/confirm': 6.1.1
+  '@inquirer/input': 5.1.2
+  '@inquirer/select': 5.2.1
+  '@linear/sdk': 89.0.0
+  '@react-navigation/native': 7.3.15
+  '@tanstack/react-query': 5.101.4
+  '@tsconfig/strictest': 2.0.8
+  '@typescript/native': npm:typescript@7.0.2
+  '@types/fs-extra': 11.0.4
+  '@types/node': 26.1.2
+  '@types/react': 19.2.18
+  axios: 1.19.0
+  eslint: 10.8.0
+  eslint-config-prettier: 10.1.8
+  eslint-formatter-pretty: 7.1.0
+  eslint-plugin-import: 2.32.0
+  eslint-plugin-prettier: 5.5.6
+  eslint-plugin-react: 7.37.5
+  eslint-plugin-react-hooks: 7.1.1
+  eslint-plugin-simple-import-sort: 14.0.0
+  expo: 57.0.10
+  expo-image: 57.0.2
+  globals: 17.9.0
+  parse-duration: 2.1.8
+  prettier: 3.9.6
+  prettier-plugin-packagejson: 3.0.2
+  prettier-plugin-sh: 0.19.0
+  prettier-plugin-tailwindcss: 0.8.1
+  react: 19.2.8
+  react-native: 0.86.2
+  react-native-mmkv: 4.3.2
+  react-native-nitro-modules: 0.36.5
+  tsup: 8.5.1
+  tsx: 4.23.8
+  typescript: npm:@typescript/typescript6@6.0.2
+  typescript-eslint: 8.66.0
+  zx: 8.8.5
