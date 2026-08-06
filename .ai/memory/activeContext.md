@@ -35,7 +35,7 @@ This branch modernizes the toolkit's React Native storage support, dependency ma
 - `utils/dates.ts` formats elapsed durations and checks inclusive date-range containment with optional bounds.
 - `utils/colors.ts` parses supported color strings, calculates WCAG luminance and contrast, and selects readable black or white text. Transparent colors use the caller's fallback because the background is unknown.
 - `utils/strings.ts` adds documented helpers for pluralization, regular-expression escaping, truncation, compact list summaries, SemVer-core comparison, and character filtering with preserved exclusions.
-- `utils/geo.ts` calculates a `react-native-maps` region that contains a set of coordinates. Its dependency is development-only so the toolkit can type-check the source without imposing a runtime dependency on consumers.
+- `utils/geo.ts` calculates a `react-native-maps` region that contains a set of coordinates. React Native Maps follows the toolkit's direct-dependency convention.
 - The README catalogs each utility module so consumers can discover copy-and-paste source files quickly.
 
 ## Working conventions

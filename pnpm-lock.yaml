@@ -227,6 +227,9 @@ importers:
       react-native:
         specifier: 'catalog:'
         version: 0.86.2(@babel/core@7.29.7)(@types/react@19.2.18)(react@19.2.8)
+      react-native-maps:
+        specifier: 'catalog:'
+        version: 1.29.0(react-native@0.86.2(@babel/core@7.29.7)(@types/react@19.2.18)(react@19.2.8))(react@19.2.8)
       react-native-mmkv:
         specifier: 'catalog:'
         version: 4.3.2(react-native-nitro-modules@0.36.5(react-native@0.86.2(@babel/core@7.29.7)(@types/react@19.2.18)(react@19.2.8))(react@19.2.8))(react-native@0.86.2(@babel/core@7.29.7)(@types/react@19.2.18)(react@19.2.8))(react@19.2.8)
@@ -248,10 +251,6 @@ importers:
       zx:
         specifier: 'catalog:'
         version: 8.8.5
-    devDependencies:
-      react-native-maps:
-        specifier: 'catalog:'
-        version: 1.29.0(react-native@0.86.2(@babel/core@7.29.7)(@types/react@19.2.18)(react@19.2.8))(react@19.2.8)
 
 packages:
 
