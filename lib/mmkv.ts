@@ -1,3 +1,3 @@
-import { MMKV } from 'react-native-mmkv'
+import { createMMKV } from 'react-native-mmkv'
 
-export const mmkv = new MMKV({ id: '@yulolimum/toolkit/storage' })
+export const mmkv = createMMKV({ id: '@yulolimum/toolkit/storage' })
