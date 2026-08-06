@@ -54,6 +54,7 @@ Utility functions and modules for common development tasks. Copy and paste into 
 - **[`objects.ts`](utils/objects.ts)** - Object utilities: `getObjPath`, `isObjEmpty`, type-safe `getObjectKeys`/`Values`/`Entries`, `pick`, `pickBy`, `removeNullishValues`, `omit`, `getRootLevelObject`
 - **[`provider-registry.tsx`](utils/provider-registry.tsx)** - Compose multiple React providers without deep nesting, with conditional inclusion and typed props
 - **[`safe-try-catch.ts`](utils/safe-try-catch.ts)** - `safeResolve` and `safeExec` functions for error handling without try/catch blocks, returning `{ ok, value }` result objects
+- **[`string.ts`](utils/string.ts)** - String helpers for pluralization, regex escaping, truncation, list summaries, SemVer-core comparison, and character filtering
 
 ## Lib
 
