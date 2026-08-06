@@ -2,7 +2,7 @@
 
 ## Current focus
 
-This branch modernizes the toolkit's React Native storage support, dependency management, local tooling, CI setup, and reusable utility registry. The implementation work is committed through `08e0a32`; the remaining work is this memory-bank refresh.
+This branch modernizes the toolkit's React Native storage support, dependency management, local tooling, CI setup, and reusable utility registry. The completed work is committed through `a7821aa`; current work adds a React Native Maps region helper.
 
 ## Completed on this branch
 
@@ -35,6 +35,7 @@ This branch modernizes the toolkit's React Native storage support, dependency ma
 - `utils/dates.ts` formats elapsed durations and checks inclusive date-range containment with optional bounds.
 - `utils/colors.ts` parses supported color strings, calculates WCAG luminance and contrast, and selects readable black or white text. Transparent colors use the caller's fallback because the background is unknown.
 - `utils/strings.ts` adds documented helpers for pluralization, regular-expression escaping, truncation, compact list summaries, SemVer-core comparison, and character filtering with preserved exclusions.
+- `utils/geo.ts` calculates a `react-native-maps` region that contains a set of coordinates. Its dependency is development-only so the toolkit can type-check the source without imposing a runtime dependency on consumers.
 - The README catalogs each utility module so consumers can discover copy-and-paste source files quickly.
 
 ## Working conventions
@@ -47,6 +48,5 @@ This branch modernizes the toolkit's React Native storage support, dependency ma
 
 ## Next steps
 
-- Commit this memory-bank refresh as its own documentation update.
 - Use the catalog upgrade flow for future dependency refreshes, checking breaking changes before major version bumps.
 - Keep MMKV consumers on v4 APIs when adding storage examples or migration guidance.

@@ -52,6 +52,7 @@ Utility functions and modules for common development tasks. Copy and paste into 
 - **[`arrays.ts`](utils/arrays.ts)** - Array helpers for normalization, toggling, shuffling, selection, deduplication, and sorting
 - **[`colors.ts`](utils/colors.ts)** - Parse color strings, calculate WCAG contrast, and choose readable black or white text
 - **[`dates.ts`](utils/dates.ts)** - Date helpers for compact elapsed-time labels and inclusive range containment
+- **[`geo.ts`](utils/geo.ts)** - React Native Maps region calculation for a set of coordinates
 - **[`objects.ts`](utils/objects.ts)** - Object utilities: `getObjPath`, `isObjEmpty`, type-safe `getObjectKeys`/`Values`/`Entries`, `pick`, `pickBy`, `removeNullishValues`, `omit`, `getRootLevelObject`
 - **[`provider-registry.tsx`](utils/provider-registry.tsx)** - Compose multiple React providers without deep nesting, with conditional inclusion and typed props
 - **[`safe-try-catch.ts`](utils/safe-try-catch.ts)** - `safeResolve` and `safeExec` functions for error handling without try/catch blocks, returning `{ ok, value }` result objects

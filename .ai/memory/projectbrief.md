@@ -28,7 +28,7 @@
 
 ### Reusable source registry
 
-- `utils/`: arrays, dates, objects, strings, colors, safe error handling, and React provider composition.
+- `utils/`: arrays, colors, dates, geo, objects, strings, safe error handling, and React provider composition.
 - `lib/`: a configured MMKV v4 instance.
 - `services/`: a typed storage service with schema version migration and reactive access.
 - `hooks/` and `components/`: reusable React and React Native patterns.

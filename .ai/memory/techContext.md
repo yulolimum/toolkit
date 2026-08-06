@@ -12,6 +12,7 @@
 
 - React `19.2.8`, React Native `0.86.2`, Expo `57.0.10`, and Expo Image `57.0.2`.
 - React Native MMKV `4.3.2` with React Native Nitro Modules `0.36.5`.
+- React Native Maps `1.29.0` is a development-only dependency that supplies types for the `utils/geo.ts` source file; consumers provide its runtime package when they use that helper.
 - TypeScript is catalog-managed alongside TypeScript Native; strict project settings extend `@tsconfig/strictest`.
 - ESLint `10.8.0`, Prettier `3.9.6`, tsx `4.23.8`, tsup `8.5.1`, and zx `8.8.5` support development and script execution.
 - Inquirer packages are catalog-managed at their v5 and v6 releases, so callers should use their current generic prompt APIs where inference needs help.

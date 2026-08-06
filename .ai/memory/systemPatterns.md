@@ -47,6 +47,7 @@
 - Date helpers format elapsed durations and make inclusive range-containment semantics explicit.
 - Color helpers parse only supported hex and comma-separated RGB formats, calculate WCAG contrast, and return fallbacks for invalid or transparent colors.
 - String helpers make their edge cases explicit: the truncation limit includes the ellipsis, list summaries use an item count, SemVer comparison supports only normalized core versions, and character filtering allows explicit preserved characters.
+- Geo helpers that use React Native Maps should declare that dependency and make map-projection limitations explicit.
 
 ## Script pattern
 

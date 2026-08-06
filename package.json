@@ -57,5 +57,8 @@
     "typescript-eslint": "catalog:",
     "zx": "catalog:"
   },
+  "devDependencies": {
+    "react-native-maps": "catalog:"
+  },
   "packageManager": "pnpm@11.20.0"
 }
