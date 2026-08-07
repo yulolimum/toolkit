@@ -4,12 +4,12 @@ import { useRef } from 'react'
  * A React hook that detects multiple consecutive presses within a time threshold.
  * Useful for implementing features like "press 5 times to enable debug mode" or similar patterns.
  *
- * @param callback - Function to execute when the target press count is reached
+ * @param callback - Function to execute with the press handler's arguments when the target count is reached
  * @param opts - Configuration options
  * @param opts.count - Number of presses required to trigger the callback (default: 10)
  * @param opts.threshold - Time window in milliseconds to reset the press count (default: 500)
  * @param opts.enabled - Whether the hook is enabled (default: true). Returns undefined when disabled.
- * @returns The press handler function, or undefined if disabled
+ * @returns The press handler function, which forwards its arguments to `callback`, or undefined if disabled
  *
  * @example
  * ```tsx
@@ -35,8 +35,8 @@ import { useRef } from 'react'
  * }
  * ```
  */
-export function useMultiCountPress(
-  callback: () => void,
+export function useMultiCountPress<Args extends unknown[]>(
+  callback: (...args: Args) => void,
   opts?: { count?: number; threshold?: number; enabled?: boolean },
 ) {
   const { count = 10, threshold = 500, enabled = true } = opts ?? {}
@@ -44,14 +44,14 @@ export function useMultiCountPress(
   const pressTimeout = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
   const pressCount = useRef(0)
 
-  function handleClick() {
+  function handleClick(...args: Args) {
     clearTimeout(pressTimeout.current)
 
     pressCount.current += 1
 
     if (pressCount.current === count) {
       pressCount.current = 0
-      callback()
+      callback(...args)
     } else {
       pressTimeout.current = setTimeout(() => {
         pressCount.current = 0
