@@ -37,7 +37,16 @@ Unstyled React Native components. Each solves one layout or state problem and le
 
 - [`AspectImage.tsx`](components/AspectImage.tsx) - Expo Image wrapper that renders at the source's natural aspect ratio, with optional max width or height.
 - [`MeasuringView.tsx`](components/MeasuringView.tsx) - View that measures its own layout and passes the size to a render-prop child.
-- [`QueryState.tsx`](components/QueryState.tsx) - Renders loading, error, empty, and success for one or many TanStack Query results. Every state is overridable.
+- **[`QueryState.tsx`](components/QueryState.tsx)** - Composable TanStack Query state primitives. Include only the states a view needs.
+
+  - `QueryStateProvider` - Shares one query's lifecycle flags and a caller-defined empty state.
+  - `useQueryState` - Reads the shared state and throws outside its provider.
+  - `QueryStatePending` - Renders while pending without an active request.
+  - `QueryStateLoading` - Renders during the initial active request.
+  - `QueryStateFetching` - Renders during a background request without replacing content.
+  - `QueryStateError` - Renders for errors, with an optional retry action.
+  - `QueryStateEmpty` - Renders when the caller reports successful empty data.
+  - `QueryStateContent` - Renders successful non-empty content, with an override for stale data.
 
 ## Hooks (`hooks/`)
 
