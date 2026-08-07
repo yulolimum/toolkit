@@ -26,6 +26,8 @@
     "@react-navigation/native": "catalog:",
     "@scmmishra/pico-search": "catalog:",
     "@tanstack/react-query": "catalog:",
+    "@tauri-apps/api": "catalog:",
+    "@tauri-apps/plugin-store": "catalog:",
     "@tsconfig/strictest": "catalog:",
     "@types/fs-extra": "catalog:",
     "@types/node": "catalog:",
