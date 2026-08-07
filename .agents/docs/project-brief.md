@@ -22,4 +22,4 @@ The toolkit is not a library. There is no package entry point, no build output, 
 
 It is also not a framework for the projects that borrow from it. Copied code becomes the consumer's code, and the toolkit does not track it or try to keep it current.
 
-The React Native and Expo material targets the stack the author works in now. Keeping that stack current is intentional, so the registry stays usable in new projects instead of collecting patterns for versions nobody runs.
+The React Native, Expo, and Tauri material targets the stacks the author works in now. Keeping those stacks current is intentional, so the registry stays usable in new projects instead of collecting patterns for versions nobody runs.

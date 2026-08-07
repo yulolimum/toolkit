@@ -36,7 +36,7 @@ Scripts that reach external services read credentials from a local environment f
 
 The project extends the strictest shared base configuration, with bundler module resolution and the automatic JSX runtime.
 
-The root compilation program covers only the scripts and the shareable configuration. Registry source sits outside it. Those files are written for the applications that will host them, against React Native and Expo types this repository declares but never runs, so check them in a consuming project or in isolation rather than expecting the root program to cover them.
+The root compilation program covers only the scripts and the shareable configuration. Registry source sits outside it. Those files are written for the applications that will host them, against React Native, Expo, and Tauri types this repository declares but never runs, so check them in a consuming project or in isolation rather than expecting the root program to cover them.
 
 ## Registry conventions
 

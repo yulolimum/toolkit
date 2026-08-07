@@ -34,41 +34,41 @@ Description: The shared technical foundation: how code runs, how dependencies an
 Tags: `dependencies`, `catalog`, `toolchain`, `typescript`, `running-scripts`, `tsx`, `zx`, `conventions`, `linting`, `formatting`, `credentials`, `agents`, `symlinks`
 
 #### [scripts.md](./scripts.md)
-Description: What qualifies as automation here and the interaction contract every script keeps.
+Description: Standalone command-line automation for recurring work.
 Tags: `scripts`, `cli`, `automation`, `prompts`, `caching`, `eas`, `linear`, `clockify`, `media`
 
 #### [workflows.md](./workflows.md)
-Description: Reusable GitHub Actions workflows meant to be copied into other repositories.
+Description: Copyable GitHub Actions workflows for consumer projects.
 Tags: `workflows`, `github-actions`, `ci`, `eas`, `preview-builds`, `pull-requests`
 
 #### [configs.md](./configs.md)
-Description: Shareable linting, formatting, and EAS configuration, which also governs this repository.
+Description: Shareable ESLint, Prettier, and EAS configuration.
 Tags: `configs`, `eslint`, `prettier`, `eas`, `build-profiles`
 
 #### [utils.md](./utils.md)
-Description: What makes a helper portable enough to copy on its own, and the rules that keep it that way.
+Description: Stateless, independently copyable helper modules.
 Tags: `utils`, `helpers`, `arrays`, `objects`, `strings`, `dates`, `colors`, `timers`, `search`
 
 #### [lib.md](./lib.md)
-Description: Configured instances of third-party libraries.
+Description: Default instances of configured third-party libraries.
 Tags: `lib`, `mmkv`, `library-setup`
 
 #### [services.md](./services.md)
-Description: Typed storage services, their schemas, and the split between general and sensitive data.
-Tags: `services`, `storage`, `mmkv`, `secure-storage`, `schema`, `persistence`
+Description: Stateful API and storage abstractions.
+Tags: `services`, `api`, `axios`, `http`, `storage`, `mmkv`, `secure-storage`, `tauri`, `schema`, `persistence`
 
 #### [components.md](./components.md)
-Description: Reusable React Native components for recurring layout and state problems.
+Description: Unstyled React Native components with reusable rendering behavior.
 Tags: `components`, `react-native`, `images`, `layout`, `query-state`
 
 #### [hooks.md](./hooks.md)
-Description: Reusable React and React Native hooks.
+Description: React and React Native hooks for lifecycle and interaction behavior.
 Tags: `hooks`, `react`, `react-native`, `app-state`, `authorization`, `debounce`, `navigation`, `refresh`
 
 #### [docs.md](./docs.md)
-Description: Reference guides for setting up an environment and understanding delivery and notification systems.
+Description: Human-facing, application-agnostic reference guides.
 Tags: `docs`, `guides`, `environment-setup`, `eas`, `push-notifications`
 
 #### [skills.md](./skills.md)
-Description: Agent skills kept in the repository and shared like the other copyable artifacts.
+Description: Shareable instructions for recurring agent work.
 Tags: `skills`, `agents`, `documentation`
