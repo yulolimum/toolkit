@@ -85,3 +85,8 @@ Tags: `docs`, `guides`, `environment-setup`, `eas`, `push-notifications`
 
 Description: Shareable instructions for recurring agent work.
 Tags: `skills`, `agents`, `documentation`
+
+#### [prompts.md](./prompts.md)
+
+Description: Focused conventions for recurring agent work.
+Tags: `prompts`, `agents`, `comments`, `commits`, `markdown`, `typescript`, `tanstack-query`

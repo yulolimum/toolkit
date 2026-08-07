@@ -14,7 +14,7 @@ Everything is written to be shared, and whatever can also serve this repository 
 
 The repository is organized by category, and those category names are the words the project uses for itself.
 
-Scripts are interactive command-line automation. Configs, workflows, and skills are artifacts written for other repositories, though most of them are in use here as well. Utils, lib, services, components, and hooks make up the source registry, which is standalone code meant to be copied into an application. Docs are reference guides written for people and not tied to any particular application.
+Scripts are interactive command-line automation. Configs, workflows, skills, and prompts are artifacts written for other repositories, though most of them are in use here as well. Utils, lib, services, components, and hooks make up the source registry, which is standalone code meant to be copied into an application. Docs are reference guides written for people and not tied to any particular application.
 
 ## Boundaries
 
