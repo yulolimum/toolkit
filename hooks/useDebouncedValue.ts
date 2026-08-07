@@ -10,6 +10,15 @@ export interface UseDebouncedValueOptions {
   leading?: boolean
 }
 
+function clearDebounceTimeout(timeoutRef: { current: ReturnType<typeof setTimeout> | null }) {
+  if (timeoutRef.current === null) {
+    return
+  }
+
+  clearTimeout(timeoutRef.current)
+  timeoutRef.current = null
+}
+
 /**
  * A React hook that debounces a value, delaying updates until after a specified wait time
  * has passed since the last change.
@@ -89,20 +98,18 @@ export interface UseDebouncedValueOptions {
  * }
  * ```
  */
-export function useDebouncedValue<T = any>(
-  value: T,
-  wait: number,
-  options: UseDebouncedValueOptions = { leading: false },
-) {
+export function useDebouncedValue<T>(value: T, wait: number, options: UseDebouncedValueOptions = { leading: false }) {
   const [_value, setValue] = useState(value)
   const mountedRef = useRef(false)
-  const timeoutRef = useRef<number | null>(null)
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const cooldownRef = useRef(false)
 
-  const cancel = () => window.clearTimeout(timeoutRef.current!)
+  const cancel = () => {
+    clearDebounceTimeout(timeoutRef)
+    cooldownRef.current = false
+  }
   const forceSetValue: typeof setValue = (value) => {
     cancel()
-    cooldownRef.current = false
     setValue(value)
   }
 
@@ -111,14 +118,21 @@ export function useDebouncedValue<T = any>(
       if (!cooldownRef.current && options.leading) {
         cooldownRef.current = true
         setValue(value)
+        timeoutRef.current = setTimeout(() => {
+          cooldownRef.current = false
+          timeoutRef.current = null
+        }, wait)
       } else {
-        cancel()
-        timeoutRef.current = window.setTimeout(() => {
+        clearDebounceTimeout(timeoutRef)
+        timeoutRef.current = setTimeout(() => {
           cooldownRef.current = false
           setValue(value)
+          timeoutRef.current = null
         }, wait)
       }
     }
+
+    return () => clearDebounceTimeout(timeoutRef)
   }, [value, options.leading, wait])
 
   useEffect(() => {
