@@ -46,7 +46,7 @@ Reusable React and React Native hooks.
 - [`useAppState.ts`](hooks/useAppState.ts) - Track foreground state with callbacks for the active and background transitions.
 - [`useDebouncedValue.ts`](hooks/useDebouncedValue.ts) - Debounce a value, with leading mode, forced update, and cancel.
 - [`useMultiCountPress.ts`](hooks/useMultiCountPress.ts) - Detect N presses within a time window, for debug menus and hidden features. Returns undefined when disabled.
-- [`useQueryRefreshControlProps.ts`](hooks/useQueryRefreshControlProps.ts) - RefreshControl props bound to a set of queries, refetching only those already fetched or in flight.
+- [`useQueryRefreshControlProp.ts`](hooks/useQueryRefreshControlProp.ts) - RefreshControl prop for exact query targets, with an optional reset for infinite lists.
 - [`useScreenPreventRemove.ts`](hooks/useScreenPreventRemove.ts) - Block navigation away from a screen while any condition holds, with functions to leave anyway.
 
 **[`useAuthorization.tsx`](hooks/useAuthorization.tsx)** - Role and permission gating. Replace the placeholder auth state with your own.
