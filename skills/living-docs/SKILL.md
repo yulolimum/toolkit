@@ -45,9 +45,16 @@ Scaffolding starts only when the user explicitly requests it. Once requested, cr
 
 When the user requests scaffolding, use this structure:
 
-- Keep project documentation in `.agents/docs/` with an `index.md` registry.
-- Make root `AGENTS.md` point only to the registry.
-- Make root `CLAUDE.md` a relative symlink to `AGENTS.md`.
+- Create `.agents/docs/index.md` from [assets/index.md](./assets/index.md). Preserve the template guidance above `## Registry`; only the registry section is dynamic.
+- Create root `AGENTS.md` with only this content:
+
+  ```md
+  # Agent Docs
+
+  Read [.agents/docs/index.md](./.agents/docs/index.md).
+  ```
+
+- Make root `CLAUDE.md` a relative symlink to `AGENTS.md`, so both agent entry points read the same registry.
 - Make `.claude` a relative symlink to `.agents`.
 - Keep shareable skills in root `skills/`, then make `.agents/skills` a relative symlink to `../skills` when the project uses repository-local skills.
 
@@ -75,7 +82,7 @@ Keep domain briefs free of global project rules and implementation detail. Keep 
 - Include future direction only when it is an explicit, durable part of the project's current intent. Keep it high level and omit speculative plans.
 - Keep decisions only when they still guide current work. State the active rule or boundary, not the historical reasoning behind it.
 - Omit information that is self-explanatory in code or easy to locate through search.
-- Use neutral, concise prose. Use headings and lists when they clarify the document, not to simulate completeness.
+- Use neutral, concise prose. Use headings and lists when they clarify the document or make parallel facts terser. Prefer a concise list for categories, boundaries, conventions, or compact facts that would become denser in a paragraph.
 - In technical briefs, explain the operating model and role-level distinctions in tooling or dependencies when they affect how the project is used or maintained. Keep literal commands and detailed inventories in their source documentation.
 
 ## Maintain the registry
@@ -83,6 +90,8 @@ Keep domain briefs free of global project rules and implementation detail. Keep 
 Treat the registry as part of the documentation, not an afterthought. Update it in the same pass whenever a brief is created, renamed, deleted, or materially re-scoped.
 
 Use one fourth-level heading per brief with its relative reference or path, followed by a `Description:` line and a `Tags:` line. Keep each description terse, limited to purpose and contents, and free of technical detail. Use tags that are likely to appear in a related task.
+
+Treat the template guidance above `## Registry` as stable. Update only the registry entries unless the user explicitly asks to change the template itself.
 
 Do not create a registry in a repository that has not explicitly requested scaffolding. Report it as a scaffolding option instead.
 
@@ -94,7 +103,7 @@ After preparing all documentation and registry changes, read the full upstream H
 
 Apply those instructions as an embedded editorial pass to the changed documentation prose, including registry descriptions. Preserve every supported fact and do not introduce new claims. Use the project's clearly human-authored documentation as the voice sample when available. Otherwise, use a neutral technical reference voice.
 
-Keep meaningful organization intact. Preserve headings, document ordering, registry structure, concise lists, registry references, and tags when they make the content easier to navigate. Do not preserve filler lists, outline-shaped future sections, or list formatting that obscures a simpler sentence.
+Keep meaningful organization intact. Preserve headings, document ordering, registry structure, concise lists, registry references, and tags when they make the content easier to navigate. A Humanizer pass may simplify an artificial label-and-sentence list, but must not flatten a useful list into paragraphs. Rewrite it as a simpler list instead. Do not preserve filler lists, outline-shaped future sections, or list formatting that obscures a simpler sentence.
 
 If the upstream file cannot be read, do not claim that the Humanizer pass ran. Stop before finalizing documentation changes and report the failed editorial step.
 
