@@ -33,6 +33,12 @@ catalogs:
     '@tanstack/react-query':
       specifier: 5.101.4
       version: 5.101.4
+    '@tauri-apps/api':
+      specifier: 2.11.1
+      version: 2.11.1
+    '@tauri-apps/plugin-store':
+      specifier: 2.4.3
+      version: 2.4.3
     '@tsconfig/strictest':
       specifier: 2.0.8
       version: 2.0.8
@@ -164,6 +170,12 @@ importers:
       '@tanstack/react-query':
         specifier: 'catalog:'
         version: 5.101.4(react@19.2.8)
+      '@tauri-apps/api':
+        specifier: 'catalog:'
+        version: 2.11.1
+      '@tauri-apps/plugin-store':
+        specifier: 'catalog:'
+        version: 2.4.3
       '@tsconfig/strictest':
         specifier: 'catalog:'
         version: 2.0.8
@@ -1494,6 +1506,12 @@ packages:
     resolution: {integrity: sha512-yRg2pfOCxIs4ZJW3XYYHU/WgtD04FHSnfHlpRT7h7pR77hwkdRG4wxbKe4aq6P0RvXUTBSQpQeadS1SUYUe+KA==}
     peerDependencies:
       react: ^18 || ^19
+
+  '@tauri-apps/api@2.11.1':
+    resolution: {integrity: sha512-M2FPuYND2m+wh5hfW9ZpSdxMPdEJovPBWwoHJmwUpysTYNHaOkVFN419m/K0LIgjb/7KU2vBgsUepJWugQCvAA==}
+
+  '@tauri-apps/plugin-store@2.4.3':
+    resolution: {integrity: sha512-9LWPj9yMphRi9czEtUv87XHbl1b6xgd9EXpPrUnq6nG7+nbtoF84d4Kwz9xhAv/Hf30sr58pq7EOlyI936y8qw==}
 
   '@tsconfig/strictest@2.0.8':
     resolution: {integrity: sha512-XnQ7vNz5HRN0r88GYf1J9JJjqtZPiHt2woGJOo2dYqyHGGcd6OLGqSlBB6p1j9mpzja6Oe5BoPqWmeDx6X9rLw==}
@@ -5636,6 +5654,12 @@ snapshots:
     dependencies:
       '@tanstack/query-core': 5.101.4
       react: 19.2.8
+
+  '@tauri-apps/api@2.11.1': {}
+
+  '@tauri-apps/plugin-store@2.4.3':
+    dependencies:
+      '@tauri-apps/api': 2.11.1
 
   '@tsconfig/strictest@2.0.8': {}
 
