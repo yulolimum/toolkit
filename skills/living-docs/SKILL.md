@@ -17,7 +17,11 @@ Root pointers and symlinks are part of the preferred scaffold, but a missing poi
 
 Determine the work scope from the user's request, the current session, and repository changes. Use the relevant branch diff as a reminder of changed surfaces, then verify every claim against the current source of truth.
 
+Use the project's own vocabulary, organization, and existing documentation as evidence. Do not impose a universal documentation taxonomy.
+
 Inventory the registered documentation and identify every brief that reasonably intersects with the work. Read and review those briefs for stale or missing current-state information. Do not mechanically rewrite unrelated documentation.
+
+Before creating, replacing, or retiring documentation, make a coverage map from the user's stated intent, the current repository, and any approved source documentation. For every durable concern in scope, identify where it is primarily documented: the project brief, the technical brief, a domain brief, or an intentional exclusion. Use this as a completeness check, not a required document structure. When the domain model is ambiguous, advise the user of candidates instead of deciding it unilaterally.
 
 ## Update existing documentation
 
@@ -54,10 +58,12 @@ Use relative symlinks so the setup remains portable across clones.
 Use these document roles:
 
 - `project-brief.md` describes the project's purpose, boundaries, vocabulary, and durable direction.
-- `technical-brief.md` describes the shared technical foundation, meaningful library choices, conceptual repository organization, and cross-cutting project conventions.
+- `technical-brief.md` describes the shared technical foundation, operating or execution model, meaningful dependency roles, conceptual repository organization, and cross-cutting project conventions.
 - Domain briefs describe one coherent product, business, or code domain. They cover the domain's purpose, boundaries, essential concepts, and high-level workflows or interactions when useful.
 
 Name domain files after the domain, such as `utilities.md` or `authentication.md`. Do not add a `-brief` suffix to domain file names. “Brief” describes the document's role, not its filename.
+
+Domain boundaries vary by project. They may align with a product area, package, workflow, namespace, or nested feature. Treat repository structure as evidence, not a mandate, and defer to explicit user direction when the intended model is unclear. Do not merge otherwise distinct domains solely to reduce the number of documents. Use an umbrella brief only when the project itself or the user identifies a genuine shared domain.
 
 Keep domain briefs free of global project rules and implementation detail. Keep project-wide engineering conventions in the technical brief. Keep agent operating instructions in the repository's agent instruction files, not in project briefs.
 
@@ -70,6 +76,7 @@ Keep domain briefs free of global project rules and implementation detail. Keep 
 - Keep decisions only when they still guide current work. State the active rule or boundary, not the historical reasoning behind it.
 - Omit information that is self-explanatory in code or easy to locate through search.
 - Use neutral, concise prose. Use headings and lists when they clarify the document, not to simulate completeness.
+- In technical briefs, explain the operating model and role-level distinctions in tooling or dependencies when they affect how the project is used or maintained. Keep literal commands and detailed inventories in their source documentation.
 
 ## Maintain the registry
 
@@ -78,6 +85,8 @@ Treat the registry as part of the documentation, not an afterthought. Update it 
 Use one fourth-level heading per brief with its relative reference or path, followed by a `Description:` line and a `Tags:` line. Keep each description terse, limited to purpose and contents, and free of technical detail. Use tags that are likely to appear in a related task.
 
 Do not create a registry in a repository that has not explicitly requested scaffolding. Report it as a scaffolding option instead.
+
+When replacing or retiring existing documentation, complete the coverage review before deleting source documents. Do not assume a broad summary covers distinct durable concerns.
 
 ## Humanize the completed draft
 
