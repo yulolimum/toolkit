@@ -47,6 +47,8 @@ Reusable React and React Native hooks.
 - [`useMultiCountPress.ts`](hooks/useMultiCountPress.ts) - Detect N presses within a time window, for debug menus and hidden features. Returns undefined when disabled.
 - [`useQueryRefreshControlProps.ts`](hooks/useQueryRefreshControlProps.ts) - RefreshControl props bound to a set of queries, refetching only those already fetched or in flight.
 - [`useScreenPreventRemove.ts`](hooks/useScreenPreventRemove.ts) - Block navigation away from a screen while any condition holds, with functions to leave anyway.
+- [`useTauriDevTools.ts`](hooks/useTauriDevTools.ts) - Enable the Cmd/Ctrl+R reload shortcut in a Tauri development build.
+- [`useTauriStorage.ts`](hooks/useTauriStorage.ts) - React state for one Tauri storage key, with async updates, reset, and external change synchronization.
 
 **[`useAuthorization.tsx`](hooks/useAuthorization.tsx)** - Role and permission gating. Replace the placeholder auth state with your own.
 
