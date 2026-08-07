@@ -44,7 +44,8 @@ Reusable React and React Native hooks.
 **[`useAuthorization.tsx`](hooks/useAuthorization.tsx)** - Role and permission gating. Replace the placeholder auth state with your own.
 
 - `AuthorizationProvider` - Provides the authorization flags to the tree.
-- `useAuthorization` - Read all flags, or evaluate a request with AND or OR semantics.
+- `authorize` - Evaluate a request against authorization flags without React context.
+- `useAuthorization` - Read all flags, or evaluate a request with AND or OR semantics. Throws without a provider.
 - `Authorized` - Render children conditionally on the same request shape, with an optional fallback.
 
 ## Scripts (`scripts/`)
