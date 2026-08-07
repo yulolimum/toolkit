@@ -19,6 +19,7 @@ Add each document using this format:
 
 ```md
 #### [file-name.md](./file-name.md)
+
 Description: Very brief description of the document's purpose and contents.
 Tags: `related-topic`, `another-topic`
 ```
