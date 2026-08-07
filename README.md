@@ -12,7 +12,11 @@ Agent skills, shared the same way as configs.
 
 ## Services (`services/`)
 
-Stateful, schema-driven abstractions. Adopt the class and its schema together.
+Stateful abstractions that own storage or network configuration. Adopt a storage class and its schema together.
+
+**[`api-base.ts`](services/api-base.ts)** - Axios base class for API clients.
+
+- `ApiBase` - Resettable Axios client with JSON defaults, base-URL and header setters, normalized API results, and an `unsafe` unwrapping helper.
 
 **[`storage.ts`](services/storage.ts)** - Persistent storage built on MMKV.
 
@@ -21,6 +25,10 @@ Stateful, schema-driven abstractions. Adopt the class and its schema together.
 **[`secure-storage.ts`](services/secure-storage.ts)** - Asynchronous storage for small sensitive strings.
 
 - `SecureStorage` - Typed Expo SecureStore wrapper with `get`, `set`, `remove`, and `clear`. Reads fall back to schema defaults, writes warn instead of throwing, and `clear` only removes keys the schema declares.
+
+**[`tauri-storage.ts`](services/tauri-storage.ts)** - Asynchronous persistent storage for Tauri applications.
+
+- `TauriStorage` - Schema-driven Tauri store wrapper with async updates and key-change listeners. It clears versioned keys when needed, returns defaults, and skips writes outside Tauri or when storage is unavailable.
 
 ## Components (`components/`)
 
