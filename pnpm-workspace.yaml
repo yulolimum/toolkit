@@ -9,6 +9,9 @@ catalog:
   '@inquirer/select': 5.2.1
   '@linear/sdk': 89.0.0
   '@react-navigation/native': 7.3.15
+  '@rozenite/network-activity-plugin': 1.13.0
+  '@rozenite/storage-plugin': 1.13.0
+  '@rozenite/tanstack-query-plugin': 1.13.0
   '@scmmishra/pico-search': 0.6.0
   '@tanstack/react-query': 5.101.4
   '@tauri-apps/api': 2.11.1

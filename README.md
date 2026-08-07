@@ -46,6 +46,7 @@ Reusable React and React Native hooks.
 - [`useDebouncedValue.ts`](hooks/useDebouncedValue.ts) - Debounce a value, with leading mode, forced update, and cancel.
 - [`useMultiCountPress.ts`](hooks/useMultiCountPress.ts) - Detect N presses within a time window, for debug menus and hidden features. Returns undefined when disabled.
 - [`useQueryRefreshControlProps.ts`](hooks/useQueryRefreshControlProps.ts) - RefreshControl props bound to a set of queries, refetching only those already fetched or in flight.
+- [`useRNDevTools.ts`](hooks/useRNDevTools.ts) - Development-only Rozenite panels for React Native network activity, TanStack Query, MMKV, and Expo SecureStore.
 - [`useScreenPreventRemove.ts`](hooks/useScreenPreventRemove.ts) - Block navigation away from a screen while any condition holds, with functions to leave anyway.
 - [`useTauriDevTools.ts`](hooks/useTauriDevTools.ts) - Enable the Cmd/Ctrl+R reload shortcut in a Tauri development build.
 - [`useTauriStorage.ts`](hooks/useTauriStorage.ts) - React state for one Tauri storage key, with async updates, reset, and external change synchronization.
@@ -191,3 +192,4 @@ Guides written for people, with no application-specific details.
 Pre-configured library instances. Configure one here and everything downstream picks it up as a default.
 
 - [`mmkv.ts`](lib/mmkv.ts) - Shared MMKV v4 instance for React Native persistent storage. Used by `services/storage.ts` unless another instance is injected.
+- [`secure-storage.ts`](lib/secure-storage.ts) - Shared typed Expo SecureStore instance for access and refresh tokens. Used by `useRNDevTools.ts`; adapt its schema for each app.
