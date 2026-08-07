@@ -9,6 +9,7 @@ Everything here is meant to be copied out. Much of it runs in this repository to
 Agent skills, shared the same way as configs.
 
 - [`living-docs`](skills/living-docs) - Scaffold, write, audit, and register living documentation for any project.
+- [`react-provider-pattern`](skills/react-provider-pattern) - Create React context providers with a data hook, thin provider, and guarded consumer hook.
 
 ## Services (`services/`)
 
