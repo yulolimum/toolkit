@@ -35,7 +35,9 @@ Stateful abstractions that own storage or network configuration. Adopt a storage
 Unstyled React Native components. Each solves one layout or state problem and leaves appearance to you.
 
 - [`AspectImage.tsx`](components/AspectImage.tsx) - Expo Image wrapper that renders at the source's natural aspect ratio, with optional max width or height.
+- [`CollapsibleView.tsx`](components/CollapsibleView.tsx) - View that measures its content and animates it open or closed.
 - [`MeasuringView.tsx`](components/MeasuringView.tsx) - View that measures its own layout and passes the size to a render-prop child.
+- [`PolymorphicView.tsx`](components/PolymorphicView.tsx) - View that can render another React Native component through an `as` prop.
 - [`QueryState.tsx`](components/QueryState.tsx) - Renders loading, error, empty, and success for one or many TanStack Query results. Every state is overridable.
 
 ## Hooks (`hooks/`)
