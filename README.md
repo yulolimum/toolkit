@@ -9,6 +9,7 @@ Everything here is meant to be copied out. Much of it runs in this repository to
 Agent skills, shared the same way as configs.
 
 - [`living-docs`](skills/living-docs) - Scaffold, write, audit, and register living documentation for any project.
+- [`react-provider-pattern`](skills/react-provider-pattern) - Create React context providers with a data hook, thin provider, and guarded consumer hook.
 
 ## Services (`services/`)
 
@@ -38,7 +39,16 @@ Unstyled React Native components. Each solves one layout or state problem and le
 - [`CollapsibleView.tsx`](components/CollapsibleView.tsx) - View that measures its content and animates it open or closed.
 - [`MeasuringView.tsx`](components/MeasuringView.tsx) - View that measures its own layout and passes the size to a render-prop child.
 - [`PolymorphicView.tsx`](components/PolymorphicView.tsx) - View that can render another React Native component through an `as` prop.
-- [`QueryState.tsx`](components/QueryState.tsx) - Renders loading, error, empty, and success for one or many TanStack Query results. Every state is overridable.
+- **[`QueryState.tsx`](components/QueryState.tsx)** - Composable TanStack Query state primitives. Include only the states a view needs.
+
+  - `QueryStateProvider` - Shares one query's lifecycle flags and a caller-defined empty state.
+  - `useQueryState` - Reads the shared state and throws outside its provider.
+  - `QueryStatePending` - Renders while pending without an active request.
+  - `QueryStateLoading` - Renders during the initial active request.
+  - `QueryStateFetching` - Renders during a background request without replacing content.
+  - `QueryStateError` - Renders for errors, with an optional retry action.
+  - `QueryStateEmpty` - Renders when the caller reports successful empty data.
+  - `QueryStateContent` - Renders successful non-empty content, with an override for stale data.
 
 ## Hooks (`hooks/`)
 
@@ -47,7 +57,7 @@ Reusable React and React Native hooks.
 - [`useAppState.ts`](hooks/useAppState.ts) - Track foreground state with callbacks for the active and background transitions.
 - [`useDebouncedValue.ts`](hooks/useDebouncedValue.ts) - Debounce a value, with leading mode, forced update, and cancel.
 - [`useMultiCountPress.ts`](hooks/useMultiCountPress.ts) - Detect N presses within a time window, for debug menus and hidden features. Returns undefined when disabled.
-- [`useQueryRefreshControlProps.ts`](hooks/useQueryRefreshControlProps.ts) - RefreshControl props bound to a set of queries, refetching only those already fetched or in flight.
+- [`useQueryRefreshControlProp.ts`](hooks/useQueryRefreshControlProp.ts) - RefreshControl prop for exact query targets, with an optional reset for infinite lists.
 - [`useRNDevTools.ts`](hooks/useRNDevTools.ts) - Development-only Rozenite panels for React Native network activity, TanStack Query, MMKV, and Expo SecureStore.
 - [`useScreenPreventRemove.ts`](hooks/useScreenPreventRemove.ts) - Block navigation away from a screen while any condition holds, with functions to leave anyway.
 - [`useTauriDevTools.ts`](hooks/useTauriDevTools.ts) - Enable the Cmd/Ctrl+R reload shortcut in a Tauri development build.
@@ -56,7 +66,8 @@ Reusable React and React Native hooks.
 **[`useAuthorization.tsx`](hooks/useAuthorization.tsx)** - Role and permission gating. Replace the placeholder auth state with your own.
 
 - `AuthorizationProvider` - Provides the authorization flags to the tree.
-- `useAuthorization` - Read all flags, or evaluate a request with AND or OR semantics.
+- `authorize` - Evaluate a request against authorization flags without React context.
+- `useAuthorization` - Read all flags, or evaluate a request with AND or OR semantics. Throws without a provider.
 - `Authorized` - Render children conditionally on the same request shape, with an optional fallback.
 
 ## Scripts (`scripts/`)
