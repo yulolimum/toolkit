@@ -52,7 +52,7 @@ The shared ESLint and Prettier configuration is meant for other projects, and th
 
 ## Agent setup
 
-Agent-facing material is divided between shareable skills and focused prompts, separate from the documentation this repository distributes to people.
+Agent-facing material lives in shareable skills, separate from the documentation this repository distributes to people. The linter keeps its convention files beside its workflow so a copied skill retains its rules.
 
 The entry point is the documentation registry rather than a single large instruction file. The root agent instruction file does nothing but point at that registry, and each registry entry describes its brief well enough for an agent to judge whether the task at hand needs it. The intent is that an agent reads the map first and then only the briefs that apply, so the cost of orienting stays roughly flat as the documentation grows.
 

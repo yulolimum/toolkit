@@ -11,13 +11,14 @@ Agent skills, shared the same way as configs.
 - [`living-docs`](skills/living-docs) - Scaffold, write, audit, and register living documentation for any project.
 - [`create-linear-tickets`](skills/create-linear-tickets) - Create and update Linear tickets with workspace checks and a structured draft.
 - [`humanizer`](skills/humanizer) - Apply the upstream Humanizer editorial guidance to prose.
-- [`llm-linter`](skills/llm-linter) - Match completed work to selected conventions, then apply the approved prompts.
-  - [`commit`](prompts/commit.md) - Commit message and staging guidance.
-  - [`comments`](prompts/comments.md) - Code comment conventions.
-  - [`barrel-exports`](prompts/barrel-exports.md) - Direct-import conventions.
-  - [`typescript-inference`](prompts/typescript-inference.md) - Return type inference guidance.
-  - [`tanstack-query-data-fetching`](prompts/tanstack-query-data-fetching.md) - TanStack Query data-fetching and mutation guidance.
-  - [`markdown`](prompts/markdown.md) - Markdown formatting guidance.
+- [`llm-linter`](skills/llm-linter) - Match completed work to selected conventions, then apply the approved registry files.
+  - [`new-prompt`](skills/llm-linter/new-prompt.md) - Workflow branch for creating a linter prompt.
+  - [`commit`](skills/llm-linter/registry/commit.md) - Commit message and staging guidance.
+  - [`comments`](skills/llm-linter/registry/comments.md) - Code comment conventions.
+  - [`barrel-exports`](skills/llm-linter/registry/barrel-exports.md) - Direct-import conventions.
+  - [`typescript-inference`](skills/llm-linter/registry/typescript-inference.md) - Return type inference guidance.
+  - [`tanstack-query-data-fetching`](skills/llm-linter/registry/tanstack-query-data-fetching.md) - TanStack Query data-fetching and mutation guidance.
+  - [`markdown`](skills/llm-linter/registry/markdown.md) - Markdown formatting guidance.
 - [`typescript-script-pattern`](skills/typescript-script-pattern) - Build TypeScript automation scripts with consistent prompt, CLI, cache, and logging conventions.
 - [`react-provider-pattern`](skills/react-provider-pattern) - Create React context providers with a data hook, thin provider, and guarded consumer hook.
 - [`generate-pr-description`](skills/generate-pr-description) - Generate a concise pull-request description from the branch diff.
