@@ -9,7 +9,12 @@ Everything here is meant to be copied out. Much of it runs in this repository to
 Agent skills, shared the same way as configs.
 
 - [`living-docs`](skills/living-docs) - Scaffold, write, audit, and register living documentation for any project.
+- [`create-linear-tickets`](skills/create-linear-tickets) - Create and update Linear tickets with workspace checks and a structured draft.
+- [`humanizer`](skills/humanizer) - Apply the upstream Humanizer editorial guidance to prose.
+- [`typescript-script-pattern`](skills/typescript-script-pattern) - Build TypeScript automation scripts with consistent prompt, CLI, cache, and logging conventions.
 - [`react-provider-pattern`](skills/react-provider-pattern) - Create React context providers with a data hook, thin provider, and guarded consumer hook.
+- [`generate-pr-description`](skills/generate-pr-description) - Generate a concise pull-request description from the branch diff.
+- [`dependency-catalog-upgrade`](skills/dependency-catalog-upgrade) - Consolidate monorepo dependency versions into a catalog, pin them, and upgrade them.
 
 ## Services (`services/`)
 
