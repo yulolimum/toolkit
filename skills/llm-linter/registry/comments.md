@@ -1,10 +1,10 @@
 # Code comment conventions
 
-The default state of code is **no comments**. Comments are a cost, not a virtue. Most comments agents leave restate what the code plainly says and must be removed.
+By default, do not add comments. Comments add maintenance cost. Remove comments that only restate behavior the code makes clear.
 
 ## Remove comments that restate the code
 
-Delete any comment that a competent reader would already understand from the code itself. The code is self-documenting; the comment adds nothing. These are noise and must go.
+Delete any comment that a competent reader can understand from the code itself. The code shows the behavior. The comment adds no information. It is noise. Remove it.
 
 Bad (delete these):
 
@@ -22,11 +22,11 @@ let count = 0
 return result
 ```
 
-If removing the comment loses no information, remove it. Do not write comments for the LLM's benefit; the LLM can figure it out. Comments exist only for a **human** who would otherwise be confused.
+If removing a comment loses no information, remove it. Do not write comments to help an LLM; it can infer the code. Write comments only for a **human** who would otherwise be confused.
 
 ## Keep comments that explain what the code cannot
 
-Keep (or add) a comment only when it captures something not recoverable from the code: a non-obvious _why_, a workaround, a subtle edge case, a constraint, a gotcha, or intent that the implementation alone doesn't reveal.
+Keep or add a comment only when it gives information that the code cannot show: a non-obvious _why_, a workaround, a subtle edge case, a constraint, a gotcha, or intent that the implementation does not reveal.
 
 Good (keep these):
 
@@ -41,19 +41,19 @@ requestAnimationFrame(measure)
 const pageSize = 100
 ```
 
-The test: if a comment explains _why_ or warns of something surprising, keep it. If it explains _what_ the code already shows, delete it.
+Use this test: keep a comment if it explains _why_ or warns about something surprising. Delete it if it explains _what_ the code already shows.
 
 ## Inline comments
 
-Use `//` for inline comments in JavaScript/TypeScript. Keep them short and place them where the surprise lives.
+Use `//` for inline comments in JavaScript/TypeScript. Keep them short. Put them where the surprising behavior occurs.
 
 ## Documentation comments
 
-When documenting a function, component, hook, or exported declaration, use **TSDoc/JSDoc** block style (`/** ... */`) so the docs surface on hover in VS Code.
+For a function, component, hook, or exported declaration, use **TSDoc/JSDoc** block style (`/** ... */`). This lets VS Code show the documentation on hover.
 
-- Lead with a concise description of what it does and why you'd reach for it.
-- It is fine to omit `@param`/`@returns` and other tags when the types and names already make them obvious. Do not pad the block with redundant tags just to fill it out.
-- Add tags only when they carry real information (a non-obvious parameter meaning, units, side effects, a thrown error, an example).
+- Start with a concise description of what it does and when to use it.
+- Omit `@param`, `@returns`, and other tags when the types and names already make them clear. Do not add redundant tags only to fill the block.
+- Add tags only when they give useful information: a non-obvious parameter meaning, units, side effects, a thrown error, or an example.
 
 ```ts
 /**
@@ -65,4 +65,4 @@ function useDebouncedValue<T>(value: T, delayMs: number) { ... }
 
 ## Applying this as a cleanup pass
 
-When run over existing code, strip every self-explanatory comment, keep the genuinely necessary ones, and convert function/component documentation to TSDoc style where it isn't already.
+For existing code, remove every self-explanatory comment. Keep comments that give needed information. Convert function and component documentation to TSDoc style when it is not already TSDoc.

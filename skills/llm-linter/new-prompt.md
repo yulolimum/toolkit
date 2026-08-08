@@ -4,11 +4,11 @@ Create a standalone prompt from a repeatable lesson. Do not create a prompt for 
 
 ## Keep the prompt standalone
 
-A registry prompt is a Markdown snippet injected into an agent session. It supplies a focused specification, constraint, or feedback.
+A registry prompt is a Markdown snippet injected into an agent session. It gives a focused specification, constraint, or feedback.
 
 - Write only the content the receiving agent needs.
 - Do not mention the linter, registry, selection, loading, injection, tags, or routing in the prompt body.
-- Treat when and how the prompt enters a session as external behavior. Do not change routing or workflow unless the user asks for that separate change.
+- Treat the timing and method of prompt injection as external behavior. Do not change its routing or workflow unless the user asks for a separate change.
 - Do not treat an injection preference, such as "unconditionally," as a prompt instruction.
 
 ## Identify the prompt need
@@ -23,7 +23,7 @@ If one inferred candidate exists, confirm it before gathering requirements:
 
 1. I think this prompt should prevent or guide: `<terse problem>`. Is that right?
 
-If more than one inferred candidate exists, present the candidates as a numbered list and ask the user to choose. If no candidate exists, ask:
+If more than one inferred candidate exists, list the candidates as numbered options. Ask the user to choose. If no candidate exists, ask:
 
 1. What behavior should this prompt prevent or guide?
 
@@ -31,7 +31,7 @@ If more than one inferred candidate exists, present the candidates as a numbered
 
 Combine the user's direct request or confirmed session context. Check `./registry/` for overlap. If an existing file already covers the behavior, explain that and ask whether to extend it instead.
 
-Ask only questions whose answers change the prompt body, metadata, or an important boundary. Every question must use a numbered list, including a single question. Do not ask for information the user already gave or about external injection behavior.
+Ask a question only when its answer changes the prompt body, metadata, or an important boundary. Every question must use a numbered list, including a single question. Do not ask for information that the user already gave or about external injection behavior.
 
 Clarify only what remains uncertain:
 
@@ -57,9 +57,9 @@ Write prompt prose in terse Simplified Technical English:
 - Use active voice and simple tenses.
 - State the actor and action. Do not omit needed subjects, verbs, or articles.
 - Use one instruction in each sentence.
-- Keep instructions to 20 words when practical and descriptions to 25.
+- When practical, keep instructions to 20 words and descriptions to 25 words.
 - Avoid noun clusters with four or more words.
-- Define an unfamiliar domain term once, when needed.
+- Define each unfamiliar domain term once, when needed.
 - Use lists for three or more steps or conditions.
 - Keep one topic in each paragraph.
 - Keep safety conditions, scope limits, and needed precision, even when they make a sentence longer.

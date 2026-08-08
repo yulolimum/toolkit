@@ -1,6 +1,6 @@
 # Commit conventions
 
-Write commit messages following the seven rules of a great commit message.
+Write commit messages that follow the seven rules below.
 
 ## The seven rules
 
@@ -8,59 +8,58 @@ Write commit messages following the seven rules of a great commit message.
 2. **Limit the subject line to 50 characters.**
 3. **Capitalize the subject line.**
 4. **Do not end the subject line with a period.**
-5. **Use the imperative mood in the subject line.** Write it as a command.
-   Test: "If applied, this commit will _[subject]_." For example, "Add password reset flow", not "Added" or "Adds".
+5. **Use the imperative mood for the subject line.** Write it as a command.
+   Test it: "If applied, this commit will _[subject]_." For example, use "Add password reset flow", not "Added" or "Adds".
 6. **Wrap the body at 72 characters.**
 7. **Use the body to explain _what_ and _why_, not _how_.**
 
-DO NOT USE Conventional Commits EVER!
+Never use Conventional Commits.
 
 ## Authorship
 
-Commit as the repository author only. Do NOT add any co-author, attribution, or trailer crediting Claude, an LLM, or any AI tool. That means no `Co-authored-by:` lines and no "Generated with" / "Co-authored with" notes anywhere in the message.
+Commit only as the repository author. Do not add co-author, attribution, or trailer credit for Claude, an LLM, or an AI tool. Do not include `Co-authored-by:` lines or "Generated with" / "Co-authored with" notes anywhere in the message.
 
 ## Commit granularity and batching
 
-Treat the commit history as a chronological implementation journal, not only as a collection of release-ready snapshots.
+Treat commit history as a chronological record of implementation. Do not treat it only as a collection of release-ready snapshots.
 
 Prefer multiple phase-level commits over one feature-level commit.
 
-Batch tightly related files together when they implement the same conceptual layer and would normally be reviewed or reverted together. A shared component and its state hook may belong in one commit when they form one public abstraction.
+Batch tightly related files together only when they implement the same conceptual layer and reviewers would normally review or revert them together. A shared component and its state hook can belong in one commit when they form one public abstraction.
 
-Do not split related files mechanically by file. However, do not merge different implementation phases merely because they are dependent.
+Do not split related files into separate commits only because they are separate files. Do not merge different implementation phases only because they are dependent.
 
 Dependency determines commit order, not commit membership. A generic shared change should be committed separately from the feature consumer that depends on it.
 
 Before staging, identify the implementation batches and their order. For each batch:
 
-- group files by conceptual phase and intent;
-- include related files that form one reviewable unit;
-- keep later consumer work separate from prerequisite shared work;
-- stage only files or hunks belonging to the current batch;
-- use partial staging when a file contains multiple phases.
+- Group files by conceptual phase and intent.
+- Include related files that form one reviewable unit.
+- Keep later consumer work separate from prerequisite shared work.
+- Stage only the files or hunks for the current batch.
+- Use partial staging when a file contains multiple phases.
 
-Intermediate commits may intentionally break typechecking, builds, or downstream consumers when that reflects the requested implementation sequence. Do not add compatibility layers or migrate unrelated consumers just to make an intermediate commit green.
+Intermediate commits can intentionally break typechecking, builds, or downstream consumers when this reflects the requested implementation sequence. Do not add compatibility layers or migrate unrelated consumers only to make an intermediate commit green.
 
 Do not default to `git add -A`. Stage each batch deliberately.
 
-Only create one commit when the user explicitly requests one atomic commit or the work genuinely represents one implementation phase.
+Create one commit only when the user explicitly requests an atomic commit or the work represents one implementation phase.
 
 ## Keep it high level (non-negotiable)
 
-The commit message must be understandable by anyone, whether a designer, a manager, or a new teammate, WITHOUT reading the code. Describe the change in terms of behavior and intent, never implementation.
+Anyone must be able to understand the commit message without reading the code, including a designer, a manager, or a new teammate. Describe behavior and intent, never implementation.
 
 Do NOT include:
 
 - Code snippets or inline code of any kind
 - File paths, file names, function names, class names, or variable names
-- Technical jargon about the implementation (data structures, library calls,
-  framework internals, etc.)
-- A play-by-play of which lines or files changed
+- Technical implementation jargon, such as data structures, library calls, or framework internals
+- A step-by-step account of the changed lines or files
 
 Do focus on:
 
-- What the change accomplishes from a user's or product's perspective
-- Why the change was made (the problem it solves or the goal it serves)
+- What the change accomplishes for the user or product
+- Why the change was made: the problem it solves or the goal it serves
 - Any user-visible impact or behavior change
 
 ### Examples
@@ -84,4 +83,4 @@ Replaced the N+1 query in app/controllers/dashboard_controller.rb by adding
 .includes(:records) and memoizing the result in @records.
 ```
 
-Keep the subject concrete but plain. If you cannot explain the change without naming code, you are being too technical. Restate it in terms of what the user or product gets.
+Keep the subject concrete and plain. If you cannot explain the change without naming code, it is too technical. Restate it in terms of what the user or product gets.

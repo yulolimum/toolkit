@@ -1,13 +1,13 @@
 # Markdown document conventions
 
-Rules for writing and editing markdown documents (docs, guides, READMEs, and any `.md` file).
+Use these rules when you write or edit Markdown documents, including docs, guides, READMEs, and `.md` files.
 
 ## No hard wrapping
 
-Do not hard-wrap prose. Each paragraph is a single continuous line; let the editor soft-wrap it on display. Do not insert manual line breaks to keep lines under some column width.
+Do not hard-wrap prose. Keep each paragraph on one continuous line. Let the editor soft-wrap it for display. Do not insert manual line breaks to keep lines below a column limit.
 
-When editing an existing document that was hard-wrapped, unwrap it: join the broken lines of each paragraph back into one line. Keep the blank line between paragraphs, and leave genuine line breaks alone (list items, headings, code blocks, table rows, and intentional hard breaks).
+When you edit an existing hard-wrapped document, unwrap it. Join the broken lines in each paragraph. Keep the blank line between paragraphs. Do not change real line breaks in list items, headings, code blocks, table rows, or intentional hard breaks.
 
 ## Skill files
 
-`SKILL.md` files are an exception. Their layout can carry agent-facing meaning, so do not mechanically unwrap, reflow, or otherwise normalize them. Preserve their established formatting unless the user or the skill itself asks for a change.
+`SKILL.md` files are an exception. Their layout can have meaning for an agent. Do not mechanically unwrap, reflow, or otherwise normalize them. Preserve their existing format unless the user or the skill itself requests a change.
