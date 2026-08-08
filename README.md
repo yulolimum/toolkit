@@ -218,6 +218,7 @@ Guides written for people, with no application-specific details.
 - [`dev-environment-setup.md`](docs/dev-environment-setup.md) - macOS React Native environment setup: brew, asdf, Node, pnpm, Java, CocoaPods, Xcode, and Android Studio.
 - [`dev-eas.md`](docs/dev-eas.md) - EAS profiles, fingerprints, PR previews, Firebase tester distribution, store releases, and OTA updates.
 - [`dev-push-notifications.md`](docs/dev-push-notifications.md) - Push notification architecture, with Expo and Firebase options for both the server and client halves.
+- [`dev-react-native-architecture.md`](docs/dev-react-native-architecture.md) - React Native's old and new architectures, interoperability layers, and native module migration guidance.
 
 ## Lib (`lib/`)
 
