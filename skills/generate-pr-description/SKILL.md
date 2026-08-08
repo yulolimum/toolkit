@@ -40,7 +40,7 @@ The skill generates markdown in this format. Always include `## Overview`. Omit 
 
 - **[Topic Category]**: [One-sentence explanation of confusing context, reviewer risk, or required developer action]
 
-<!-- Include Proofs only when the selected Proofs format is `default` or `mobile`. Omit this section for `none`. -->
+<!-- Include Proofs only when the selected Proofs format is `standard` or `mobile`. Omit this section for `none`. -->
 
 ## Proofs
 
@@ -49,11 +49,26 @@ The skill generates markdown in this format. Always include `## Overview`. Omit 
 | _______     | <video src="______"/> |
 ```
 
-Before generating the description, ask the user which Proofs format to use:
+Before generating the description, collect these choices together unless the user already specified them:
 
-- `none`: omit the Proofs section entirely
-- `default`: 2 columns, `Description` and `Video`
-- `mobile`: 3 columns, `Description`, `iOS`, and `Android`
+- Editorial pass: `ste` (default) or `humanizer`
+- Proofs:
+  - `none` (default): omit the Proofs section entirely
+  - `standard`: 2 columns, `Description` and `Video`
+  - `mobile`: 3 columns, `Description`, `iOS`, and `Android`
+
+Use plain bullets, not a numbered choice. Ask:
+
+```text
+Choose an editorial pass and a Proofs format:
+
+- Editorial pass: ste (default) or humanizer
+- Proofs: none (default), standard, or mobile
+
+Reply with both values, for example: ste none
+```
+
+Use STE when the user omits the editorial pass. Use `none` when the user omits the Proofs format.
 
 If the user explicitly asks for a diagram, append a `## Diagram` section after Proofs when Proofs are included; otherwise append it after Tasks or Notes.
 
@@ -62,22 +77,25 @@ If the user explicitly asks for a diagram, append a `## Diagram` section after P
 
 ## Workflow
 
-### Step 0: Load Humanizer
+### Step 0: Choose the editorial pass
 
-Before drafting the PR description, read and apply the upstream Humanizer instructions at <https://raw.githubusercontent.com/blader/humanizer/refs/heads/main/SKILL.md>. The generated PR description should keep the required structure, but the prose must avoid AI-generated writing patterns, filler, generic note-padding, and stiff phrasing.
+Collect the editorial pass and Proofs format with the prompt above unless the user already specified them. Use STE by default.
+
+Apply the selected skill after drafting:
+
+- `ste`: Apply `simplified-technical-english`.
+- `humanizer`: Apply `humanizer`.
+
+Use the skill name. Do not use a filesystem path or external URL.
 
 ### Step 1: Branch Detection and Validation
 
-1. Ask the user which Proofs format to use unless they already specified it:
-   - `none`: omit the Proofs section entirely
-   - `default`: 2 columns, `Description` and `Video`
-   - `mobile`: 3 columns, `Description`, `iOS`, and `Android`
-2. Identify current branch
-3. Detect base branch automatically:
+1. Identify current branch
+2. Detect base branch automatically:
    - Check `origin/HEAD` default branch
    - Look for common branches (main, master, develop)
    - Prompt user if ambiguous
-4. Validate both branches exist
+3. Validate both branches exist
 
 **Git Commands:**
 
@@ -219,11 +237,11 @@ git diff [base]...HEAD
 
 **Proofs Section:**
 
-- Include this section only when the selected Proofs format is `default` or `mobile`
+- Include this section only when the selected Proofs format is `standard` or `mobile`
 - Omit the Proofs section entirely when the selected Proofs format is `none`
 - Place this section after Tasks, or after Notes when Notes are present
-- Ask the user which Proofs format to use unless they already specified it
-- For `default`, use this exact table shape:
+- Use the selected Proofs format. Ask for it together with the editorial pass when it is unspecified.
+- For `standard`, use this exact table shape:
   ```markdown
   | Description | Video                 |
   | ----------- | --------------------- |
@@ -253,7 +271,7 @@ git diff [base]...HEAD
 
 ### Step 5: Present and Refine
 
-- Before presenting, run the full generated PR description through the humanizer guidance while preserving headings, checklist syntax, tables, placeholders, and any requested diagram
+- Before presenting, apply the selected editorial skill while preserving headings, checklist syntax, tables, placeholders, and any requested diagram
 - **Output raw markdown wrapped in a markdown code fence** (`markdown ... `)
 - This makes the output copy-pastable - user can select and copy the raw markdown syntax directly
 - Do NOT output formatted/rendered markdown - output the raw text
@@ -276,7 +294,8 @@ git diff [base]...HEAD
    - Overview: Adds sign-in and route protection so users can access authenticated product areas securely.
    - Tasks: Add user authentication, Add login form, Add auth middleware
    - Notes: Requires AUTH_SECRET env var, Breaking: /login endpoint moved
-   - Proofs: Ask the user for `none`, `default`, or `mobile`; omit Proofs for `none`, otherwise include the matching placeholder table
+   - Choices: Use STE and no Proofs by default. Accept a combined reply such as `ste none` or `humanizer standard`.
+   - Proofs: Omit Proofs for `none`, otherwise include the matching placeholder table
    - Diagram: Omitted unless requested
 
 ### Example 2: Bug Fix
@@ -292,7 +311,8 @@ git diff [base]...HEAD
    - Overview: Fixes a cache cleanup problem that caused memory usage to grow over time.
    - Tasks: Fix memory leak in cache, Add cache cleanup tests
    - Notes: Omitted if there is no confusing context, developer action, or risk to explain
-   - Proofs: Ask the user for `none`, `default`, or `mobile`; omit Proofs for `none`, otherwise include the matching placeholder table
+   - Choices: Use STE and no Proofs by default. Accept a combined reply such as `ste none` or `humanizer standard`.
+   - Proofs: Omit Proofs for `none`, otherwise include the matching placeholder table
    - Diagram: Omitted unless requested
 
 ### Example 3: Refactor
@@ -308,7 +328,8 @@ git diff [base]...HEAD
    - Overview: Reorganizes the API layer so request handling and service logic are easier to maintain.
    - Tasks: Refactor API layer (service extraction, type updates, test updates)
    - Notes: Breaking: Import paths changed, Migration: Update imports from api/_ to services/_
-   - Proofs: Ask the user for `none`, `default`, or `mobile`; omit Proofs for `none`, otherwise include the matching placeholder table
+   - Choices: Use STE and no Proofs by default. Accept a combined reply such as `ste none` or `humanizer standard`.
+   - Proofs: Omit Proofs for `none`, otherwise include the matching placeholder table
    - Diagram: Omitted unless requested
 
 ## Best Practices
