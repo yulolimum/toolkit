@@ -169,7 +169,7 @@ export function Authorized(props: AuthorizedProps) {
  * )
  * ```
  */
-export function authorize(authorizations: AuthorizationMap, request: AuthorizationRequest): boolean {
+export function authorize(authorizations: AuthorizationMap, request: AuthorizationRequest) {
   const base = 'and' in request ? request.and : 'or' in request ? request.or : request
   const op: 'and' | 'or' = 'or' in request ? 'or' : 'and'
 
