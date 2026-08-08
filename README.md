@@ -211,6 +211,7 @@ Reusable GitHub Actions workflows. Copy into `.github/workflows/` and replace th
 
 Guides written for people, with no application-specific details.
 
+- [`dev-ai-setup.md`](docs/dev-ai-setup.md) - Preferred AI development setup: repository context, living documentation, and reusable skills shared globally.
 - [`dev-environment-setup.md`](docs/dev-environment-setup.md) - macOS React Native environment setup: brew, asdf, Node, pnpm, Java, CocoaPods, Xcode, and Android Studio.
 - [`dev-eas.md`](docs/dev-eas.md) - EAS concepts: configuration, code signing, the difference between build, submit, and update, and the OTA hotfix flow.
 - [`dev-push-notifications.md`](docs/dev-push-notifications.md) - Push notification architecture, with Expo and Firebase options for both the server and client halves.
