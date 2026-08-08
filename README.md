@@ -33,21 +33,10 @@ Agent skills, shared the same way as configs.
 
 Stateful abstractions that own storage or network configuration. Adopt a storage class and its schema together.
 
-**[`api-base.ts`](services/api-base.ts)** - Axios base class for API clients.
-
-- `ApiBase` - Resettable Axios client with JSON defaults, base-URL and header setters, normalized API results, and an `unsafe` unwrapping helper.
-
-**[`storage.ts`](services/storage.ts)** - Persistent storage built on MMKV.
-
-- `Storage` - Typed store with `get`, `set`, `remove`, `clear`, and a reactive `useStorage` hook. Per-key defaults, JSON serialization for objects, and version-based clearing when a key's schema changes. Accepts a custom MMKV instance.
-
-**[`secure-storage.ts`](services/secure-storage.ts)** - Asynchronous storage for small sensitive strings.
-
-- `SecureStorage` - Typed Expo SecureStore wrapper with `get`, `set`, `remove`, and `clear`. Reads fall back to schema defaults, writes warn instead of throwing, and `clear` only removes keys the schema declares.
-
-**[`tauri-storage.ts`](services/tauri-storage.ts)** - Asynchronous persistent storage for Tauri applications.
-
-- `TauriStorage` - Schema-driven Tauri store wrapper with async updates and key-change listeners. It clears versioned keys when needed, returns defaults, and skips writes outside Tauri or when storage is unavailable.
+- [`api-base.ts`](services/api-base.ts) - Resettable Axios client with JSON defaults, base-URL and header setters, normalized API results, and an `unsafe` unwrapping helper.
+- [`storage.ts`](services/storage.ts) - Typed store with `get`, `set`, `remove`, `clear`, and a reactive `useStorage` hook. Per-key defaults, JSON serialization for objects, and version-based clearing when a key's schema changes. Accepts a custom MMKV instance.
+- [`secure-storage.ts`](services/secure-storage.ts) - Typed Expo SecureStore wrapper with `get`, `set`, `remove`, and `clear`. Reads fall back to schema defaults, writes warn instead of throwing, and `clear` only removes keys the schema declares.
+- [`tauri-storage.ts`](services/tauri-storage.ts) - Schema-driven Tauri store wrapper with async updates and key-change listeners. It clears versioned keys when needed, returns defaults, and skips writes outside Tauri or when storage is unavailable.
 
 ## Components (`components/`)
 
@@ -57,16 +46,7 @@ Unstyled React Native components. Each solves one layout or state problem and le
 - [`CollapsibleView.tsx`](components/CollapsibleView.tsx) - View that measures its content and animates it open or closed.
 - [`MeasuringView.tsx`](components/MeasuringView.tsx) - View that measures its own layout and passes the size to a render-prop child.
 - [`PolymorphicView.tsx`](components/PolymorphicView.tsx) - View that can render another React Native component through an `as` prop.
-- **[`QueryState.tsx`](components/QueryState.tsx)** - Composable TanStack Query state primitives. Include only the states a view needs.
-
-  - `QueryStateProvider` - Shares one query's lifecycle flags and a caller-defined empty state.
-  - `useQueryState` - Reads the shared state and throws outside its provider.
-  - `QueryStatePending` - Renders while pending without an active request.
-  - `QueryStateLoading` - Renders during the initial active request.
-  - `QueryStateFetching` - Renders during a background request without replacing content.
-  - `QueryStateError` - Renders for errors, with an optional retry action.
-  - `QueryStateEmpty` - Renders when the caller reports successful empty data.
-  - `QueryStateContent` - Renders successful non-empty content, with an override for stale data.
+- [`QueryState.tsx`](components/QueryState.tsx) - Composable TanStack Query state primitives. Include only the states a view needs.
 
 ## Hooks (`hooks/`)
 
@@ -80,13 +60,7 @@ Reusable React and React Native hooks.
 - [`useScreenPreventRemove.ts`](hooks/useScreenPreventRemove.ts) - Block navigation away from a screen while any condition holds, with functions to leave anyway.
 - [`useTauriDevTools.ts`](hooks/useTauriDevTools.ts) - Enable the Cmd/Ctrl+R reload shortcut in a Tauri development build.
 - [`useTauriStorage.ts`](hooks/useTauriStorage.ts) - React state for one Tauri storage key, with async updates, reset, and external change synchronization.
-
-**[`useAuthorization.tsx`](hooks/useAuthorization.tsx)** - Role and permission gating. Replace the placeholder auth state with your own.
-
-- `AuthorizationProvider` - Provides the authorization flags to the tree.
-- `authorize` - Evaluate a request against authorization flags without React context.
-- `useAuthorization` - Read all flags, or evaluate a request with AND or OR semantics. Throws without a provider.
-- `Authorized` - Render children conditionally on the same request shape, with an optional fallback.
+- [`useAuthorization.tsx`](hooks/useAuthorization.tsx) - Role and permission gating. Replace the placeholder auth state with your own.
 
 ## Scripts (`scripts/`)
 
