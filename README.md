@@ -9,9 +9,6 @@ Everything here is meant to be copied out. Much of it runs in this repository to
 Agent skills, shared the same way as configs.
 
 - [`living-docs`](skills/living-docs) - Scaffold, write, audit, and register living documentation for any project.
-- [`create-linear-tickets`](skills/create-linear-tickets) - Create and update Linear tickets with workspace checks and a structured draft.
-- [`humanizer`](skills/humanizer) - Apply the upstream Humanizer editorial guidance to prose.
-- [`simplified-technical-english`](skills/simplified-technical-english) - Apply explicit Simplified Technical English rules to selected prose.
 - [`llm-linter`](skills/llm-linter) - Match completed work to selected conventions, then apply the approved registry files.
   - [`new-prompt`](skills/llm-linter/new-prompt.md) - Workflow branch for creating a linter prompt.
   - [`commit`](skills/llm-linter/registry/commit.md) - Commit message and staging guidance.
@@ -20,6 +17,10 @@ Agent skills, shared the same way as configs.
   - [`typescript-inference`](skills/llm-linter/registry/typescript-inference.md) - Return type inference guidance.
   - [`tanstack-query-data-fetching`](skills/llm-linter/registry/tanstack-query-data-fetching.md) - TanStack Query data-fetching and mutation guidance.
   - [`markdown`](skills/llm-linter/registry/markdown.md) - Markdown formatting guidance.
+- [`link-global-skills`](skills/link-global-skills) - Link local skills individually into the global directories for Codex, Claude Code, and Cursor.
+- [`create-linear-tickets`](skills/create-linear-tickets) - Create and update Linear tickets with workspace checks and a structured draft.
+- [`humanizer`](skills/humanizer) - Apply the upstream Humanizer editorial guidance to prose.
+- [`simplified-technical-english`](skills/simplified-technical-english) - Apply explicit Simplified Technical English rules to selected prose.
 - [`typescript-script-pattern`](skills/typescript-script-pattern) - Build TypeScript automation scripts with consistent prompt, CLI, cache, and logging conventions.
 - [`react-provider-pattern`](skills/react-provider-pattern) - Create React context providers with a data hook, thin provider, and guarded consumer hook.
 - [`generate-pr-description`](skills/generate-pr-description) - Generate a concise pull-request description from the branch diff.
