@@ -62,6 +62,13 @@ Conventions for barrel files and module export/import structure. Apply when crea
 
 ---
 
+**prefer-local-implementations**
+`./registry/prefer-local-implementations.md`
+tags: abstractions, helpers, components, refactoring, cleanup, colocation, react, typescript
+Prefer readable local code over premature helper, component, and file extraction during cleanup.
+
+---
+
 **typescript-inference**
 `./registry/typescript-inference.md`
 tags: typescript, javascript, inference, return-types, hooks, functions, cleanup, readability

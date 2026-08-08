@@ -14,6 +14,7 @@ Agent skills, shared the same way as configs.
   - [`commit`](skills/llm-linter/registry/commit.md) - Commit message and staging guidance.
   - [`comments`](skills/llm-linter/registry/comments.md) - Code comment conventions.
   - [`barrel-exports`](skills/llm-linter/registry/barrel-exports.md) - Direct-import conventions.
+  - [`prefer-local-implementations`](skills/llm-linter/registry/prefer-local-implementations.md) - Guidance for preferring readable local code over premature extraction.
   - [`typescript-inference`](skills/llm-linter/registry/typescript-inference.md) - Return type inference guidance.
   - [`tanstack-query-data-fetching`](skills/llm-linter/registry/tanstack-query-data-fetching.md) - TanStack Query data-fetching and mutation guidance.
   - [`markdown`](skills/llm-linter/registry/markdown.md) - Markdown formatting guidance.
