@@ -7,40 +7,40 @@ description: Generate concise, human-readable pull request descriptions from the
 
 ## Overview
 
-This skill analyzes git changes between branches to generate professional, concise PR descriptions following a standardized format. It examines commits, diffs, and change patterns to produce an overview, changelog-style tasks, and notes only when something needs extra explanation, with optional architectural diagrams.
+Use this skill to create concise PR descriptions from changes between branches. Read commits, diffs, and change patterns. Write an overview, changelog-style tasks, optional notes, and optional diagrams.
 
 ## When to Use This Skill
 
-Invoke this skill when:
+Use this skill when you need to:
 
-- Creating a pull request and need a description
-- Want to document changes before creating PR
-- Need to summarize branch work for review
-- Generating release notes from changes
-- Understanding what changed in a branch
+- Create a pull request description.
+- Document work before creating a pull request.
+- Summarize branch changes for review.
+- Generate release notes.
+- Understand what changed in a branch.
 
 ## Output Format
 
-The skill generates markdown in this format. Always include `## Overview`. Omit `## Notes` when there are no useful notes.
+Generate Markdown in this format. Always include Overview. Omit Notes when there is no useful reviewer context.
 
 ```markdown
 ## Overview
 
-[One short prose paragraph summarizing what this PR is about. No code references, file references, function names, commands, or implementation details.]
+[One short paragraph that summarizes the PR. Do not include code, file, function, command, or implementation details.]
 
 ## Tasks
 
-- [Action verb] [human-readable high-level change]
-- [Action verb] [another top-level change]
-- [Action verb] [change with sub-items if scope is large]
-  - [Sub-item describing specific aspect of parent change]
+- [Action verb] [Human-readable high-level change]
+- [Action verb] [Another top-level change]
+- [Action verb] [Change with sub-items for a large scope]
+  - [Sub-item for the parent change]
   - [Another sub-item for the same parent change]
 
 ## Notes
 
-- **[Topic Category]**: [One-sentence explanation of confusing context, reviewer risk, or required developer action]
+- **[Topic Category]**: [One sentence about reviewer context, risk, or required action]
 
-<!-- Include Proofs only when the selected Proofs format is `standard` or `mobile`. Omit this section for `none`. -->
+<!-- Include Proofs only for the standard or mobile format. Omit it for none. -->
 
 ## Proofs
 
@@ -49,55 +49,49 @@ The skill generates markdown in this format. Always include `## Overview`. Omit 
 | _______     | <video src="______"/> |
 ```
 
-Before generating the description, collect these choices together unless the user already specified them:
-
-- Editorial pass: `ste` (default) or `humanizer`
-- Proofs:
-  - `none` (default): omit the Proofs section entirely
-  - `standard`: 2 columns, `Description` and `Video`
-  - `mobile`: 3 columns, `Description`, `iOS`, and `Android`
-
-Use plain bullets, not a numbered choice. Ask:
+Before generating the description, collect both choices unless the user already gave them. Present this exact prompt with no added framing, defaults, reply instructions, or extra bullets:
 
 ```text
-Choose an editorial pass and a Proofs format:
+Editorial Pass:
+- Simplified Technical English (ste)
+- Humanizer
 
-- Editorial pass: ste (default) or humanizer
-- Proofs: none (default), standard, or mobile
-
-Reply with both values, for example: ste none
+Proofs:
+- none
+- standard
+- mobile
 ```
 
-Use STE when the user omits the editorial pass. Use `none` when the user omits the Proofs format.
+Use Simplified Technical English when the user omits the editorial pass. Accept ste as the choice for Simplified Technical English. Use none when the user omits the Proofs format.
 
-If the user explicitly asks for a diagram, append a `## Diagram` section after Proofs when Proofs are included; otherwise append it after Tasks or Notes.
+When the user explicitly asks for a diagram, put Diagram after Proofs when Proofs is present. Otherwise, put it after Tasks or Notes.
 
-**Action verbs**: Add, Update, Fix, Remove, Refactor, Migrate, Deprecate
-**Topic categories**: Breaking Change, Migration Required, Configuration, Dependencies, Performance, Security, Testing, etc.
+**Action verbs:** Add, Update, Fix, Remove, Refactor, Migrate, Deprecate
+**Topic categories:** Breaking Change, Migration Required, Configuration, Dependencies, Performance, Security, Testing, and similar categories
 
 ## Workflow
 
 ### Step 0: Choose the editorial pass
 
-Collect the editorial pass and Proofs format with the prompt above unless the user already specified them. Use STE by default.
+Collect the editorial pass and Proofs format with the prompt above unless the user already specified them. Use Simplified Technical English by default.
 
-Apply the selected skill after drafting:
+After drafting, apply the selected skill:
 
-- `ste`: Apply `simplified-technical-english`.
-- `humanizer`: Apply `humanizer`.
+- ste: Apply simplified-technical-english.
+- humanizer: Apply humanizer.
 
 Use the skill name. Do not use a filesystem path or external URL.
 
-### Step 1: Branch Detection and Validation
+### Step 1: Detect and validate branches
 
-1. Identify current branch
-2. Detect base branch automatically:
-   - Check `origin/HEAD` default branch
-   - Look for common branches (main, master, develop)
-   - Prompt user if ambiguous
-3. Validate both branches exist
+1. Identify the current branch.
+2. Detect the base branch:
+   - Check the origin/HEAD default branch.
+   - Check common branches: main, master, and develop.
+   - Ask the user when the base branch is ambiguous.
+3. Validate that both branches exist.
 
-**Git Commands:**
+**Git commands:**
 
 ```bash
 # Current branch
@@ -110,210 +104,201 @@ git symbolic-ref refs/remotes/origin/HEAD 2> /dev/null | sed 's@^refs/remotes/or
 git branch -r | grep -E 'origin/(main|master|develop)'
 ```
 
-### Step 2: Gather Change Information
+### Step 2: Gather change information
 
-Collect comprehensive git information in parallel:
+Collect this information in parallel.
 
-**Commit History:**
+**Commit history:**
 
 ```bash
 git log [base]..HEAD --format="%h %s%n%b%n---"
 ```
 
-**Change Statistics:**
+**Change statistics:**
 
 ```bash
 git diff [base]...HEAD --stat
 git diff [base]...HEAD --name-status
 ```
 
-**Full Diff:**
+**Full diff:**
+
+Read the full diff only when it has fewer than 10,000 lines.
 
 ```bash
 git diff [base]...HEAD
 ```
 
-### Step 3: Analyze Changes
+For a larger diff, inspect relevant files. Summarize large refactors. Focus on public API and behavior changes. Skip cosmetic changes in the summary.
 
-**Overview Extraction:**
+### Step 3: Analyze changes
 
-- Identify the highest-level purpose of the PR in plain language
-- Translate technical/internal changes into the outcome or workflow change they create
-- Do not include code references, file paths, function names, commands, branch names, or implementation details
+**Overview extraction:**
 
-**Task Categorization:**
+- Identify the highest-level purpose of the PR in plain language.
+- Translate technical changes into the outcome or workflow change they create.
+- Do not include code references, file paths, function names, commands, branch names, or implementation details.
 
-- Group files by module/directory
-- Identify functional areas (auth, api, ui, database, tests)
-- Detect new features, updates, fixes, refactors
-- Analyze commit messages for intent
-- Create hierarchical task list
+**Task categorization:**
 
-**Note Extraction:**
+- Group files by module or directory.
+- Identify functional areas such as auth, API, UI, database, and tests.
+- Detect features, updates, fixes, and refactors.
+- Use commit messages to confirm intent.
+- Create a hierarchical task list.
 
-- Notes are optional; skip this whole section if nothing meaningful turns up.
-- Scan commits for keywords:
-  - "breaking", "deprecated", "migration"
-  - "security", "performance", "gotcha"
-  - "config", "environment", "setup"
-- Identify breaking changes from:
-  - Removed functions/exports
-  - Changed function signatures
-  - API endpoint changes
-- Detect dependencies:
-  - package.json changes
-  - New imports
-- Spot configuration needs:
-  - .env changes
-  - Config file updates
+**Note extraction:**
 
-**Diagram Assessment:**
+- Notes are optional. Omit them when nothing needs explanation.
+- Scan commits for breaking, deprecated, migration, security, performance, gotcha, configuration, environment, and setup keywords.
+- Identify breaking changes from removed exports, changed function signatures, and API changes.
+- Detect dependencies from package changes and new imports.
+- Detect configuration needs from environment and configuration file changes.
 
-- Skip this by default
-- Only assess and include a diagram when the user explicitly asks for one
-- If requested, detect architectural patterns:
-  - New component interactions
-  - Data flow changes
-  - API additions/changes
-  - State management updates
-- Decide diagram type and necessity for the requested diagram
+**Diagram assessment:**
+
+- Skip diagrams by default.
+- Assess and include a diagram only when the user explicitly asks.
+- When requested, detect new component interactions, data flows, API changes, and state-management updates.
+- Choose a useful diagram type for the requested change.
 
 ### Step 4: Generate Markdown
 
-**Overview Section:**
+**Overview section:**
 
-- Always include this section before Tasks
-- Write prose, not bullets
-- Keep it to one short paragraph, usually 1-3 sentences
-- Explain the work at the highest useful level
-- Audience is project managers or teammates scanning for "what is this about?"
-- Do not include code references, file paths, function names, endpoint names, component names, commands, branch names, implementation details, or test details
-- If the work is technical or internal, describe the operational, product, or workflow outcome instead of the implementation
+- Put Overview before Tasks.
+- Write prose, not bullets.
+- Use one short paragraph, usually one to three sentences.
+- Explain the work at the highest useful level.
+- Write for project managers and teammates who need to know what the PR changes.
+- Do not include code references, file paths, function names, endpoint names, component names, commands, branch names, implementation details, or test details.
+- For internal work, describe the operational, product, or workflow outcome.
 
-**Tasks Section:**
+**Tasks section:**
 
-- Use concise bullet points
-- Group related changes
-- Indent sub-items for large scopes
-- Lead with verb (Add, Update, Fix, Remove, Refactor)
-- Focus on what changed in human-readable product/release language
-- Write this like a concise changelog for a human reviewer, not an implementation inventory
-- **Keep tasks at feature/module level - DO NOT enumerate details**
-  - ❌ BAD: "Implement GammaApi client with 17 endpoints (status, teams, sports, tags, events, markets...)"
-  - ✅ GOOD: "Implement GammaApi client"
-  - Don't list specific functions, endpoint names, component names, file paths, or implementation details unless the name is the user-facing feature
-  - Tasks describe the change, not every aspect of it
-- Avoid code references in Tasks. Put necessary file paths, function names, or command details in Notes only when they affect the reviewer or developer using the change.
+- Use concise bullet points.
+- Group related changes.
+- Indent sub-items for large scopes.
+- Start each item with Add, Update, Fix, Remove, or Refactor.
+- Use human-readable product or release language.
+- Write a concise changelog, not an implementation inventory.
+- Keep tasks at feature or module level. Do not list every detail.
+  - Bad: Implement GammaApi client with 17 endpoints (status, teams, sports, tags, events, markets...).
+  - Good: Implement GammaApi client.
+  - Do not list functions, endpoints, components, file paths, or implementation details unless the name is a user-facing feature.
+  - Describe the change, not every part of its implementation.
+- Avoid code references in Tasks. Put a necessary file path, function name, or command in Notes only when it affects the reviewer or developer.
 
-**Notes Section:**
+**Notes section:**
 
-- Bold topic headings
-- One-sentence descriptions
-- Treat Notes as optional. Omit the section entirely when there is nothing confusing, risky, or actionable to explain.
-- **Include only information that affects reviewer understanding, integration, or follow-up action:**
-  - Breaking changes
-  - Migration steps required
-  - Configuration needs (env vars, config files)
-  - New dependencies
-  - Manual instructions or workflow changes developers must know
-  - Non-obvious behavior changes, risks, gotchas, or rollout constraints
-  - Performance implications that affect usage
-  - Security considerations
-- **Do not add a note just because a fact is true.** If it is obvious from the Tasks or diff and requires no action, leave it out.
-- Do not include a `Testing` note just to list validations that passed. Passing checks are expected and do not affect reviewer understanding, integration, or follow-up action.
-- Only include a `Testing` note when the testing status changes what a reviewer should do or know, such as:
-  - A required validation could not be run
-  - A flaky or partial validation result needs context
-  - A risky area has no practical automated coverage
-  - A manual verification step is required before merge
-- If all requested validations passed normally, omit `## Notes`.
-- **EXCLUDE implementation details visible in code:**
-  - ❌ BAD: "Architecture: Uses result type pattern ({ ok: true, data } | { ok: false, error })"
-  - ❌ BAD: "Implementation: Uses factory pattern for service creation"
-  - ❌ BAD: "Code structure: Separates concerns into modules"
-  - ❌ BAD: "Configuration: Existing settings are unchanged" unless the reviewer specifically needs that assurance to avoid a likely misunderstanding
-- These are visible in code review - don't waste note space on them
-- Focus on information that requires developer action or explains something a reviewer would otherwise misread
+- Use bold topic headings and one-sentence descriptions.
+- Omit Notes when there is no confusing, risky, or actionable context.
+- Include only information that affects reviewer understanding, integration, or follow-up action:
+  - Breaking changes.
+  - Required migrations.
+  - Configuration needs, including environment variables and configuration files.
+  - New dependencies.
+  - Required manual instructions or workflow changes.
+  - Non-obvious behavior changes, risks, gotchas, or rollout limits.
+  - Performance implications that affect use.
+  - Security considerations.
+- Do not add a note only because a fact is true. Omit facts that are obvious from Tasks or the diff and need no action.
+- Do not add a Testing note only to list normal passing checks.
+- Add a Testing note only when testing changes what a reviewer needs to do or know:
+  - A required validation could not run.
+  - A check is flaky or partial.
+  - A risky area has no practical automated coverage.
+  - A manual check is required before merge.
+- Omit Notes when all requested validations passed normally.
+- Exclude implementation details that reviewers can see in code:
+  - Bad: Architecture: Uses a result type pattern ({ ok: true, data } | { ok: false, error }).
+  - Bad: Implementation: Uses a factory pattern for service creation.
+  - Bad: Code structure: Separates concerns into modules.
+  - Bad: Configuration: Existing settings are unchanged, unless the reviewer needs that assurance to avoid a likely misunderstanding.
+- Focus on required action or context a reviewer could otherwise misread.
 
-**Proofs Section:**
+**Proofs section:**
 
-- Include this section only when the selected Proofs format is `standard` or `mobile`
-- Omit the Proofs section entirely when the selected Proofs format is `none`
-- Place this section after Tasks, or after Notes when Notes are present
-- Use the selected Proofs format. Ask for it together with the editorial pass when it is unspecified.
-- For `standard`, use this exact table shape:
+- Include Proofs only for the standard or mobile format.
+- Omit Proofs for none.
+- Put Proofs after Tasks, or after Notes when Notes is present.
+- Ask for the Proofs format with the editorial pass when it is unspecified.
+- For standard, use this exact table:
+
   ```markdown
   | Description | Video                 |
   | ----------- | --------------------- |
   | _______     | <video src="______"/> |
   ```
-- For `mobile`, use this exact table shape:
+
+- For mobile, use this exact table:
+
   ```markdown
   | Description | iOS                   | Android               |
   | ----------- | --------------------- | --------------------- |
   | _______     | <video src="______"/> | <video src="______"/> |
   ```
-- Leave placeholders as shown unless the user provides proof descriptions or video URLs
 
-**Diagram Section:**
+- Keep placeholders unless the user provides proof descriptions or video URLs.
 
-- Skip this section by default
-- Include only when the user explicitly asks for a diagram
-- Use mermaid syntax
-- Choose appropriate type:
-  - `flowchart TD` for flows
-  - `sequenceDiagram` for interactions
-  - `classDiagram` for structure
-  - `stateDiagram-v2` for states
-- Keep concise (< 15 nodes)
-- Label clearly
-- Show only PR changes, not entire system
+**Diagram section:**
 
-### Step 5: Present and Refine
+- Skip Diagram by default.
+- Include it only when the user explicitly asks for a diagram.
+- Use Mermaid syntax.
+- Choose the diagram type:
+  - flowchart TD for flows.
+  - sequenceDiagram for interactions.
+  - classDiagram for structure.
+  - stateDiagram-v2 for state changes.
+- Keep it concise, with fewer than 15 nodes.
+- Label it clearly.
+- Show only PR changes, not the full system.
 
-- Before presenting, apply the selected editorial skill while preserving headings, checklist syntax, tables, placeholders, and any requested diagram
-- **Output raw markdown wrapped in a markdown code fence** (`markdown ... `)
-- This makes the output copy-pastable - user can select and copy the raw markdown syntax directly
-- Do NOT output formatted/rendered markdown - output the raw text
-- Verify accuracy with user
-- Offer refinements if needed
-- Ready to paste into GitHub PR
+### Step 5: Present and refine
+
+- Before presenting, apply the selected editorial skill. Preserve headings, checklist syntax, tables, placeholders, and any requested diagram.
+- Output raw Markdown in a fenced code block labelled markdown.
+- Do not output rendered Markdown.
+- Verify accuracy with the user.
+- Offer refinements when needed.
+- Make the result ready to paste into a GitHub PR.
 
 ## Examples
 
-### Example 1: Feature Addition
+### Example 1: Feature addition
 
 **User request:** "Generate PR description for my feature branch"
 
 **Process:**
 
-1. Detect branches: `feature/user-auth` → `main`
-2. Find commits: 8 commits about authentication
-3. Analyze files: auth/, api/auth.ts, components/LoginForm.tsx
+1. Detect branches: feature/user-auth to main.
+2. Find eight commits about authentication.
+3. Analyze auth/, api/auth.ts, and components/LoginForm.tsx.
 4. Generate:
    - Overview: Adds sign-in and route protection so users can access authenticated product areas securely.
-   - Tasks: Add user authentication, Add login form, Add auth middleware
-   - Notes: Requires AUTH_SECRET env var, Breaking: /login endpoint moved
-   - Choices: Use STE and no Proofs by default. Accept a combined reply such as `ste none` or `humanizer standard`.
-   - Proofs: Omit Proofs for `none`, otherwise include the matching placeholder table
-   - Diagram: Omitted unless requested
+   - Tasks: Add user authentication, Add login form, Add auth middleware.
+   - Notes: Requires AUTH_SECRET environment variable. Breaking change: the /login endpoint moved.
+   - Choices: Use Simplified Technical English and no Proofs by default. Accept a combined reply such as ste none or humanizer standard.
+   - Proofs: Omit Proofs for none. Otherwise, include the selected placeholder table.
+   - Diagram: Omit unless requested.
 
-### Example 2: Bug Fix
+### Example 2: Bug fix
 
 **User request:** "/generate-pr-description"
 
 **Process:**
 
-1. Detect branches: `fix/memory-leak` → `develop`
-2. Find commits: 2 commits fixing memory issue
-3. Analyze files: utils/cache.ts, tests/cache.test.ts
+1. Detect branches: fix/memory-leak to develop.
+2. Find two commits that fix a memory issue.
+3. Analyze utils/cache.ts and tests/cache.test.ts.
 4. Generate:
    - Overview: Fixes a cache cleanup problem that caused memory usage to grow over time.
-   - Tasks: Fix memory leak in cache, Add cache cleanup tests
-   - Notes: Omitted if there is no confusing context, developer action, or risk to explain
-   - Choices: Use STE and no Proofs by default. Accept a combined reply such as `ste none` or `humanizer standard`.
-   - Proofs: Omit Proofs for `none`, otherwise include the matching placeholder table
-   - Diagram: Omitted unless requested
+   - Tasks: Fix memory leak in cache. Add cache cleanup tests.
+   - Notes: Omit when there is no confusing context, developer action, or risk.
+   - Choices: Use Simplified Technical English and no Proofs by default. Accept a combined reply such as ste none or humanizer standard.
+   - Proofs: Omit Proofs for none. Otherwise, include the selected placeholder table.
+   - Diagram: Omit unless requested.
 
 ### Example 3: Refactor
 
@@ -321,48 +306,48 @@ git diff [base]...HEAD
 
 **Process:**
 
-1. Detect branches: `refactor/api-layer` → `main`
-2. Find commits: 15 commits restructuring API
-3. Analyze files: api/_, services/_, types/_, tests/_
+1. Detect branches: refactor/api-layer to main.
+2. Find 15 commits that restructure the API layer.
+3. Analyze api/_, services/_, types/_, and tests/_.
 4. Generate:
    - Overview: Reorganizes the API layer so request handling and service logic are easier to maintain.
-   - Tasks: Refactor API layer (service extraction, type updates, test updates)
-   - Notes: Breaking: Import paths changed, Migration: Update imports from api/_ to services/_
-   - Choices: Use STE and no Proofs by default. Accept a combined reply such as `ste none` or `humanizer standard`.
-   - Proofs: Omit Proofs for `none`, otherwise include the matching placeholder table
-   - Diagram: Omitted unless requested
+   - Tasks: Refactor API layer, including service extraction, type updates, and test updates.
+   - Notes: Breaking change: import paths changed. Migration: update imports from api/_ to services/_.
+   - Choices: Use Simplified Technical English and no Proofs by default. Accept a combined reply such as ste none or humanizer standard.
+   - Proofs: Omit Proofs for none. Otherwise, include the selected placeholder table.
+   - Diagram: Omit unless requested.
 
 ## Best Practices
 
-### Analysis Quality
+### Analysis quality
 
-- Read ALL commits in range, not just latest
-- Consider file locations for context
-- Check for implicit breaking changes
-- Verify test coverage changes
-- Note dependency updates
+- Read all commits in the range, not only the latest commit.
+- Consider file locations for context.
+- Check for implicit breaking changes.
+- Verify test coverage changes.
+- Note dependency updates.
 
-### Description Conciseness
+### Description conciseness
 
-- Target: 1 overview paragraph
-- Target: 5-10 task items
-- Notes are only added when necessary; omit the section by default
-- One sentence per item
-- Human reviewer audience (skip implementation inventory and filler)
-- Action-oriented language
+- Use one overview paragraph.
+- Target five to ten task items.
+- Add Notes only when needed.
+- Use one sentence per item.
+- Write for human reviewers. Skip implementation inventory and filler.
+- Use action-oriented language.
 
-### Diagram Guidelines
+### Diagram guidelines
 
-- Only when the user explicitly asks for a diagram
-- Focus on new/changed parts
-- Keep < 15 nodes
-- Use standard mermaid syntax
-- Label clearly
-- Show relationships, not every detail
+- Add a diagram only when the user explicitly asks.
+- Focus on new or changed parts.
+- Keep it under 15 nodes.
+- Use standard Mermaid syntax.
+- Label it clearly.
+- Show relationships, not every detail.
 
-### Token Efficiency
+### Token efficiency
 
-- Don't fetch full diff if > 10K lines
-- Summarize large refactors
-- Focus on public API changes
-- Skip cosmetic changes in summary
+- Do not fetch a full diff with more than 10,000 lines.
+- Summarize large refactors.
+- Focus on public API changes.
+- Skip cosmetic changes in the summary.
