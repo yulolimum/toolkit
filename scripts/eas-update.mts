@@ -12,6 +12,10 @@ import { $, fs, minimist } from 'zx'
 //
 const scriptName = 'eas-update'
 const scriptCommand = 'pnpm eas:update'
+const updateTargets = {
+  preview: { channel: 'preview', environment: 'preview' },
+  production: { channel: 'production', environment: 'production' },
+}
 
 //
 // Arguments
@@ -21,13 +25,13 @@ type Args = { [K in ArgNames]: NonNullable<(typeof parsedArgs)[K]> }
 
 const args = minimist(process.argv.slice(2), {
   boolean: ['verbose', 'help'],
-  string: ['platform', 'channel', 'message'],
+  string: ['platform', 'profile', 'message'],
   alias: { v: 'verbose', h: 'help' },
 })
 
 const parsedArgs = {
   platform: args.platform as string | undefined,
-  channel: args.channel as string | undefined,
+  profile: args.profile as string | undefined,
   message: args.message as string | undefined,
   verbose: Boolean(args.verbose),
   help: Boolean(args.help),
@@ -85,7 +89,7 @@ if (parsedArgs.help) {
 
 Options:
   --platform <string>   Platform to update (all, ios, android)
-  --channel <string>    Channel to update (preview, production)
+  --profile <string>    Update profile (preview, production)
   --message <string>    Update message (omit for auto-generated)
   --verbose, -v         Enable debug logs
   --help, -h            Show help
@@ -113,6 +117,11 @@ const platform = await (async function () {
     })
   }
 
+  if (response !== 'all' && response !== 'ios' && response !== 'android') {
+    log('The update platform must be all, ios, or android.')
+    process.exit(1)
+  }
+
   cache.args.platform = response
   accumulatedArgs.platform = response
 
@@ -122,15 +131,15 @@ const platform = await (async function () {
   return response
 })()
 
-const channel = await (async function () {
+const profile = await (async function () {
   let response: string
 
-  if (parsedArgs.channel !== undefined) {
-    response = parsedArgs.channel
+  if (parsedArgs.profile !== undefined) {
+    response = parsedArgs.profile
   } else {
     response = await select<string>({
-      message: 'Select channel',
-      default: cache.args.channel ?? 'preview',
+      message: 'Select update profile',
+      default: cache.args.profile ?? 'preview',
       choices: [
         { name: 'Preview', value: 'preview' },
         { name: 'Production', value: 'production' },
@@ -138,14 +147,21 @@ const channel = await (async function () {
     })
   }
 
-  cache.args.channel = response
-  accumulatedArgs.channel = response
+  if (response !== 'preview' && response !== 'production') {
+    log('The update profile must be preview or production.')
+    process.exit(1)
+  }
 
-  debug('channel:', response)
+  cache.args.profile = response
+  accumulatedArgs.profile = response
+
+  debug('profile:', response)
   await writeCache(cache)
 
   return response
 })()
+
+const updateTarget = updateTargets[profile]
 
 const message = await (async function () {
   let response: string
@@ -169,12 +185,12 @@ const message = await (async function () {
 })()
 
 //
-// Build command
+// Update command
 //
 const messageArgs = message ? ['--message', message] : ['--auto']
 
 log(
-  `\n> npx eas-cli@latest update --platform ${platform} --channel ${channel} --environment ${channel} --clear-cache ${message ? `--message "${message}"` : '--auto'} --non-interactive\n`,
+  `\n> EAS_BUILD_PROFILE=${profile} npx eas-cli@latest update --platform ${platform} --channel ${updateTarget.channel} --environment ${updateTarget.environment} ${message ? `--message "${message}"` : '--auto'} --non-interactive\n`,
 )
 
 const shouldProceed = await confirm({
@@ -190,9 +206,11 @@ if (!shouldProceed) {
 try {
   await $({
     stdio: 'inherit',
-  })`npx eas-cli@latest update --platform ${platform} --channel ${channel} --environment ${channel} --clear-cache ${messageArgs} --non-interactive`
+    env: { ...process.env, EAS_BUILD_PROFILE: profile },
+  })`npx eas-cli@latest update --platform ${platform} --channel ${updateTarget.channel} --environment ${updateTarget.environment} ${messageArgs} --non-interactive`
 } catch (error) {
   log('\nUpdate failed:', (error as Error).message)
+  process.exitCode = 1
 }
 
 //
