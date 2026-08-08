@@ -4,8 +4,8 @@
   },
   "build": {
     "base": {
-      "node": "22.x.x",
-      "pnpm": "10.x.x",
+      "node": "24.19.0",
+      "pnpm": "11.20.0",
       "android": {
         "buildType": "app-bundle",
         "gradleCommand": ":app:bundleRelease"
@@ -17,12 +17,12 @@
       "autoIncrement": true,
       "env": {
         "NODE_ENV": "production"
-      },
-      "channel": "base"
+      }
     },
     "development": {
       "extends": "base",
       "developmentClient": true,
+      "distribution": "internal",
       "environment": "development",
       "autoIncrement": false,
       "android": {
@@ -30,48 +30,52 @@
         "gradleCommand": ":app:assembleRelease"
       },
       "env": {
-        "NODE_ENV": "development"
-      }
+        "NODE_ENV": "development",
+        "EAS_BUILD_PROFILE": "development"
+      },
+      "channel": "development"
     },
-    "preview:pr-__pr_number__": {
+    "preview:pr": {
       "extends": "base",
       "distribution": "internal",
       "environment": "preview",
+      "env": {
+        "NODE_ENV": "production",
+        "EAS_BUILD_PROFILE": "preview:pr"
+      },
       "channel": "pr-__pr_number__",
       "android": {
         "buildType": "apk",
         "gradleCommand": ":app:assembleRelease"
       }
     },
-    "preview:internal": {
+    "preview": {
       "extends": "base",
-      "distribution": "internal",
+      "distribution": "store",
       "environment": "preview",
+      "env": {
+        "NODE_ENV": "production",
+        "EAS_BUILD_PROFILE": "preview"
+      },
       "channel": "preview",
       "android": {
         "buildType": "apk",
         "gradleCommand": ":app:assembleRelease"
       }
     },
-    "preview": {
-      "extends": "base",
-      "distribution": "store",
-      "environment": "preview",
-      "channel": "preview"
-    },
     "production": {
       "extends": "base",
       "distribution": "store",
       "environment": "production",
+      "env": {
+        "NODE_ENV": "production",
+        "EAS_BUILD_PROFILE": "production"
+      },
       "channel": "production"
     }
   },
   "submit": {
     "preview": {
-      "android": {
-        "track": "internal",
-        "releaseStatus": "completed"
-      },
       "ios": {
         "appleTeamId": "<--APPLE_TEAM_ID-->",
         "ascAppId": "<--ASC_APP_ID-->"

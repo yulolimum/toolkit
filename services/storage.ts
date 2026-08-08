@@ -40,7 +40,7 @@ import * as MMKV from 'react-native-mmkv'
 
 import { mmkv } from '../lib/mmkv'
 
-export type BaseStorage = Record<string, { type: StorageTypes; default: any; version?: string | number }>
+export type BaseStorage = Record<string, { type: StorageTypes; default: unknown; version?: string | number }>
 type StorageTypes = 'object' | 'string' | 'boolean' | 'number'
 type StorageMetadata = Record<string, string | number>
 type GetStorageKey<S extends BaseStorage> = keyof S
@@ -112,11 +112,12 @@ export class Storage<T extends BaseStorage> {
       | GetStorageValue<typeof this.config, K>
       | ((current: GetStorageValue<typeof this.config, K>) => GetStorageValue<typeof this.config, K>),
   ) => {
-    const nextValue = typeof value === 'function' ? (value as any)(this.get(key)) : value
+    type Value = GetStorageValue<typeof this.config, K>
+    const nextValue = typeof value === 'function' ? (value as (current: Value) => Value)(this.get(key)) : value
 
     try {
       if (nextValue === null || nextValue === undefined) {
-        this.storage.delete(key as string)
+        this.storage.remove(key as string)
       }
       // Primitives can be stored directly
       else if (typeof nextValue === 'string' || typeof nextValue === 'boolean' || typeof nextValue === 'number') {
@@ -132,7 +133,7 @@ export class Storage<T extends BaseStorage> {
   }
 
   remove = <K extends GetStorageKey<typeof this.config>>(key: K) => {
-    this.storage.delete(key as string)
+    this.storage.remove(key as string)
   }
 
   clear = () => {
@@ -143,6 +144,7 @@ export class Storage<T extends BaseStorage> {
    * React hook for accessing and updating a value in persistent storage.
    * This hook provides a reactive interface to MMKV storage, automatically updating when the value changes.
    */
+  /* eslint-disable react-hooks/rules-of-hooks -- Storage instances expose a hook-like API. Consumers must call useStorage from React function components. */
   useStorage = <K extends GetStorageKey<typeof this.config>>(
     key: K,
   ): [
@@ -185,15 +187,16 @@ export class Storage<T extends BaseStorage> {
     }, [value, defaultValue, persistenceType])
 
     const setValueMemo = useCallback(
-      (v: any) => {
+      (v: unknown) => {
         const next = typeof v === 'function' ? v(valueOrDefault) : v
         setValue(next)
       },
-      [valueOrDefault, persistenceType, setValue],
+      [valueOrDefault, setValue],
     )
 
-    const reset = useCallback(() => this.remove(key), [])
+    const reset = useCallback(() => this.remove(key), [key])
 
     return [valueOrDefault, setValueMemo, reset] as any
   }
+  /* eslint-enable react-hooks/rules-of-hooks */
 }

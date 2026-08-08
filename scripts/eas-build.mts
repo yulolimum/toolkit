@@ -19,16 +19,16 @@ type ArgNames = keyof typeof parsedArgs
 type Args = { [K in ArgNames]: NonNullable<(typeof parsedArgs)[K]> }
 
 const args = minimist(process.argv.slice(2), {
-  boolean: ['addNewDevices', 'verbose', 'help'],
-  string: ['platform', 'profile', 'distribution'],
+  boolean: ['addNewDevices', 'local', 'verbose', 'help'],
+  string: ['platform', 'profile'],
   alias: { v: 'verbose', h: 'help' },
 })
 
 const parsedArgs = {
   platform: args.platform as string | undefined,
   profile: args.profile as string | undefined,
-  distribution: args.distribution as string | undefined,
   addNewDevices: args['addNewDevices'] ? true : undefined,
+  local: args.local ? true : undefined,
   verbose: Boolean(args.verbose),
   help: Boolean(args.help),
 }
@@ -49,7 +49,7 @@ const repoRoot = process.cwd()
 const cacheDir = path.join(repoRoot, 'node_modules', '.cache', scriptName)
 const cacheFile = path.join(cacheDir, 'cache.json')
 
-async function readCache(): Promise<Cache> {
+async function readCache() {
   try {
     const cache = (await fs.readJson(cacheFile)) as Cache
     cache.args = cache.args || {}
@@ -84,12 +84,12 @@ if (parsedArgs.help) {
   log(`Usage: ${scriptCommand} [options]
 
 Options:
-  --platform <string>       Platform to build (all, ios, android)
-  --profile <string>        Build profile (development, preview, production)
-  --distribution <string>   Distribution method (store, internal)
-  --addNewDevices         Register new iOS devices before build
-  --verbose, -v             Enable debug logs
-  --help, -h                Show help
+  --platform <string>    Platform to build (all, ios, android)
+  --profile <string>     Build profile (development, preview, production)
+  --local                Run an iOS or Android build locally
+  --addNewDevices        Register iOS devices for a development build
+  --verbose, -v          Enable debug logs
+  --help, -h             Show help
 `)
   process.exit(0)
 }
@@ -103,7 +103,7 @@ const platform = await (async function () {
   if (parsedArgs.platform !== undefined) {
     response = parsedArgs.platform
   } else {
-    response = await select({
+    response = await select<string>({
       message: 'Select platform',
       default: cache.args.platform ?? 'all',
       choices: [
@@ -112,6 +112,11 @@ const platform = await (async function () {
         { name: 'Android', value: 'android' },
       ],
     })
+  }
+
+  if (response !== 'all' && response !== 'ios' && response !== 'android') {
+    log('The build platform must be all, ios, or android.')
+    process.exit(1)
   }
 
   cache.args.platform = response
@@ -129,7 +134,7 @@ const profile = await (async function () {
   if (parsedArgs.profile !== undefined) {
     response = parsedArgs.profile
   } else {
-    response = await select({
+    response = await select<string>({
       message: 'Select profile',
       default: cache.args.profile ?? 'preview',
       choices: [
@@ -138,6 +143,11 @@ const profile = await (async function () {
         { name: 'Production', value: 'production' },
       ],
     })
+  }
+
+  if (response !== 'development' && response !== 'preview' && response !== 'production') {
+    log('The build profile must be development, preview, or production. PR previews are created by CI.')
+    process.exit(1)
   }
 
   cache.args.profile = response
@@ -149,62 +159,45 @@ const profile = await (async function () {
   return response
 })()
 
-const distribution = await (async function () {
-  if (profile === 'development') {
-    const response = 'development'
-
-    cache.args.distribution = response
-    accumulatedArgs.distribution = response
-
-    debug('distribution:', response, '(auto-selected for development profile)')
-    await writeCache(cache)
-
-    return response
-  }
-
-  let response: string
-
-  if (parsedArgs.distribution !== undefined) {
-    response = parsedArgs.distribution
-  } else {
-    let choices = []
-
-    if (platform === 'ios') {
-      choices = [
-        { name: 'TestFlight', value: 'store' },
-        { name: 'EAS (ad-hoc)', value: 'internal' },
-      ]
-    } else if (platform === 'android') {
-      choices = [
-        { name: 'Play Store (Internal Testing)', value: 'store' },
-        { name: 'EAS (apk)', value: 'internal' },
-      ]
-    } else {
-      choices = [
-        { name: 'Store', value: 'store', description: 'TestFlight (iOS) and Play Store (Android)' },
-        { name: 'Internal', value: 'internal', description: 'EAS (ad-hoc) for iOS and EAS (apk) for Android' },
-      ]
+const local = await (async function () {
+  if (platform === 'all') {
+    if (parsedArgs.local) {
+      log('Local builds require an iOS or Android platform.')
+      process.exit(1)
     }
 
-    response = await select({
-      message: 'Select distribution',
-      default: cache.args.distribution ?? 'internal',
-      choices,
+    debug('local: false (not available for all platforms)')
+    return false
+  }
+
+  let response: boolean
+
+  if (parsedArgs.local !== undefined) {
+    response = parsedArgs.local
+  } else {
+    response = await confirm({
+      message: 'Run this build locally?',
+      default: cache.args.local ?? false,
     })
   }
 
-  cache.args.distribution = response
-  accumulatedArgs.distribution = response
+  cache.args.local = response
+  accumulatedArgs.local = response
 
-  debug('distribution:', response)
+  debug('local:', response)
   await writeCache(cache)
 
   return response
 })()
 
 const addNewDevices = await (async function () {
-  if (platform === 'android') {
-    debug('addNewDevices: false (not applicable for Android)')
+  if (profile !== 'development' || platform !== 'ios') {
+    if (parsedArgs.addNewDevices) {
+      log('Registering devices requires an iOS development build.')
+      process.exit(1)
+    }
+
+    debug('addNewDevices: false (only available for iOS development builds)')
     return false
   }
 
@@ -223,6 +216,11 @@ const addNewDevices = await (async function () {
     })
   }
 
+  if (response && local) {
+    log('Registering devices requires a cloud build so EAS can refresh the ad hoc profile.')
+    process.exit(1)
+  }
+
   cache.args.addNewDevices = response
   accumulatedArgs.addNewDevices = response
 
@@ -235,19 +233,15 @@ const addNewDevices = await (async function () {
 //
 // Build command
 //
-const profileOption = distribution === 'internal' ? `${profile}:internal` : profile
-const localArgs = profile === 'development' ? ['--local'] : []
+const localArgs = local ? ['--local'] : []
+const provisioningArgs = addNewDevices ? ['--refresh-ad-hoc-provisioning-profile'] : []
+const buildCommand = `npx eas-cli@latest build --profile ${profile} --platform ${platform} --non-interactive${local ? ' --local' : ''}${addNewDevices ? ' --refresh-ad-hoc-provisioning-profile' : ''}`
 
 if (addNewDevices) {
-  log(
-    `\nTo register new devices, the following command needs to be run manually:\n > npx eas-cli@latest build -e ${profileOption} -p ${platform}\n`,
-  )
-  process.exit(0)
+  log(`\n> npx eas-cli@latest device:create\n> ${buildCommand}\n`)
+} else {
+  log(`\n> ${buildCommand}\n`)
 }
-
-log(
-  `\n> npx eas-cli@latest build -e ${profileOption} -p ${platform} --non-interactive${localArgs.length ? ' --local' : ''}\n`,
-)
 
 const shouldProceed = await confirm({
   message: 'Proceed?',
@@ -260,11 +254,16 @@ if (!shouldProceed) {
 }
 
 try {
+  if (addNewDevices) {
+    await $({ stdio: 'inherit' })`npx eas-cli@latest device:create`
+  }
+
   await $({
     stdio: 'inherit',
-  })`npx eas-cli@latest build -e ${profileOption} -p ${platform} --non-interactive ${localArgs}`
+  })`npx eas-cli@latest build --profile ${profile} --platform ${platform} --non-interactive ${localArgs} ${provisioningArgs}`
 } catch (error) {
   log('\nBuild failed:', (error as Error).message)
+  process.exitCode = 1
 }
 
 //

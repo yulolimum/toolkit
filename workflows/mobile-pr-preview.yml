@@ -1,0 +1,107 @@
+# Mobile PR Preview Workflow
+#
+# Builds an opt-in preview for a non-draft mobile pull request labeled
+# `mobile/preview`. Reuses compatible native builds and publishes an OTA update
+# to that PR's EAS channel.
+#
+# Required secrets:
+#   - EXPO_TOKEN: Expo access token for EAS CLI
+#
+# Replace:
+#   - @placeholder/mobile: Your mobile workspace package name
+#   - apps/mobile: Your mobile app directory, if different
+#
+# Before use:
+#   - Add the mobile/preview and mobile/preview-available labels to the repository
+
+name: Mobile PR Preview
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review, labeled, unlabeled]
+    paths:
+      - 'apps/mobile/**'
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: mobile-pr-preview-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  preview:
+    if: >-
+      ${{
+        github.event.pull_request.draft != true &&
+        contains(github.event.pull_request.labels.*.name, 'mobile/preview')
+      }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - uses: pnpm/action-setup@v6
+        with:
+          run_install: false
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: '.tool-versions'
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build mobile dependencies
+        run: pnpm --filter "@placeholder/mobile^..." build
+
+      - name: Setup EAS
+        uses: expo/expo-github-action@v9
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+          packager: pnpm
+
+      - name: Replace PR placeholders in eas.json
+        working-directory: apps/mobile
+        run: sed -i "s/__pr_number__/${{ github.event.pull_request.number }}/g" eas.json
+
+      - name: Generate iOS fingerprint
+        working-directory: apps/mobile
+        env:
+          EAS_BUILD_PROFILE: preview:pr
+        run: pnpm dlx @expo/fingerprint fingerprint:generate --platform ios
+
+      - name: Generate Android fingerprint
+        working-directory: apps/mobile
+        env:
+          EAS_BUILD_PROFILE: preview:pr
+        run: pnpm dlx @expo/fingerprint fingerprint:generate --platform android
+
+      - name: Publish mobile preview
+        id: deploy
+        uses: expo/expo-github-action/continuous-deploy-fingerprint@v9
+        env:
+          EAS_BUILD_PROFILE: preview:pr
+          NODE_OPTIONS: --max-old-space-size=8192
+        with:
+          profile: preview:pr
+          branch: pr-${{ github.event.pull_request.number }}
+          environment: preview
+          platform: all
+          working-directory: apps/mobile
+
+      - name: Add PR label
+        uses: actions/github-script@v9
+        with:
+          script: |
+            await github.rest.issues.addLabels({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: ['mobile/preview-available'],
+            })

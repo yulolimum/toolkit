@@ -47,7 +47,7 @@ const repoRoot = process.cwd()
 const cacheDir = path.join(repoRoot, 'node_modules', '.cache', scriptName)
 const cacheFile = path.join(cacheDir, 'cache.json')
 
-async function readCache(): Promise<Cache> {
+async function readCache() {
   try {
     const cache = (await fs.readJson(cacheFile)) as Cache
     cache.args = cache.args || {}
@@ -93,38 +93,13 @@ Options:
 //
 // Script
 //
-const platform = await (async function () {
-  let response: string
-
-  if (parsedArgs.platform !== undefined) {
-    response = parsedArgs.platform
-  } else {
-    response = await select({
-      message: 'Select platform',
-      default: cache.args.platform ?? 'ios',
-      choices: [
-        { name: 'iOS', value: 'ios' },
-        { name: 'Android', value: 'android' },
-      ],
-    })
-  }
-
-  cache.args.platform = response
-  accumulatedArgs.platform = response
-
-  debug('platform:', response)
-  await writeCache(cache)
-
-  return response
-})()
-
 const profile = await (async function () {
   let response: string
 
   if (parsedArgs.profile !== undefined) {
     response = parsedArgs.profile
   } else {
-    response = await select({
+    response = await select<string>({
       message: 'Select profile',
       default: cache.args.profile ?? 'preview',
       choices: [
@@ -132,6 +107,11 @@ const profile = await (async function () {
         { name: 'Production', value: 'production' },
       ],
     })
+  }
+
+  if (response !== 'preview' && response !== 'production') {
+    log('The submit profile must be preview or production.')
+    process.exit(1)
   }
 
   cache.args.profile = response
@@ -143,10 +123,50 @@ const profile = await (async function () {
   return response
 })()
 
+const platform = await (async function () {
+  let response: string
+
+  if (parsedArgs.platform !== undefined) {
+    response = parsedArgs.platform
+  } else {
+    const choices =
+      profile === 'preview'
+        ? [{ name: 'iOS', value: 'ios' }]
+        : [
+            { name: 'iOS', value: 'ios' },
+            { name: 'Android', value: 'android' },
+          ]
+
+    response = await select<string>({
+      message: 'Select platform',
+      default: choices.some((choice) => choice.value === cache.args.platform) ? cache.args.platform : 'ios',
+      choices,
+    })
+  }
+
+  if (response !== 'ios' && response !== 'android') {
+    log('The submit platform must be ios or android.')
+    process.exit(1)
+  }
+
+  if (profile === 'preview' && response !== 'ios') {
+    log('The preview submit profile only supports iOS.')
+    process.exit(1)
+  }
+
+  cache.args.platform = response
+  accumulatedArgs.platform = response
+
+  debug('platform:', response)
+  await writeCache(cache)
+
+  return response
+})()
+
 //
 // Submit command
 //
-log(`\n> npx eas-cli@latest submit -e ${profile} -p ${platform} --no-wait\n`)
+log(`\n> npx eas-cli@latest submit --profile ${profile} --platform ${platform} --latest --non-interactive\n`)
 
 const shouldProceed = await confirm({
   message: 'Proceed?',
@@ -159,9 +179,12 @@ if (!shouldProceed) {
 }
 
 try {
-  await $({ stdio: 'inherit' })`npx eas-cli@latest submit -e ${profile} -p ${platform} --no-wait`
+  await $({
+    stdio: 'inherit',
+  })`npx eas-cli@latest submit --profile ${profile} --platform ${platform} --latest --non-interactive`
 } catch (error) {
   log('\nSubmit failed:', (error as Error).message)
+  process.exitCode = 1
 }
 
 //

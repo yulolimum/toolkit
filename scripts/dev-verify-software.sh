@@ -2,13 +2,14 @@
 set -e
 
 # Software
-software=("node" "java" "xcode-select" "adb" "pod" "xcodebuild")
+software=("node" "pnpm" "java" "xcode-select" "adb" "pod" "xcodebuild")
 
 # Version numbers (inclusive)
-node=("22.0.0" "22.999.0")
+node=("24.19.0" "24.999.0")
+pnpm=("11.20.0" "11.999.0")
 java=("17.0.0" "17.999.0")
 pod=("1.16.0")
-xcodebuild=("16.2")
+xcodebuild=("26.4")
 
 success() {
 	echo -e "✅ $1"

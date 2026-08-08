@@ -1,22 +1,23 @@
-import type { DependencyList } from 'react'
 import type { AppStateStatus } from 'react-native'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useEffectEvent, useRef, useState } from 'react'
 import { AppState } from 'react-native'
 
-type UseAppStateOptions = {
-  /** Callback fired when app becomes active (foreground) */
+type UseAppStateOptions = Readonly<{
+  /** Callback fired when the app becomes active after any other state. */
   onActive?: () => void
-  /** Callback fired when app goes to background */
+  /** Callback fired when the app enters the background, not when it becomes inactive. */
   onBackground?: () => void
-}
+}>
 
 /**
  * A React Native hook that tracks app state (active, background, inactive) and provides
  * callbacks for state transitions.
  *
- * @param options - Optional callbacks for state transitions
- * @param deps - Dependency array for the effect (defaults to [])
+ * Callbacks always read values from the latest committed render without recreating the native
+ * subscription.
+ *
+ * @param options - Optional callbacks for state transitions.
  * @returns Object with current state and convenience booleans
  *
  * @example
@@ -59,37 +60,37 @@ type UseAppStateOptions = {
  * ```
  *
  * @example
- * With dependencies:
+ * Callbacks can safely read changing values:
  * ```tsx
- * function SyncComponent() {
- *   const syncData = useCallback(() => {
- *     // sync logic
- *   }, [userId])
- *
- *   useAppState({ onActive: syncData }, [syncData])
+ * function SyncComponent({ userId }: { userId: string }) {
+ *   useAppState({
+ *     onActive: () => void syncUser(userId),
+ *   })
  * }
  * ```
  */
-export function useAppState(options?: UseAppStateOptions, deps: DependencyList = []) {
+export function useAppState(options?: UseAppStateOptions) {
   const [state, setState] = useState<AppStateStatus>(AppState.currentState)
   const prevState = useRef(state)
 
+  const handleStateChange = useEffectEvent((nextState: AppStateStatus) => {
+    const becomingActive = prevState.current !== 'active' && nextState === 'active'
+    const enteringBackground = prevState.current !== 'background' && nextState === 'background'
+
+    if (becomingActive) options?.onActive?.()
+    if (enteringBackground) options?.onBackground?.()
+
+    prevState.current = nextState
+    setState(nextState)
+  })
+
   useEffect(() => {
-    const subscription = AppState.addEventListener('change', (nextState) => {
-      const becomingActive = prevState.current.match(/inactive|background/) && nextState === 'active'
-      const goingBackground = nextState.match(/inactive|background/)
-
-      if (becomingActive) options?.onActive?.()
-      if (goingBackground) options?.onBackground?.()
-
-      prevState.current = nextState
-      setState(nextState)
-    })
+    const subscription = AppState.addEventListener('change', handleStateChange)
 
     return () => {
       subscription.remove()
     }
-  }, deps)
+  }, [])
 
   return {
     state,

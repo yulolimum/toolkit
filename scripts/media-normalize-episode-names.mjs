@@ -1,6 +1,6 @@
 process.env.FORCE_COLOR = '1'
 
-import confirm from '@inquirer/confirm' // @^5
+import confirm from '@inquirer/confirm' // @^6
 import axios from 'axios'
 import path from 'path'
 import { dotenv, fs, minimist } from 'zx' // @^8

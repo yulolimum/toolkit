@@ -1,7 +1,7 @@
 process.env.FORCE_COLOR = '1'
 
-import input from '@inquirer/input' // @^4
-import select from '@inquirer/select' // @^4
+import input from '@inquirer/input' // @^5
+import select from '@inquirer/select' // @^5
 import path, { dirname } from 'path'
 import { fileURLToPath } from 'url'
 import { $, fs, minimist, spinner } from 'zx' // @^8
@@ -9,12 +9,7 @@ import { $, fs, minimist, spinner } from 'zx' // @^8
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const cacheFile = path.join(__dirname, '.cache')
 
-let cache = {}
-try {
-  cache = await fs.readJson(cacheFile)
-} catch (_error) {
-  cache = {}
-}
+const cache = await fs.readJson(cacheFile).catch(() => ({}))
 
 cache.mediaAccelerate = cache.mediaAccelerate ?? {}
 

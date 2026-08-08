@@ -2,27 +2,21 @@ import type { PropsWithChildren, ReactNode } from 'react'
 
 import { createContext, useContext, useMemo } from 'react'
 
-type Authorization =
-  | 'ExampleUserLoggedIn'
-  | 'ExampleUserPro'
-  | 'ExampleUserAdmin'
-  | 'ExampleCanEdit'
-  | 'ExampleCanDelete'
+export type Authorization =
+  'ExampleUserLoggedIn' | 'ExampleUserPro' | 'ExampleUserAdmin' | 'ExampleCanEdit' | 'ExampleCanDelete'
 
 type BaseAuthorizationRequest = {
   [K in Authorization]?: boolean
 }
 
-type AuthorizationRequest =
-  | BaseAuthorizationRequest
-  | { and: BaseAuthorizationRequest }
-  | { or: BaseAuthorizationRequest }
+export type AuthorizationRequest =
+  BaseAuthorizationRequest | { and: BaseAuthorizationRequest } | { or: BaseAuthorizationRequest }
 
 /**
  * Computes authorization flags from your app's auth state.
  * Replace with your own authentication hook and authorization logic.
  */
-function useAuthorizationContext() {
+function useAuthorizationData() {
   // Replace with your own auth hook, e.g.:
   // const { user, authenticated, permissions } = useAuth()
   const user = { id: '1', role: 'admin', plan: 'free' }
@@ -44,6 +38,11 @@ function useAuthorizationContext() {
   return authorizations
 }
 
+type AuthorizationContext = ReturnType<typeof useAuthorizationData>
+const AuthorizationContext = createContext<AuthorizationContext | null>(null)
+
+export type AuthorizationMap = AuthorizationContext
+
 /**
  * Provider component that makes authorization context available to the app.
  *
@@ -59,7 +58,8 @@ function useAuthorizationContext() {
  * ```
  */
 export function AuthorizationProvider(props: PropsWithChildren) {
-  const data = useAuthorizationContext()
+  const data = useAuthorizationData()
+
   return <AuthorizationContext.Provider value={data}>{props.children}</AuthorizationContext.Provider>
 }
 
@@ -71,6 +71,8 @@ export function AuthorizationProvider(props: PropsWithChildren) {
  * - Default (no wrapper): AND logic
  * - `{ and: { ... } }`: Explicit AND logic
  * - `{ or: { ... } }`: OR logic (any condition can be true)
+ *
+ * @throws {Error} If called outside an `AuthorizationProvider`.
  *
  * @example
  * Get all authorization flags:
@@ -98,30 +100,16 @@ export function AuthorizationProvider(props: PropsWithChildren) {
  * const canModify = useAuthorization({ or: { ExampleUserAdmin: true, ExampleCanEdit: true } })
  * ```
  */
-export function useAuthorization(): AuthorizationContext
+export function useAuthorization(): AuthorizationMap
 export function useAuthorization(request: AuthorizationRequest): boolean
 export function useAuthorization(request?: AuthorizationRequest) {
-  const authorizations = useContext(AuthorizationContext)
+  const context = useContext(AuthorizationContext)
 
-  const authorizationForRequest = useMemo(() => {
-    if (!request) return true
-
-    const base = 'and' in request ? request.and : 'or' in request ? request.or : request
-    const op: 'and' | 'or' = 'or' in request ? 'or' : 'and'
-
-    const entries = Object.entries(base) as [Authorization, boolean][]
-
-    if (entries.length === 0) return false
-
-    const results = entries.map(([key, expected]) => authorizations[key] === expected)
-    return op === 'or' ? results.some(Boolean) : results.every(Boolean)
-  }, [authorizations, request])
-
-  if (request) {
-    return authorizationForRequest
-  } else {
-    return authorizations
+  if (!context) {
+    throw new Error('useAuthorization must be used within an AuthorizationProvider')
   }
+
+  return request ? authorize(context, request) : context
 }
 
 type AuthorizedProps = PropsWithChildren<{
@@ -166,5 +154,29 @@ export function Authorized(props: AuthorizedProps) {
   return authorized ? children : fallback
 }
 
-type AuthorizationContext = ReturnType<typeof useAuthorizationContext>
-const AuthorizationContext = createContext<AuthorizationContext>({} as AuthorizationContext)
+/**
+ * Evaluates an authorization request against a map of authorization flags.
+ *
+ * Unwrapped requests and `{ and: ... }` require every flag to match. An
+ * `{ or: ... }` request requires at least one matching flag. Empty requests
+ * always return `false`.
+ *
+ * @example
+ * ```ts
+ * const canDelete = authorize(
+ *   { ExampleUserAdmin: true, ExampleCanDelete: true },
+ *   { and: { ExampleUserAdmin: true, ExampleCanDelete: true } },
+ * )
+ * ```
+ */
+export function authorize(authorizations: AuthorizationMap, request: AuthorizationRequest) {
+  const base = 'and' in request ? request.and : 'or' in request ? request.or : request
+  const op: 'and' | 'or' = 'or' in request ? 'or' : 'and'
+
+  const entries = Object.entries(base) as [Authorization, boolean][]
+
+  if (entries.length === 0) return false
+
+  const results = entries.map(([key, expected]) => authorizations[key] === expected)
+  return op === 'or' ? results.some(Boolean) : results.every(Boolean)
+}

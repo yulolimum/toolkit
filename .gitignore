@@ -7,7 +7,5 @@ scripts/.cache
 ai/memory
 ai/rules/.memory-registry
 
-
-
 #tmp
 scripts/media-join-video.sh

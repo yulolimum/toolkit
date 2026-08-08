@@ -1,0 +1,104 @@
+# Mobile Preview Workflow
+#
+# After mobile changes merge to main, creates the shared tester build. iOS goes
+# to TestFlight and Android is distributed through Firebase App Distribution.
+#
+# Required secrets:
+#   - EXPO_TOKEN: Expo access token for EAS CLI
+#   - FIREBASE_APP_DISTRIBUTION_KEY: Firebase service-account JSON
+#
+# Replace:
+#   - @placeholder/mobile: Your mobile workspace package name
+#   - apps/mobile: Your mobile app directory, if different
+#   - <--FIREBASE_APP_ID-->: Your Firebase App Distribution app ID
+#   - <--FIREBASE_TESTER_GROUP-->: Your Firebase tester group
+
+name: Mobile Preview
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'apps/mobile/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: mobile-preview-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  preview:
+    name: Preview (${{ matrix.platform }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [ios, android]
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - uses: pnpm/action-setup@v6
+        with:
+          run_install: false
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: '.tool-versions'
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build mobile dependencies
+        run: pnpm --filter "@placeholder/mobile^..." build
+
+      - name: Setup EAS
+        uses: expo/expo-github-action@v9
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+          packager: pnpm
+
+      - name: Generate ${{ matrix.platform }} fingerprint
+        working-directory: apps/mobile
+        env:
+          EAS_BUILD_PROFILE: preview
+        run: pnpm dlx @expo/fingerprint fingerprint:generate --platform ${{ matrix.platform }}
+
+      - name: Build and submit iOS preview
+        if: matrix.platform == 'ios'
+        working-directory: apps/mobile
+        run: pnpm dlx eas-cli@latest build --profile preview --platform ios --auto-submit --non-interactive --wait
+
+      - name: Build Android preview
+        if: matrix.platform == 'android'
+        id: android-build
+        working-directory: apps/mobile
+        run: |
+          build=$(pnpm dlx eas-cli@latest build --profile preview --platform android --json --non-interactive --wait)
+          echo "id=$(echo "$build" | jq -er '.[0].id')" >> "$GITHUB_OUTPUT"
+
+      - name: Download Android APK
+        if: matrix.platform == 'android'
+        id: android-apk
+        working-directory: apps/mobile
+        run: |
+          download=$(pnpm dlx eas-cli@latest build:download --build-id "${{ steps.android-build.outputs.id }}" --json --non-interactive)
+          cp "$(echo "$download" | jq -er '.path')" "$GITHUB_WORKSPACE/app.apk"
+          echo "path=app.apk" >> "$GITHUB_OUTPUT"
+
+      - name: Distribute Android preview
+        if: matrix.platform == 'android'
+        uses: wzieba/Firebase-Distribution-Github-Action@v1.7.1
+        with:
+          appId: '<--FIREBASE_APP_ID-->'
+          serviceCredentialsFileContent: ${{ secrets.FIREBASE_APP_DISTRIBUTION_KEY }}
+          groups: '<--FIREBASE_TESTER_GROUP-->'
+          file: ${{ steps.android-apk.outputs.path }}
