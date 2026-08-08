@@ -11,6 +11,7 @@ Agent skills, shared the same way as configs.
 - [`living-docs`](skills/living-docs) - Scaffold, write, audit, and register living documentation for any project.
 - [`create-linear-tickets`](skills/create-linear-tickets) - Create and update Linear tickets with workspace checks and a structured draft.
 - [`humanizer`](skills/humanizer) - Apply the upstream Humanizer editorial guidance to prose.
+- [`simplified-technical-english`](skills/simplified-technical-english) - Apply explicit Simplified Technical English rules to selected prose.
 - [`llm-linter`](skills/llm-linter) - Match completed work to selected conventions, then apply the approved registry files.
   - [`new-prompt`](skills/llm-linter/new-prompt.md) - Workflow branch for creating a linter prompt.
   - [`commit`](skills/llm-linter/registry/commit.md) - Commit message and staging guidance.
