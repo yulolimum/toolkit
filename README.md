@@ -92,7 +92,7 @@ Interactive automation, one self-contained file per task. Every prompt has a fla
 - [`dev:check-code-quality`](scripts/dev-check-code-quality.mjs) - Pick and run any of TypeScript, ESLint, and Prettier. Remembers the selection.
 - [`dev:clean`](scripts/dev-clean.sh) - Recursively delete `node_modules`, build output, and caches.
 - [`dev:verify-software`](scripts/dev-verify-software.sh) - Check installed Node, pnpm, Java, Xcode, Android, and CocoaPods versions against the ranges set at the top of the script.
-- [`eas:build`](scripts/eas-build.mts) - Interactive EAS build. Prompts for platform, profile, and distribution, prints the assembled command, then runs it.
+- [`eas:build`](scripts/eas-build.mts) - Interactive EAS build for development, shared preview, or production. Prompts for platform and profile, prints the assembled command, then runs it.
 - [`eas:submit`](scripts/eas-submit.mts) - Submit a build to TestFlight or Play Store internal testing.
 - [`eas:update`](scripts/eas-update.mts) - Publish an over-the-air update to a channel, with an optional message.
 - [`linear:start-clockify-timer`](scripts/linear-start-clockify-timer.ts) - Start a Clockify timer from a Linear issue URL, or log a fixed duration retroactively.
@@ -199,13 +199,16 @@ Shareable config files. The root `eslint.config.mjs` and `prettier.config.mjs` r
 
 - [`eslint.config.mjs`](configs/eslint.config.mjs) - Flat ESLint config covering TypeScript, React, hooks, import sorting, and Prettier.
 - [`prettier.config.mjs`](configs/prettier.config.mjs) - Prettier with package.json, shell, and Tailwind plugins.
-- [`eas.json`](configs/eas.json) - EAS build and submit profiles. A base profile plus development, preview, and production in store and internal variants, including a per-PR channel profile.
+- [`eas.json`](configs/eas.json) - EAS build and submit profiles for development, PR previews, shared previews, and production releases.
 
 ## Workflows (`workflows/`)
 
 Reusable GitHub Actions workflows. Copy into `.github/workflows/` and replace the placeholders.
 
-- [`eas-preview-deploy.yml`](workflows/eas-preview-deploy.yml) - Per-PR EAS preview builds. Skips the native build when the fingerprint is unchanged, always publishes an OTA update, and comments build links and QR codes on the PR.
+- [`mobile-ci.yml`](workflows/mobile-ci.yml) - Runs mobile tests for non-draft pull requests.
+- [`mobile-pr-preview.yml`](workflows/mobile-pr-preview.yml) - Label-gated PR preview builds that reuse compatible native builds and publish PR OTA updates.
+- [`mobile-preview.yml`](workflows/mobile-preview.yml) - Builds shared previews after `main` merges, submits iOS to TestFlight, and distributes Android through Firebase App Distribution.
+- [`mobile-production.yml`](workflows/mobile-production.yml) - Manually builds and submits production iOS and Android releases.
 
 ## Docs (`docs/`)
 
@@ -213,7 +216,7 @@ Guides written for people, with no application-specific details.
 
 - [`dev-ai-setup.md`](docs/dev-ai-setup.md) - Preferred AI development setup: repository context, living documentation, and reusable skills shared globally.
 - [`dev-environment-setup.md`](docs/dev-environment-setup.md) - macOS React Native environment setup: brew, asdf, Node, pnpm, Java, CocoaPods, Xcode, and Android Studio.
-- [`dev-eas.md`](docs/dev-eas.md) - EAS concepts: configuration, code signing, the difference between build, submit, and update, and the OTA hotfix flow.
+- [`dev-eas.md`](docs/dev-eas.md) - EAS profiles, fingerprints, PR previews, Firebase tester distribution, store releases, and OTA updates.
 - [`dev-push-notifications.md`](docs/dev-push-notifications.md) - Push notification architecture, with Expo and Firebase options for both the server and client halves.
 
 ## Lib (`lib/`)
