@@ -4,7 +4,7 @@
   "description": "Personal development toolkit and reusable code registry organized by domain with interactive CLI interfaces and preference caching.",
   "type": "module",
   "scripts": {
-    "dev:check-code-quality": "npx zx --install ./scripts/dev-check-code-quality.mjs",
+    "dev:check-code-quality": "tsx scripts/dev-check-code-quality.ts",
     "dev:clean": "./scripts/dev-clean.sh",
     "dev:verify-software": "./scripts/dev-verify-software.sh",
     "eas:build": "tsx scripts/eas-build.mts",

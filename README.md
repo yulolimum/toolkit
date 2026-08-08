@@ -90,7 +90,7 @@ Reusable React and React Native hooks.
 
 Interactive automation, one self-contained file per task. Every prompt has a flag that skips it, and each script remembers your last answers.
 
-- [`dev:check-code-quality`](scripts/dev-check-code-quality.mjs) - Pick and run any of TypeScript, ESLint, and Prettier. Remembers the selection.
+- [`dev:check-code-quality`](scripts/dev-check-code-quality.ts) - Pick and run any of TypeScript, ESLint, and Prettier. Remembers the selection.
 - [`dev:clean`](scripts/dev-clean.sh) - Recursively delete `node_modules`, build output, and caches.
 - [`dev:verify-software`](scripts/dev-verify-software.sh) - Check installed Node, pnpm, Java, Xcode, Android, and CocoaPods versions against the ranges set at the top of the script.
 - [`eas:build`](scripts/eas-build.mts) - Interactive EAS build. Prompts for platform, profile, and distribution, prints the assembled command, then runs it.
