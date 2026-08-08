@@ -1,17 +1,21 @@
 ---
 name: living-docs
-description: Create, refresh, audit, and scaffold concise living documentation for a software project. Use when initializing project docs, updating documentation after implementation work, checking related docs for stale current-state information, maintaining a documentation registry, or proposing a new domain-level brief.
+description: Create, refresh, audit, and scaffold agent-facing living documentation in the `.agents/docs` system, including its registry, project/technical/domain briefs, and agent entry points. Use only for that system. Do not use for README files, user-facing documentation, changelogs, inline comments, or one-off documentation edits unless the user explicitly asks for living docs.
 ---
 
 # Living Docs
 
-Maintain project documentation as a compact map of current intent. Write durable, high-level context that helps an agent understand what the project is building and what each domain owns.
+Maintain the agent-facing `.agents/docs` system as a compact map of current intent. Write durable, high-level context that helps an agent understand what the project is building and what each domain owns.
+
+## Scope
+
+Use this skill only for agent-facing documentation in `.agents/docs`, its registry, or agent entry points that direct agents to that system. README files, user-facing documentation, changelogs, inline comments, and small standalone documentation edits are outside this skill's scope unless the user explicitly asks to apply Living Docs to them.
 
 ## Confirm scaffolding
 
 Treat `.agents/docs/index.md` as the Living Docs scaffold marker. When it exists, work within this documentation system and follow its registry rules. Do not inspect or adopt unrelated documentation structures as alternatives.
 
-If the registry is absent, do not update project documentation. Report that the Living Docs scaffold is missing. Scaffolding remains an explicit user decision.
+If the registry is absent, do not update agent-facing living documentation. Report that the Living Docs scaffold is missing. Scaffolding remains an explicit user decision.
 
 Root pointers and symlinks are part of the preferred scaffold, but a missing pointer does not block a documentation update once the registry exists. Report the setup issue and repair it only when the user asks.
 

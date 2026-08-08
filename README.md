@@ -90,6 +90,9 @@ Reusable React and React Native hooks.
 
 Interactive automation, one self-contained file per task. Every prompt has a flag that skips it, and each script remembers your last answers.
 
+- [`worktree-setup`](scripts/worktree-setup.ts) - Prepare a mobile worktree for an agent to use. Invoke with `pnpm exec tsx scripts/worktree-setup.ts`.
+- [`worktree-run`](scripts/worktree-run.ts) - Launch an isolated iOS or Android development session for the current worktree. Invoke with `pnpm exec tsx scripts/worktree-run.ts --platform ios` or `pnpm exec tsx scripts/worktree-run.ts --platform android`.
+- [`worktree-teardown`](scripts/worktree-teardown.ts) - Reclaim the mobile resources for a worktree when it is archived. Invoke with `pnpm exec tsx scripts/worktree-teardown.ts`.
 - [`dev:check-code-quality`](scripts/dev-check-code-quality.ts) - Pick and run any of TypeScript, ESLint, and Prettier. Remembers the selection.
 - [`dev:clean`](scripts/dev-clean.sh) - Recursively delete `node_modules`, build output, and caches.
 - [`dev:verify-software`](scripts/dev-verify-software.sh) - Check installed Node, pnpm, Java, Xcode, Android, and CocoaPods versions against the ranges set at the top of the script.
