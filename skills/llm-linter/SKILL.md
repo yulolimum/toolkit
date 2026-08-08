@@ -49,9 +49,16 @@ Conventions for inline and documentation comments in code. Apply when writing or
 ---
 
 **humanizer**
-`../humanizer/SKILL.md`
+`./registry/humanizer.md`
 tags: prose, writing, documentation, docs, guides, readme, markdown, pull-request, pr, slack, email, linear, tickets, client-communication, comms
-Points at the humanizer skill (read and apply that SKILL.md directly; no need to invoke the skill machinery). Apply to anything with prose: documentation, markdown files, guides, READMEs, pull request descriptions, Linear tickets, Slack messages, and replies to clients or coworkers.
+Invokes the humanizer skill for prose, including documentation, Markdown files, guides, READMEs, pull request descriptions, Linear tickets, Slack messages, and client or coworker communications.
+
+---
+
+**simplified-technical-english**
+`./registry/simplified-technical-english.md`
+tags: prose, writing, documentation, docs, guides, readme, markdown, pull-request, pr, slack, email, linear, tickets, client-communication, comms, simplified-technical-english, ste, asd-ste100, technical-writing
+Invokes the simplified-technical-english skill for prose, including documentation, Markdown files, guides, READMEs, pull request descriptions, Linear tickets, Slack messages, and client or coworker communications.
 
 ---
 

@@ -13,6 +13,8 @@ Agent skills, shared the same way as configs.
   - [`new-prompt`](skills/llm-linter/new-prompt.md) - Workflow branch for creating a linter prompt.
   - [`commit`](skills/llm-linter/registry/commit.md) - Commit message and staging guidance.
   - [`comments`](skills/llm-linter/registry/comments.md) - Code comment conventions.
+  - [`humanizer`](skills/llm-linter/registry/humanizer.md) - Invokes the Humanizer skill for prose editing.
+  - [`simplified-technical-english`](skills/llm-linter/registry/simplified-technical-english.md) - Invokes the Simplified Technical English skill for prose editing.
   - [`barrel-exports`](skills/llm-linter/registry/barrel-exports.md) - Direct-import conventions.
   - [`prefer-local-implementations`](skills/llm-linter/registry/prefer-local-implementations.md) - Guidance for preferring readable local code over premature extraction.
   - [`typescript-inference`](skills/llm-linter/registry/typescript-inference.md) - Return type inference guidance.
