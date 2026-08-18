@@ -5,7 +5,7 @@ import { homedir } from 'node:os'
 import { join } from 'node:path'
 
 const homeDirectory = homedir()
-const skillBlacklist = new Set(['link-global-skills'])
+const skillBlacklist = new Set(['toolkit-link-global-skills'])
 
 const providers = [
   {

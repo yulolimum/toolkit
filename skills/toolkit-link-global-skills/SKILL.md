@@ -1,5 +1,5 @@
 ---
-name: link-global-skills
+name: toolkit-link-global-skills
 description: Link a project's local skills into the user-level skill directories for Codex, Claude Code, and Cursor. Use when installing, synchronizing, repairing, or cleaning global skill symlinks.
 ---
 
@@ -18,14 +18,14 @@ If it blocks, run it from the intended repository root. Do not pass another repo
 Resolve the directory containing this `SKILL.md`, then run its sibling script from the active repository root:
 
 ```sh
-node /path/to/link-global-skills/scripts/link-global-skills.mjs
+node /path/to/toolkit-link-global-skills/scripts/link-global-skills.mjs
 ```
 
 ## Behavior
 
 - Clean only broken direct-child symlinks in `~/.agents/skills`, `~/.claude/skills`, and `~/.cursor/skills`.
 - Link every direct child of the local source that contains a `SKILL.md` file.
-- Skip names in the script's skill blacklist, including `link-global-skills` itself.
+- Skip names in the script's skill blacklist, including `toolkit-link-global-skills` itself.
 - Leave a matching symlink unchanged.
 - Never replace a file, directory, provider root, or symlink that points elsewhere. Report those entries as conflicts.
 - Create a missing provider directory as needed.
