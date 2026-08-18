@@ -1,5 +1,5 @@
 ---
-name: react-provider-pattern
+name: toolkit-react-provider-pattern
 description: Create React context providers following a strict four-part pattern — a private data hook, type-inference from its return, a thin provider component, and a consumer hook that either throws when used outside its provider or falls back to running the data hook directly. Use whenever asked to create, scaffold, or refactor a React context provider, a "*Provider" component, or a "use*" context consumer hook.
 ---
 
