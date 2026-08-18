@@ -4,8 +4,12 @@ node_modules
 scripts/.cache
 .eslintcache
 .env
-ai/memory
-ai/rules/.memory-registry
+
+# Local graph-dev specifications and project references
+.context/
+skills/toolkit-graph-dev-v1/references/*.md
+skills/toolkit-graph-dev-v2/references/*.md
+!skills/toolkit-graph-dev-v2/references/template.md
 
 #tmp
 scripts/media-join-video.sh

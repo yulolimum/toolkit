@@ -27,7 +27,7 @@ The exact names depend on the tools a project uses. Keep the information in one 
 
 ## Use living documentation for durable context
 
-The living-docs skill maintains a compact record of a project's current intent. It describes the current state instead of recent history and avoids repeating what is already clear from the source.
+The toolkit-living-docs skill maintains a compact record of a project's current intent. It describes the current state instead of recent history and avoids repeating what is already clear from the source.
 
 The skill starts from a documentation registry. Agents read that map first and then open only the briefs that relate to their task. The briefs cover the project's purpose and boundaries, its technical foundation, and durable domain concepts. This avoids asking every agent to start with one large instruction file.
 

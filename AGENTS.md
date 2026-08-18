@@ -2,6 +2,8 @@
 
 Read [.agents/docs/index.md](./.agents/docs/index.md).
 
+After a feature or change reaches its logical conclusion, such as during verification or before a commit, use the toolkit-living-docs skill to update the living documentation. Do not do this preemptively.
+
 ## Keep the README current
 
 [README.md](./README.md) catalogs everything in the toolkit. Update it in the same change, whenever you:

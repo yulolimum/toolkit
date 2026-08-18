@@ -2,32 +2,47 @@
 
 Personal development toolkit and source registry. Nothing here is published or installable. Copy the files you need into your own project and adapt them there.
 
-Everything here is meant to be copied out. Much of it runs in this repository too, which is how it stays exercised: the shared configs lint this repo, and the living-docs skill maintains its documentation.
+Everything here is meant to be copied out. Much of it runs in this repository too, which is how it stays exercised: the shared configs lint this repo, and the toolkit-living-docs skill maintains its documentation.
 
 ## Skills (`skills/`)
 
-Agent skills, shared the same way as configs.
+Agent skills, shared the same way as configs. Each skill has a README with a short overview and use instructions.
 
-- [`living-docs`](skills/living-docs) - Scaffold, write, audit, and register living documentation for any project.
-- [`llm-linter`](skills/llm-linter) - Match completed work to selected conventions, then apply the approved registry files.
-  - [`new-prompt`](skills/llm-linter/new-prompt.md) - Workflow branch for creating a linter prompt.
-  - [`commit`](skills/llm-linter/registry/commit.md) - Commit message and staging guidance.
-  - [`comments`](skills/llm-linter/registry/comments.md) - Code comment conventions.
-  - [`humanizer`](skills/llm-linter/registry/humanizer.md) - Invokes the Humanizer skill for prose editing.
-  - [`simplified-technical-english`](skills/llm-linter/registry/simplified-technical-english.md) - Invokes the Simplified Technical English skill for prose editing.
-  - [`barrel-exports`](skills/llm-linter/registry/barrel-exports.md) - Direct-import conventions.
-  - [`prefer-local-implementations`](skills/llm-linter/registry/prefer-local-implementations.md) - Guidance for preferring readable local code over premature extraction.
-  - [`typescript-inference`](skills/llm-linter/registry/typescript-inference.md) - Return type inference guidance.
-  - [`tanstack-query-data-fetching`](skills/llm-linter/registry/tanstack-query-data-fetching.md) - TanStack Query data-fetching and mutation guidance.
-  - [`markdown`](skills/llm-linter/registry/markdown.md) - Markdown formatting guidance.
-- [`link-global-skills`](skills/link-global-skills) - Link local skills individually into the global directories for Codex, Claude Code, and Cursor.
-- [`create-linear-tickets`](skills/create-linear-tickets) - Create and update Linear tickets with workspace checks and a structured draft.
-- [`humanizer`](skills/humanizer) - Apply the upstream Humanizer editorial guidance to prose.
-- [`simplified-technical-english`](skills/simplified-technical-english) - Apply explicit Simplified Technical English rules to selected prose.
-- [`typescript-script-pattern`](skills/typescript-script-pattern) - Build TypeScript automation scripts with consistent prompt, CLI, cache, and logging conventions.
-- [`react-provider-pattern`](skills/react-provider-pattern) - Create React context providers with a data hook, thin provider, and guarded consumer hook.
-- [`generate-pr-description`](skills/generate-pr-description) - Generate a concise pull-request description from the branch diff.
-- [`dependency-catalog-upgrade`](skills/dependency-catalog-upgrade) - Consolidate monorepo dependency versions into a catalog, pin them, and upgrade them.
+- [`toolkit-living-docs`](skills/toolkit-living-docs) - Scaffold, write, audit, and register living documentation for any project.
+  - [`README`](skills/toolkit-living-docs/README.md) - Overview and use instructions.
+  - [`references/index.md`](skills/toolkit-living-docs/references/index.md) - Registry template for new Living Docs scaffolds.
+- [`toolkit-llm-linter`](skills/toolkit-llm-linter) - Match completed work to selected conventions, then apply the approved registry files.
+  - [`README`](skills/toolkit-llm-linter/README.md) - Overview and use instructions.
+  - [`new-prompt`](skills/toolkit-llm-linter/new-prompt.md) - Workflow branch for creating a linter prompt.
+  - [`commit`](skills/toolkit-llm-linter/registry/commit.md) - Commit message and staging guidance.
+  - [`comments`](skills/toolkit-llm-linter/registry/comments.md) - Code comment conventions.
+  - [`humanizer`](skills/toolkit-llm-linter/registry/humanizer.md) - Invokes the Humanizer skill for prose editing.
+  - [`simplified-technical-english`](skills/toolkit-llm-linter/registry/simplified-technical-english.md) - Invokes the Simplified Technical English skill for prose editing.
+  - [`barrel-exports`](skills/toolkit-llm-linter/registry/barrel-exports.md) - Direct-import conventions.
+  - [`prefer-local-implementations`](skills/toolkit-llm-linter/registry/prefer-local-implementations.md) - Guidance for preferring readable local code over premature extraction.
+  - [`typescript-inference`](skills/toolkit-llm-linter/registry/typescript-inference.md) - Return type inference guidance.
+  - [`tanstack-query-data-fetching`](skills/toolkit-llm-linter/registry/tanstack-query-data-fetching.md) - TanStack Query data-fetching and mutation guidance.
+  - [`markdown`](skills/toolkit-llm-linter/registry/markdown.md) - Markdown formatting guidance.
+- [`toolkit-link-global-skills`](skills/toolkit-link-global-skills) - Link local skills individually into the global directories for Codex, Claude Code, and Cursor.
+  - [`README`](skills/toolkit-link-global-skills/README.md) - Overview and use instructions.
+- [`toolkit-create-linear-tickets`](skills/toolkit-create-linear-tickets) - Create and update Linear tickets with workspace checks and a structured draft.
+  - [`README`](skills/toolkit-create-linear-tickets/README.md) - Overview and use instructions.
+- [`toolkit-humanizer`](skills/toolkit-humanizer) - Apply the upstream Humanizer editorial guidance to prose.
+  - [`README`](skills/toolkit-humanizer/README.md) - Overview and use instructions.
+- [`toolkit-simplified-technical-english`](skills/toolkit-simplified-technical-english) - Apply the upstream ASD-STE100 skill to selected prose.
+  - [`README`](skills/toolkit-simplified-technical-english/README.md) - Overview and use instructions.
+- [`toolkit-typescript-script-pattern`](skills/toolkit-typescript-script-pattern) - Build TypeScript automation scripts with consistent prompt, CLI, cache, and logging conventions.
+  - [`README`](skills/toolkit-typescript-script-pattern/README.md) - Overview and use instructions.
+- [`toolkit-react-provider-pattern`](skills/toolkit-react-provider-pattern) - Create React context providers with a data hook, thin provider, and guarded consumer hook.
+  - [`README`](skills/toolkit-react-provider-pattern/README.md) - Overview and use instructions.
+- [`toolkit-generate-pr-description`](skills/toolkit-generate-pr-description) - Generate a concise pull-request description from the branch diff.
+  - [`README`](skills/toolkit-generate-pr-description/README.md) - Overview and use instructions.
+- [`toolkit-dependency-catalog-upgrade`](skills/toolkit-dependency-catalog-upgrade) - Consolidate monorepo dependency versions into a catalog, pin them, and upgrade them.
+  - [`README`](skills/toolkit-dependency-catalog-upgrade/README.md) - Overview and use instructions.
+- [`toolkit-graph-dev-v1`](skills/toolkit-graph-dev-v1) - Research a surface area into a spec of dependency-ordered work units, then implement one unit from that spec.
+  - [`README`](skills/toolkit-graph-dev-v1/README.md) - Overview and use instructions.
+- [`toolkit-graph-dev-v2`](skills/toolkit-graph-dev-v2) - Research, implement, and refine a spec with dependency-ordered units and reviewable chunks.
+  - [`README`](skills/toolkit-graph-dev-v2/README.md) - Overview and use instructions.
 
 ## Services (`services/`)
 
