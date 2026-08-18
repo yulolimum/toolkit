@@ -1,5 +1,5 @@
 ---
-name: llm-linter
+name: toolkit-llm-linter
 description: Apply selected conventions after implementation by matching the task to focused registry files and asking which to read. Use when the user asks to lint, align, clean up, apply conventions, write a commit message, polish completed work, or create a linter prompt.
 ---
 
@@ -11,7 +11,7 @@ This file is a **registry**, not the rules. The convention files live in [regist
 
 ## New prompt
 
-Use this branch when the user invokes `llm-linter new prompt`, asks to create or register a linter prompt, or asks to prevent a recurring problem in future work. Read [new-prompt.md](./new-prompt.md) and follow it. Do not run the selection workflow in this branch.
+Use this branch when the user invokes `toolkit-llm-linter new prompt`, asks to create or register a linter prompt, or asks to prevent a recurring problem in future work. Read [new-prompt.md](./new-prompt.md) and follow it. Do not run the selection workflow in this branch.
 
 ## Workflow (follow this exactly)
 
@@ -51,14 +51,14 @@ Conventions for inline and documentation comments in code. Apply when writing or
 **humanizer**
 `./registry/humanizer.md`
 tags: prose, writing, documentation, docs, guides, readme, markdown, pull-request, pr, slack, email, linear, tickets, client-communication, comms
-Invokes the humanizer skill for prose, including documentation, Markdown files, guides, READMEs, pull request descriptions, Linear tickets, Slack messages, and client or coworker communications.
+Invokes the toolkit-humanizer skill for prose, including documentation, Markdown files, guides, READMEs, pull request descriptions, Linear tickets, Slack messages, and client or coworker communications.
 
 ---
 
 **simplified-technical-english**
 `./registry/simplified-technical-english.md`
 tags: prose, writing, documentation, docs, guides, readme, markdown, pull-request, pr, slack, email, linear, tickets, client-communication, comms, simplified-technical-english, ste, asd-ste100, technical-writing
-Invokes the simplified-technical-english skill for prose, including documentation, Markdown files, guides, READMEs, pull request descriptions, Linear tickets, Slack messages, and client or coworker communications.
+Invokes the toolkit-simplified-technical-english skill for prose, including documentation, Markdown files, guides, READMEs, pull request descriptions, Linear tickets, Slack messages, and client or coworker communications.
 
 ---
 

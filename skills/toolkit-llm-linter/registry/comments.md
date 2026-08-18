@@ -2,6 +2,8 @@
 
 By default, do not add comments. Comments add maintenance cost. Remove comments that only restate behavior the code makes clear.
 
+One question decides every comment: does it explain something a human would otherwise misread? If yes it stays. If no it goes.
+
 ## Remove comments that restate the code
 
 Delete any comment that a competent reader can understand from the code itself. The code shows the behavior. The comment adds no information. It is noise. Remove it.
@@ -63,6 +65,12 @@ For a function, component, hook, or exported declaration, use **TSDoc/JSDoc** bl
 function useDebouncedValue<T>(value: T, delayMs: number) { ... }
 ```
 
+## Form never justifies existence
+
+`//` is for inline comments. `/** */` is for TSDoc on a declaration, where the editor surfaces it on hover. Pick the form from what the comment attaches to, never from wanting to keep the text.
+
+Do not promote a `//` comment to `/** */` during a cleanup pass. A comment that cannot survive as `//` is a comment to delete, and dressing it as documentation only launders it past the pass. Do not wrap a non-exported local in a block comment to give it the same cover.
+
 ## Applying this as a cleanup pass
 
-For existing code, remove every self-explanatory comment. Keep comments that give needed information. Convert function and component documentation to TSDoc style when it is not already TSDoc.
+For existing code, remove every self-explanatory comment. Keep comments that give needed information. Decide whether a comment survives before considering its form; only then, if a surviving comment documents an exported declaration, write it as TSDoc.
