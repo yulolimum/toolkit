@@ -1,5 +1,5 @@
 ---
-name: dependency-catalog-upgrade
+name: toolkit-dependency-catalog-upgrade
 description: Consolidate monorepo dependency versions into a pnpm or Bun catalog, pin them, and upgrade them. Use when standardizing or updating dependencies across workspaces.
 ---
 
