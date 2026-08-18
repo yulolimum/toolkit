@@ -1,5 +1,5 @@
 ---
-name: living-docs
+name: toolkit-living-docs
 description: Create, refresh, audit, and scaffold agent-facing living documentation in the `.agents/docs` system, including its registry, project/technical/domain briefs, and agent entry points. Use only for that system. Do not use for README files, user-facing documentation, changelogs, inline comments, or one-off documentation edits unless the user explicitly asks for living docs.
 ---
 
@@ -49,7 +49,7 @@ Scaffolding starts only when the user explicitly requests it. Once requested, cr
 
 When the user requests scaffolding, use this structure:
 
-- Create `.agents/docs/index.md` from [assets/index.md](./assets/index.md). Preserve the template guidance above `## Registry`; only the registry section is dynamic.
+- Create `.agents/docs/index.md` from [references/index.md](./references/index.md). Preserve the template guidance above `## Registry`; only the registry section is dynamic.
 - Create root `AGENTS.md` with only this content:
 
   ```md
@@ -101,15 +101,13 @@ Do not create a registry in a repository that has not explicitly requested scaff
 
 When replacing or retiring existing documentation, complete the coverage review before deleting source documents. Do not assume a broad summary covers distinct durable concerns.
 
-## Humanize the completed draft
+## Apply the editorial pass
 
-After preparing all documentation and registry changes, read the full upstream Humanizer instructions at https://raw.githubusercontent.com/blader/humanizer/refs/heads/main/SKILL.md. Do not rely on a remembered summary of that file.
+After preparing all documentation and registry changes, invoke the `toolkit-simplified-technical-english` skill in STE-flavored mode. Apply it to the changed documentation prose, including registry descriptions.
 
-Apply those instructions as an embedded editorial pass to the changed documentation prose, including registry descriptions. Preserve every supported fact and do not introduce new claims. Use the project's clearly human-authored documentation as the voice sample when available. Otherwise, use a neutral technical reference voice.
+Preserve every supported fact. Do not introduce new claims. Keep headings, document ordering, registry structure, registry references, and tags intact.
 
-Keep meaningful organization intact. Preserve headings, document ordering, registry structure, concise lists, registry references, and tags when they make the content easier to navigate. A Humanizer pass may simplify an artificial label-and-sentence list, but must not flatten a useful list into paragraphs. Rewrite it as a simpler list instead. Do not preserve filler lists, outline-shaped future sections, or list formatting that obscures a simpler sentence.
-
-If the upstream file cannot be read, do not claim that the Humanizer pass ran. Stop before finalizing documentation changes and report the failed editorial step.
+If the editorial pass cannot run, do not claim that it ran. Stop before finalizing the documentation changes. Report the failed editorial step. Ask the user how to proceed.
 
 ## Finish
 
