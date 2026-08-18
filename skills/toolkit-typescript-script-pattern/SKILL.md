@@ -1,5 +1,5 @@
 ---
-name: typescript-script-pattern
+name: toolkit-typescript-script-pattern
 description: Write TypeScript automation scripts with a consistent structure for prompts, arguments, caching, logging, and tsx execution. Use when creating or updating TypeScript command-line automation.
 ---
 
