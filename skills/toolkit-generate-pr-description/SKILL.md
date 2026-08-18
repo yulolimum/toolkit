@@ -1,5 +1,5 @@
 ---
-name: generate-pr-description
+name: toolkit-generate-pr-description
 description: Generate concise, human-readable pull request descriptions from the diff between a base branch and the current branch. Use when creating a pull request, preparing release notes, or summarizing branch work for review.
 ---
 
@@ -77,8 +77,8 @@ Collect the editorial pass and Proofs format with the prompt above unless the us
 
 After drafting, apply the selected skill:
 
-- ste: Apply simplified-technical-english.
-- humanizer: Apply humanizer.
+- ste: Apply toolkit-simplified-technical-english.
+- humanizer: Apply toolkit-humanizer.
 
 Use the skill name. Do not use a filesystem path or external URL.
 
@@ -285,7 +285,7 @@ For a larger diff, inspect relevant files. Summarize large refactors. Focus on p
 
 ### Example 2: Bug fix
 
-**User request:** "/generate-pr-description"
+**User request:** "/toolkit-generate-pr-description"
 
 **Process:**
 
