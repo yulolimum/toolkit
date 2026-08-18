@@ -1,13 +1,13 @@
 ---
-name: create-linear-tickets
-description: Create and update Linear tickets through the Linear MCP with workspace checks, explicit approval, labels and project prompts, and structured task descriptions. Use when creating, updating, or commenting on Linear tickets.
+name: toolkit-create-linear-tickets
+description: Create and update Linear tickets through the Linear MCP with workspace checks, explicit approval, labels, project, and estimate prompts, and structured task descriptions. Use when creating, updating, or commenting on Linear tickets.
 ---
 
 # Create Linear Tickets
 
 Rules for creating and updating Linear tickets. Follow these exactly — they encode the user's hard preferences.
 
-**Keep everything high-level and concise — except Technical Details.** Overview, Description, and Acceptance Criteria should stay brief and avoid over-explaining; say what's needed and stop. Technical Details is the only section where depth is welcome. Beyond brevity, apply the `humanizer` skill so prose reads naturally.
+**Keep everything high-level and concise — except Technical Details.** Overview, Description, and Acceptance Criteria should stay brief and avoid over-explaining; say what's needed and stop. Technical Details is the only section where depth is welcome. Beyond brevity, apply the `toolkit-humanizer` skill so prose reads naturally.
 
 ## Assignment
 
@@ -17,9 +17,9 @@ Rules for creating and updating Linear tickets. Follow these exactly — they en
 
 **Never automatically create a ticket.** Every ticket requires the user's explicit approval first.
 
-1. Before drafting, **read the upstream Humanizer instructions** at <https://raw.githubusercontent.com/blader/humanizer/refs/heads/main/SKILL.md> and apply its tone and voice guidance to all ticket prose so the draft doesn't read as AI-generated.
-2. Run the read-only preflight in Sections 1-3. This is required even when the user only asks for a draft.
-3. Present a **draft** of the ticket (title, description following the structure below, and proposed labels/project).
+1. Before drafting, **read the upstream Humanizer instructions** at <https://raw.githubusercontent.com/blader/humanizer/ebf637bdae86b62a7b006c447bb98cfa0ccc979d/SKILL.md> and apply its tone and voice guidance to all ticket prose so the draft doesn't read as AI-generated.
+2. Run the read-only preflight in Sections 1-4. This is required even when the user only asks for a draft.
+3. Present a **draft** of the ticket (title, description following the structure below, and proposed labels/project/estimate).
 4. **Iterate** with the user on the draft until they're satisfied.
 5. Only after the user **explicitly approves** do you call the Linear MCP to create the ticket.
 
@@ -61,14 +61,30 @@ Same pattern as labels:
 - Ask: "Your recent work is under project `X` — assign this ticket to it?"
 - Don't assign a project without confirmation.
 
-## 4. Ticket framing — it's a TASK
+## 4. Estimates (infer the scale, always prompt)
+
+Estimation is configured **per team**, and the MCP does not expose that configuration — `get_team` returns only id, name, and timestamps. Infer the scale from real data instead of assuming one:
+
+- Read the `estimate` field on the user's recently assigned tickets for the same team (`list_issues` with `fields: ["estimate", "team"]`). Each estimate comes back as `{value, name}`, where `name` is the team's own label for it (for example `5 Points`).
+- Infer the scale from the values in use — Fibonacci (1, 2, 3, 5, 8), exponential (1, 2, 4, 8), linear (1, 2, 3, 4, 5), or t-shirt sizes, which Linear stores as the numbers 1-5.
+- Propose only a value that already appears on that team's tickets. Never introduce a value from a scale the team doesn't use.
+- If recent tickets carry no estimates at all, the team most likely has estimation turned off. Say so and propose none rather than guessing a scale.
+- Show the proposed estimate in the draft with the reasoning in one line, and ask for approval before applying it.
+- Don't send `estimate: 0` unless the team's tickets show zero as a real value. On most teams zero is rejected.
+
+When the user states the estimate outright ("set estimate to 5 points", "make it a 3"), take it at face value — don't infer a scale and don't ask for approval on a value they just gave you:
+
+- Read the number out of the phrasing. `estimate` takes a plain number, so "5 points" is `5`, and a t-shirt size is its 1-5 position (XS=1 … XL=5).
+- Apply it directly. Only push back if the value contradicts the team's scale — a `4` on a Fibonacci team, or a size name on a points team — and then say what the team actually uses instead of silently rounding.
+
+## 5. Ticket framing — it's a TASK
 
 Every ticket is written as **a task to be completed**, with the intent of working on it — not an exploratory note or a knowledge dump.
 
 - Do **not** add random context bits that don't belong in a task.
 - Only add broader/background context when the user **explicitly asks** for it.
 
-## 5. Description structure
+## 6. Description structure
 
 Use these sections in order. Omit a section only if it genuinely doesn't apply.
 
@@ -100,16 +116,17 @@ Use these sections in order. Omit a section only if it genuinely doesn't apply.
 - Allowed, but keep them **terse and concise** — short, high-level outcomes only.
 - **Do not** put implementation details here; those belong in **Technical Details**. Prefer expanding Technical Details over a long acceptance-criteria list.
 
-## 6. After creation — offer to rename the branch
+## 7. After creation — offer to rename the branch
 
 When a ticket is created while working inside a project or repository, **offer** to rename the current git branch to Linear's suggested branch name.
 
 - **Always ask first. Never rename automatically.**
 - If the user declines, do nothing — leave the branch as-is.
 
-## 7. Updating tickets
+## 8. Updating tickets
 
 - When asked to **update the description**, rewrite it following the same section rules above.
+- Field-only changes — estimate, labels, project, priority, assignee — are a direct `save_issue` on the existing ticket. Don't redraft the description or rerun the full preflight for them. Section 4 still governs an estimate the user hasn't specified.
 - Context that does **not** fit the description structure goes in a **top-level comment**, not the description.
   - Comments can be **more technical/freeform**.
   - Example: research or context discovered after starting work → add it as a comment, not by bloating the description.
