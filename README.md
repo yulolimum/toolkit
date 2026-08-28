@@ -23,6 +23,10 @@ Agent skills, shared the same way as configs. Each skill has a README with a sho
   - [`typescript-inference`](skills/toolkit-llm-linter/registry/typescript-inference.md) - Return type inference guidance.
   - [`tanstack-query-data-fetching`](skills/toolkit-llm-linter/registry/tanstack-query-data-fetching.md) - TanStack Query data-fetching and mutation guidance.
   - [`markdown`](skills/toolkit-llm-linter/registry/markdown.md) - Markdown formatting guidance.
+  - [`jsx-truthiness`](skills/toolkit-llm-linter/registry/jsx-truthiness.md) - JSX truthiness and conditional-rendering guidance.
+  - [`zod-schema-naming`](skills/toolkit-llm-linter/registry/zod-schema-naming.md) - Zod schema naming and inferred-type guidance.
+  - [`react-hook-form`](skills/toolkit-llm-linter/registry/react-hook-form.md) - React Hook Form usage and submit-handler guidance.
+  - [`component-style-slots`](skills/toolkit-llm-linter/registry/component-style-slots.md) - Component class and style slot guidance.
 - [`toolkit-link-global-skills`](skills/toolkit-link-global-skills) - Link local skills individually into the global directories for Codex, Claude Code, and Cursor.
   - [`README`](skills/toolkit-link-global-skills/README.md) - Overview and use instructions.
 - [`toolkit-create-linear-tickets`](skills/toolkit-create-linear-tickets) - Create and update Linear tickets with workspace checks and a structured draft.
