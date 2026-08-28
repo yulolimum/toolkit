@@ -66,3 +66,13 @@ What proves a chunk works when static checks cannot. Name the tooling. Say how t
 How to name a branch for each chunk. What each branch starts from.
 
 > Name them `<user>/<chunk-id>`. Chunk 1 starts from the current tip. Each later chunk starts from the one before it.
+
+## Commits
+
+How to write a unit's commit message. Any steps to do before the commit, and what to do if one of them fails. Remove this section if the project has none.
+
+> Write the subject in the imperative. Use sentence case. Do not add a type prefix or a scope. Keep it under eight words.
+>
+> > `Add archive list route`
+>
+> Run the pre-commit hooks before each commit. Every hook must pass. If a hook fails on a file this unit does not own, commit with `--no-verify` and record it.

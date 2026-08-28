@@ -59,6 +59,8 @@ One message. Then stop. This is the only gate that always waits, because scope g
 
 **Branches.** The branch each chunk will get, and what it stacks on.
 
+**Commits.** The message format in force, and any steps to do before a commit.
+
 **Drift.** Anything found in stage 0, or "none."
 
 **Questions.** Usually none. See below.
@@ -150,7 +152,7 @@ Self-check the diff for scope creep, regressions, stale state, unhandled loading
 
 ### Closing a unit
 
-Commit the unit's changes. One commit per unit, naming the unit id.
+Commit the unit's changes. One commit per unit. The project reference gives the message format and any steps to do before the commit. With no reference instruction, name the unit id in the message.
 
 Write `built/<unit-id>.json`, per the schema. Record the branch, the commits, the files touched, every assumption made, every criterion that could not be implemented as written, anything left unverified, and anything noticed but deliberately not acted on.
 
@@ -190,7 +192,7 @@ On stopping, leave the current unit `in_progress`, leave completed units `done`,
 
 The user may ask for a change to work already done, in this session or a later one.
 
-Route the request to the chunk that owns the affected unit. That chunk's agent makes the change, re-runs the affected unit's checks, and commits it as a new commit naming the unit. Amending rewrites history that later chunks are stacked on; treat it as a project decision, not a default.
+Route the request to the chunk that owns the affected unit. That chunk's agent makes the change, re-runs the affected unit's checks, and commits it as a new commit. The commit follows the same reference instructions as any other unit commit. Amending rewrites history that later chunks are stacked on; treat it as a project decision, not a default.
 
 Then cascade. Every chunk after the changed one rebases onto the new tip, in order, and adapts its own work. Each one re-runs its checks. Report each as it lands.
 
