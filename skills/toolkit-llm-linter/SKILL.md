@@ -94,3 +94,31 @@ Conventions for frontend data fetching and mutations with TanStack Query. Apply 
 `./registry/markdown.md`
 tags: markdown, md, docs, documentation, guides, readme, prose, formatting, word-wrap, hard-wrap, unwrap
 General conventions for writing and editing markdown documents. Apply when authoring or editing any `.md` file.
+
+---
+
+**jsx-truthiness**
+`./registry/jsx-truthiness.md`
+tags: jsx, react, conditional-rendering, readability
+Simplify JSX truth checks and conditional rendering.
+
+---
+
+**zod-schema-naming**
+`./registry/zod-schema-naming.md`
+tags: zod, schema, typescript, inference, naming, pascal-case
+Names Zod schemas in PascalCase and gives needed inferred types the same name.
+
+---
+
+**react-hook-form**
+`./registry/react-hook-form.md`
+tags: react-hook-form, forms, react, typescript, useform, resolver, schema, validation
+Conventions for React Hook Form inference, form access, and submit handlers.
+
+---
+
+**component-style-slots**
+`./registry/component-style-slots.md`
+tags: react, react-native, components, props, styling, classnames, styles, slots, typescript
+Uses slot-based class and style props when reusable components expose multiple styling targets.

@@ -21,9 +21,11 @@ Commit only as the repository author. Do not add co-author, attribution, or trai
 
 ## Commit granularity and batching
 
-Treat commit history as a chronological record of implementation. Do not treat it only as a collection of release-ready snapshots.
+Treat commit history as a chronological record of implementation. Commits exist for review, not for shippable states. Do not treat them as a collection of release-ready snapshots.
 
 Prefer multiple phase-level commits over one feature-level commit.
+
+Report the batches as a plain list of what each one contains. Do not justify the split, do not explain why a batch is separate, and do not narrate what would not have made sense. The batching rules below are the reasoning; repeating them back is noise.
 
 Batch tightly related files together only when they implement the same conceptual layer and reviewers would normally review or revert them together. A shared component and its state hook can belong in one commit when they form one public abstraction.
 
@@ -36,8 +38,9 @@ Before staging, identify the implementation batches and their order. For each ba
 - Group files by conceptual phase and intent.
 - Include related files that form one reviewable unit.
 - Keep later consumer work separate from prerequisite shared work.
-- Stage only the files or hunks for the current batch.
-- Use partial staging when a file contains multiple phases.
+- Stage only the whole files for the current batch.
+
+Never partial stage. Do not stage hunks, do not use `git add -p`, and do not edit a file to remove part of its changes so the rest can be staged alone. A file is the smallest unit a batch can contain. When one file holds work belonging to two batches, put that file in one batch and say nothing further about it.
 
 Intermediate commits can intentionally break typechecking, builds, or downstream consumers when this reflects the requested implementation sequence. Do not add compatibility layers or migrate unrelated consumers only to make an intermediate commit green.
 
