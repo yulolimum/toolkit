@@ -225,6 +225,8 @@ Written by the implement workflow when a unit closes. One file per unit.
   "branch": "",
   "commits": [],
   "files": [],
+  "checks": [{ "command": "", "status": "pass", "detail": "" }],
+  "criteria": [{ "criterion": "", "verdict": "met", "evidence": "" }],
   "assumptions": [{ "detail": "", "reason": "" }],
   "criteria_deviations": [{ "criterion": "", "why": "", "instead": "" }],
   "spec_corrections": [{ "target": "", "says": "", "reality": "" }],
@@ -234,6 +236,12 @@ Written by the implement workflow when a unit closes. One file per unit.
 ```
 
 This is the record of what happened, not a place for pending instructions. Work still to be done lives in `units/`.
+
+`criteria` is the proof of completion, one entry per acceptance criterion. `criterion` is the unit's text, verbatim. `verdict` is `met` or `deviated`, and every `deviated` verdict pairs with a `criteria_deviations` entry for the same criterion. `evidence` is one line saying how the verdict was reached: the check that proves it, the file and line that implements it, or the reasoning where nothing sharper exists. A verdict without evidence is a claim, and the record exists to hold more than claims.
+
+`checks` records the final result of every command in the unit's `verify` array, plus anything else that was run. `status` is `pass` or `fail`. A unit does not close `done` while any of its checks is failing.
+
+Records written before these two fields existed warn in the validator instead of failing. Do not backfill a verdict that was never actually reached.
 
 `criteria_deviations` is the load-bearing field. When a criterion turns out to be unimplementable as written, record what it asked for, why it could not be done, and what was done instead. Without it, a later session re-reading the spec hits the same wall and may solve it differently.
 
@@ -247,7 +255,11 @@ Use it when a judgment call during building invalidated something written down. 
 
 ## Integrity gates
 
-A valid bundle passes all of these. The research and refine workflows run them before closing. They describe the format, not a process, so a failure is a defect in the bundle rather than a step someone skipped.
+A valid bundle passes all of these. They describe the format, not a process, so a failure is a defect in the bundle rather than a step someone skipped.
+
+`scripts/validate-bundle.mjs` in the skill directory settles the mechanical gates: run it with node against the bundle root and read the report. A failure blocks closing. A warning does not, but it gets resolved or reported, never dropped. The report ends with the gates the script cannot settle; those take judgment, and reading is how they get settled.
+
+Research and refine run the validator before closing, then the judgment gates, then anything the project reference adds. Implement runs it at intake, where a failure is a blocker to report rather than fix, and again as each unit closes, which is when the build-record gates first have data.
 
 | Gate | Check |
 |---|---|
@@ -256,6 +268,7 @@ A valid bundle passes all of these. The research and refine workflows run them b
 | Claim overlap | Where several units reference one entry, no two claim the same change, and each declares in `non_goals` what it leaves to the others |
 | Reuse reachability | Every `reuse_as_is` entry is referenced by at least one unit |
 | Unit grounding | Every unit references at least one surface entry |
+| Acceptance present | Every unit states at least one acceptance criterion |
 | Unit scope | No unit title requires "and" to be accurate |
 | Reference integrity | Every `surface_refs`, `decision_refs`, `notes_refs`, `depends_on`, `refines`, and `states[].source` target exists |
 | Notes reachability | Every file in `notes/` is referenced by at least one unit |
@@ -269,8 +282,11 @@ A valid bundle passes all of these. The research and refine workflows run them b
 | Constraint check | Every constraint has a stated verdict, with violations listed |
 | Prose references | Every unit id named in an `acceptance`, `non_goals`, or `behavior` string exists |
 | Prose agreement | No count, name, or claim in an acceptance criterion contradicts a notes file, a constraint verdict, or a resolved decision |
+| Build record coverage | Every `done` unit has a `built/` record naming its chunk, branch, and commits |
+| Criteria verdicts | A `done` unit's record holds a verdict with evidence for each acceptance criterion, verbatim, and every `deviated` verdict pairs with a `criteria_deviations` entry |
+| Check results | Every `verify` command of a `done` unit appears in its record's `checks` with `pass`, and no `done` unit records a failing check |
 
-Unclaimed `modify` means a change was researched and never planned. An unreferenced `reuse_as_is` entry means a "do not rebuild this" finding will never reach the agent that builds, since it loads only its own unit's references. A unit with no surface refs means work was invented with no grounding. All three are silent failures otherwise.
+Unclaimed `modify` means a change was researched and never planned. An unreferenced `reuse_as_is` entry means a "do not rebuild this" finding will never reach the agent that builds, since it loads only its own unit's references. A unit with no surface refs means work was invented with no grounding. All three are silent failures otherwise. The build-record gates bind only `done` units: a done unit with no record, no verdict, or a failing check is a completion claim with nothing behind it.
 
 The project reference may add gates. Run those after these.
 

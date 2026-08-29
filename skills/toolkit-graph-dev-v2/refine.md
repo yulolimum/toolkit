@@ -113,7 +113,7 @@ Record the request itself as a resolved decision, with the user's reasoning. Six
 
 ## Stage 3: Finalize
 
-Run the integrity gates in `schema.md`, then any the project reference adds. They apply unchanged: appended units and surface entries face the same checks as the originals.
+Run the bundle validator, `scripts/validate-bundle.mjs` in the skill directory, with node against the bundle root. It settles the mechanical gates in `schema.md`, and the first three gates below. The judgment gates it lists, and the last three below, get settled by reading. Then run any gates the project reference adds. The gates apply unchanged: appended units and surface entries face the same checks as the originals.
 
 Then these:
 

@@ -228,7 +228,7 @@ Adding units changes what the gates check, so the gates run after this step, not
 
 ### Gates
 
-Run the integrity gates in `schema.md`, then any the project reference adds. Report every failure. Do not close with one open.
+Run the bundle validator, `scripts/validate-bundle.mjs` in the skill directory, with node against the bundle root. It settles the mechanical gates in `schema.md` and ends by listing the judgment gates it cannot settle. Settle those by reading, then run any gates the project reference adds. Report every failure. Do not close with one open. Read every warning and either resolve it or carry it into the report.
 
 ### Close
 
