@@ -130,6 +130,8 @@ It does not receive units from other chunks. It does not receive a later unit's 
 
 `links` on the index or on a unit is not part of any slice. Those are pointers for people. Do not follow them, and do not treat anything they lead to as a requirement.
 
+**Coding-style skill.** If the reference names one, instruct the subagent to invoke it before its first unit. It governs how code gets written, never what gets built.
+
 ### What a subagent does per unit
 
 Set the unit's `status` to `in_progress` in `index.json`.
