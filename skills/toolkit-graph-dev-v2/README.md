@@ -30,6 +30,7 @@ Store project-specific references in `references/`. This repository ignores them
 | `implement.md` | The implement workflow. |
 | `refine.md` | The refine workflow. |
 | `references/` | One file for each project. |
+| `scripts/validate-bundle.mjs` | Checks the mechanical gates. All three workflows run it. |
 
 The skill reads `schema.md` and one workflow file, not all of them.
 
@@ -159,7 +160,7 @@ Chunks group the units for review. Their order is their dependency.
 
 Each unit has a status: `pending`, `in_progress`, or `done`. The implement workflow sets it.
 
-Each finished unit has a build record in `built/`. The record holds the branch, the commits, the changed files, the assumptions, any criterion that was not possible as written, and any place the specification itself was wrong.
+Each finished unit has a build record in `built/`. The record holds the branch, the commits, the changed files, the assumptions, any criterion that was not possible as written, and any place the specification itself was wrong. The record also holds a verdict for each acceptance criterion, with one line of evidence, and the result of each check. A unit is `done` only when the record shows each criterion met, or deviated with a reason, and each check passing.
 
 Building reveals things research cannot. The skill makes the judgment call and records the correction. Refine reads these records and can add units that bring the specification back in line.
 

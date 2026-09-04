@@ -43,6 +43,10 @@ Read `built/` if it exists. It records what a previous session did: which units 
 
 Compare the files named in the chain's `surface_refs` against what the surface entries describe. Drift is when a file the spec describes no longer matches the description. Record every instance; material drift goes in the brief. Code that simply moved is not drift, and neither are changes an earlier chunk made.
 
+### Validate
+
+Run the bundle validator, `scripts/validate-bundle.mjs` in the skill directory, with node against the bundle root. This workflow does not fix a failing bundle; a failure is a blocker, carried into the brief. A warning about a record that predates criteria verdicts is context from an older session, not a blocker.
+
 ---
 
 ## Stage 1: Brief
@@ -62,6 +66,8 @@ One message. Then stop. This is the only gate that always waits, because scope g
 **Commits.** The message format in force, and any steps to do before a commit.
 
 **Drift.** Anything found in stage 0, or "none."
+
+**Bundle health.** Validator failures from stage 0, or "clean."
 
 **Questions.** Usually none. See below.
 
@@ -105,7 +111,7 @@ The user may ask for a single branch instead. Honor it. Commits still land per u
 ### Per chunk
 
 1. Create and check out the chunk's branch.
-2. Spawn a subagent for the chunk. Give it the chunk's units in order, and nothing from any other chunk.
+2. Spawn a subagent for the chunk. Give it the chunk's units in order, the bundle root, and the path to the bundle validator. Nothing from any other chunk.
 3. Wait for it to finish.
 4. Verify the chunk. Refer to "Chunk verification" below.
 5. Report three or four lines: chunk id, what it covers, units complete, branch and tip, anything outstanding.
@@ -156,9 +162,13 @@ Commit the unit's changes. One commit per unit. The project reference gives the 
 
 Write `built/<unit-id>.json`, per the schema. Record the branch, the commits, the files touched, every assumption made, every criterion that could not be implemented as written, anything left unverified, and anything noticed but deliberately not acted on.
 
+Record a verdict for every acceptance criterion, the criterion text verbatim: `met` or `deviated`, with one line of evidence saying how the verdict was reached. Evidence is the check that proves it, the file and line that implements it, or the reasoning where nothing sharper exists. A `deviated` verdict needs its `criteria_deviations` entry. Record the final result of every `verify` command in `checks`. Walk the criteria one at a time; a verdict written without looking is worse than none.
+
 **Record where the bundle was wrong.** Building reveals things research could not. A schema that needed a field nobody planned, a notes file describing a shape that turned out insufficient, a criterion resting on a stale premise. Make the judgment call, build the right thing, and put the correction in `spec_corrections`. Do not edit research output to match, and do not suppress the judgment to stay literal. The refine workflow reads these and can append units that bring the spec back in line.
 
-Then set `status` to `done` in `index.json`, but only when every acceptance criterion is met and every check passes. A unit with outstanding work stays `in_progress`.
+Then set `status` to `done` in `index.json`, but only when every acceptance criterion is met or recorded as a deviation, and every check passes. A unit with outstanding work stays `in_progress`.
+
+Last, run the bundle validator, `scripts/validate-bundle.mjs` in the skill directory, against the bundle root. Fix what it reports against this unit's records before starting the next unit.
 
 ### Chunk verification
 
@@ -232,4 +242,5 @@ Do not claim completion while work or verification remains. A precise blocker wi
 - No destructive version control, and no discarding unrelated working-tree changes
 - No reverting or rebuilding completed work to recover from a later failure
 - No confirmation gate after stage 1, except a change request the user initiates
+- No unit closed `done` without a verdict and evidence for every acceptance criterion
 - No completion report while a check is failing
