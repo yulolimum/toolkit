@@ -29,6 +29,8 @@ Agent skills, shared the same way as configs. Each skill has a README with a sho
   - [`component-style-slots`](skills/toolkit-llm-linter/registry/component-style-slots.md) - Component class and style slot guidance.
 - [`toolkit-link-global-skills`](skills/toolkit-link-global-skills) - Link local skills individually into the global directories for Codex, Claude Code, and Cursor.
   - [`README`](skills/toolkit-link-global-skills/README.md) - Overview and use instructions.
+- [`toolkit-update-paseo-base-branch`](skills/toolkit-update-paseo-base-branch) - Update the saved base branch for the current Paseo worktree.
+  - [`README`](skills/toolkit-update-paseo-base-branch/README.md) - Overview and use instructions.
 - [`toolkit-create-linear-tickets`](skills/toolkit-create-linear-tickets) - Create and update Linear tickets with workspace checks and a structured draft.
   - [`README`](skills/toolkit-create-linear-tickets/README.md) - Overview and use instructions.
 - [`toolkit-humanizer`](skills/toolkit-humanizer) - Apply the upstream Humanizer editorial guidance to prose.
@@ -94,6 +96,7 @@ Interactive automation, one self-contained file per task. Every prompt has a fla
 - [`eas:build`](scripts/eas-build.mts) - Interactive EAS build for development, shared preview, or production. Prompts for platform and profile, prints the assembled command, then runs it.
 - [`eas:submit`](scripts/eas-submit.mts) - Submit a build to TestFlight or Play Store internal testing.
 - [`eas:update`](scripts/eas-update.mts) - Publish an over-the-air update to a channel, with an optional message.
+- [`hueforge:swatch`](scripts/generate-hueforge-project-swatch.ts) - Generate a stepped STL from a HueForge export’s actual thickness. Run `pnpm hueforge:swatch "/path/to/describe.txt"`; square cells default to 15 mm (`--cell-mm`), with a near-square grid, empty unused cells, and no added backing. Writes `<export-name>-swatch.stl` beside the input without overwriting; use `--output` to choose another path. Run `pnpm hueforge:swatch --self-test` for geometry and parsing checks. Set filament changes in your slicer.
 - [`linear:start-clockify-timer`](scripts/linear-start-clockify-timer.ts) - Start a Clockify timer from a Linear issue URL, or log a fixed duration retroactively.
 - [`media:accelerate-video`](scripts/media-accelerate-video.mjs) - Speed up a video with FFmpeg, with or without audio.
 - [`media:normalize-episode-names`](scripts/media-normalize-episode-names.mjs) - Rename TV episode files to `Show Name s01e01.ext` using an LLM, translating Russian titles when confident.

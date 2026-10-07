@@ -10,6 +10,7 @@
     "eas:build": "tsx scripts/eas-build.mts",
     "eas:submit": "tsx scripts/eas-submit.mts",
     "eas:update": "tsx scripts/eas-update.mts",
+    "hueforge:swatch": "tsx scripts/generate-hueforge-project-swatch.ts",
     "linear:start-clockify-timer": "tsx ./scripts/linear-start-clockify-timer.ts",
     "media:accelerate-video": "npx zx --install ./scripts/media-accelerate-video.mjs",
     "media:normalize-episode-names": "npx zx --install ./scripts/media-normalize-episode-names.mjs",

@@ -39,7 +39,7 @@ Tags: `dependencies`, `catalog`, `toolchain`, `typescript`, `running-scripts`, `
 #### [scripts.md](./scripts.md)
 
 Description: Standalone command-line automation for recurring work.
-Tags: `scripts`, `cli`, `automation`, `prompts`, `caching`, `eas`, `linear`, `clockify`, `media`
+Tags: `scripts`, `cli`, `automation`, `prompts`, `caching`, `eas`, `linear`, `clockify`, `media`, `hueforge`, `3d-printing`
 
 #### [workflows.md](./workflows.md)
 
