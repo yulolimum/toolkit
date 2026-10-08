@@ -20,7 +20,7 @@ A bundle is the specification for one feature, on disk, complete enough that an 
 | Path | research | implement | refine |
 |---|---|---|---|
 | `index.json` | creates | `status` only | appends units, updates chunks |
-| `spec.json` | creates | reads | appends |
+| `spec.json` | creates | reads | appends, including edges on existing entries |
 | `units/` | creates | reads | appends |
 | `notes/` | creates | reads | may append |
 | `built/` | never | creates | reads |
@@ -152,11 +152,11 @@ No workflow deletes anything. Ids are stable once written.
 | `imports` | Depends on its module | Directed |
 | `reads` / `writes` | Touches its data | Directed |
 | `mirrors` | Cross-platform counterpart | **Symmetric** |
-| `precedent_for` | Existing pattern the target should follow | Directed |
+| `precedent_for` | Pattern the target should follow, existing or planned | Directed |
 
 `mirrors` is symmetric. Record it once, on the source-platform entry. Writing both directions doubles the graph without adding information.
 
-`mirrors` is only for entries on different platforms. A same-platform relationship where one thing is the model for another is `precedent_for`. That is a different claim: not "these correspond" but "copy this one's approach."
+`mirrors` is only for entries on different platforms. A same-platform relationship where one thing is the model for another is `precedent_for`. That is a different claim: not "these correspond" but "copy this one's approach." The pattern may itself be planned work: an edge from a `build_new` entry to another planned entry says the earlier unit establishes the shape the later one follows, so the pattern's unit must come first in the unit order. Only an edge whose source is `build_new` joins units for the Shared structure gate; an edge from an existing entry, `modify` included, is shared context, not a chain between units.
 
 ### Disposition
 
@@ -266,6 +266,7 @@ Research and refine run the validator before closing, then the judgment gates, t
 | Disposition coverage | Every surface entry has a disposition |
 | Claim coverage | Every `modify` and `build_new` entry is referenced by at least one unit |
 | Claim overlap | Where several units reference one entry, no two claim the same change, and each declares in `non_goals` what it leaves to the others |
+| Shared structure | Units not yet built that share most of their `surface_refs`, some of it `build_new`, are joined by a `depends_on` path or a `precedent_for` chain from a `build_new` entry whose unit comes earlier; an unlinked group warns, never fails |
 | Reuse reachability | Every `reuse_as_is` entry is referenced by at least one unit |
 | Unit grounding | Every unit references at least one surface entry |
 | Acceptance present | Every unit states at least one acceptance criterion |

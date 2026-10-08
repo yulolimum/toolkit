@@ -101,6 +101,8 @@ Do not create a chunk. Do not reorder chunks. Do not move a unit between chunks.
 
 Append surface entries for anything new the refinement touches. These are different from research-time entries: the code exists, so evidence is what is there rather than what is planned. Update the disposition of any existing entry whose fate this changes.
 
+Edges may be appended to existing entries; adding one deletes nothing. A Shared structure warning among refinement units clears through what the refinements themselves introduce: `precedent_for` edges from the first refinement's new entry to the others', or a `depends_on` chain through the refinement units in order. A refinement with no new entry has only the chain. An inherited warning between original pending units clears the same way, through an agreed amendment to those units.
+
 Record the request itself as a resolved decision, with the user's reasoning. Six months later the bundle should explain why the feature turned out the way it did.
 
 ### What is never touched

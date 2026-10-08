@@ -45,7 +45,7 @@ Compare the files named in the chain's `surface_refs` against what the surface e
 
 ### Validate
 
-Run the bundle validator, `scripts/validate-bundle.mjs` in the skill directory, with node against the bundle root. This workflow does not fix a failing bundle; a failure is a blocker, carried into the brief. A warning about a record that predates criteria verdicts is context from an older session, not a blocker.
+Run the bundle validator, `scripts/validate-bundle.mjs` in the skill directory, with node against the bundle root. This workflow does not fix a failing bundle; a failure is a blocker, carried into the brief. A warning about a record that predates criteria verdicts is context from an older session, not a blocker. A Shared structure warning is research's or refine's to resolve; carry it into the brief, do not act on it.
 
 ---
 
@@ -67,7 +67,7 @@ One message. Then stop. This is the only gate that always waits, because scope g
 
 **Drift.** Anything found in stage 0, or "none."
 
-**Bundle health.** Validator failures from stage 0, or "clean."
+**Bundle health.** Validator failures from stage 0 in full, warnings as a count per gate, or "clean." A Shared structure warning goes in full; it names what research or refine must revisit.
 
 **Questions.** Usually none. See below.
 
@@ -172,7 +172,7 @@ Record a verdict for every acceptance criterion, the criterion text verbatim: `m
 
 Then set `status` to `done` in `index.json`, but only when every acceptance criterion is met or recorded as a deviation, and every check passes. A unit with outstanding work stays `in_progress`.
 
-Last, run the bundle validator, `scripts/validate-bundle.mjs` in the skill directory, against the bundle root. Fix what it reports against this unit's records before starting the next unit.
+Last, run the bundle validator, `scripts/validate-bundle.mjs` in the skill directory, against the bundle root. Fix what it reports against this unit's records before starting the next unit. A Shared structure warning is not against this unit's records; leave it for the report.
 
 ### Chunk verification
 
