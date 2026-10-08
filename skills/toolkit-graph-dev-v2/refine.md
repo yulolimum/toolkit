@@ -6,7 +6,7 @@ Change what a bundle says should exist, after some of it is already built.
 
 Refinement is additive. It appends units. It does not edit or delete the units that came before, because those are the record of what was built and why.
 
-**Refinement versus a change request.** A change request says the code does not match the spec, or asks for a small deviation from it. That is handled inside the implement workflow and leaves no record. Refinement says the spec itself is wrong: you want something different from what was planned. That needs acceptance criteria, so it needs units.
+**Refinement versus a change request.** A change request says the code does not match the spec, or asks for something the spec is silent on. That is handled inside the implement workflow and leaves no record. Refinement says the spec itself is wrong: you want something different from what was planned, including a reversal of something a unit's criteria state. That needs acceptance criteria, so it needs units.
 
 ## Workflow
 
@@ -45,7 +45,7 @@ Read every `spec_corrections` entry, including ones the current request does not
 
 **Current state.** What exists now, and which units built it.
 
-**Change.** What would be added. Which chunk each addition lands in.
+**Change.** What would be added. Which chunk each addition lands in. Every unit not yet built whose criteria, states, or non-goals quote the fact being changed; those get amended, not refined.
 
 **Cascade cost.** Which chunks come after the affected ones, and therefore what has to rebase and re-verify. Refining the first chunk of five is expensive; refining the last is not. The user should know which they are asking for before agreeing.
 
@@ -78,6 +78,8 @@ Same sizing rule as any unit: one job each. If the title needs "and" to be accur
 **Acceptance criteria must be self-contained.** The agent that builds a refinement loads only that unit's own slice; build records it reads may quote other criteria, but those are context, not spec. Describe the end state in full, as though nothing preceded it. A criterion phrased as a delta is unbuildable.
 
 The same applies to `states` and `non_goals`. Write them fresh. Do not point at another unit's.
+
+**Propagate to pending units.** A refinement that changes a fact changes every unit not yet built that quotes it. Amend those, with the user's agreement, as under "Target not yet built". The request is a resolved decision by the end of this stage, so a pending unit still quoting the old fact fails the Prose agreement gate; run it knowing that is what it is for.
 
 ### Placement
 

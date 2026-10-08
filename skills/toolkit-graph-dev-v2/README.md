@@ -110,11 +110,11 @@ A later chunk can fail to accept the change. The skill stops there and reports. 
 
 A new session has no live subagents. The skill reads the build records. Then it starts a new subagent for that chunk.
 
-A change request does not change the specification. Use refine for that.
+A change request does not change the specification. If a request contradicts what a unit says to build, it is a refinement. The skill stops and says so. Use refine for that.
 
 ## Refine
 
-Refine adds units. It does not edit or delete the units that came before. Those units are the record of what was built.
+Refine adds units. It does not edit or delete the units that came before. Those units are the record of what was built. A unit not yet built has no record to protect. Refine amends it, with your agreement, when the change touches it.
 
 **Stage 0. Intake.** The complaint and the bundle path.
 

@@ -206,7 +206,9 @@ On stopping, leave the current unit `in_progress`, leave completed units `done`,
 
 The user may ask for a change to work already done, in this session or a later one.
 
-Route the request to the chunk that owns the affected unit. That chunk's agent makes the change, re-runs the affected unit's checks, and commits it as a new commit. The commit follows the same reference instructions as any other unit commit. Amending rewrites history that later chunks are stacked on; treat it as a project decision, not a default.
+**A change request is not a reversal.** A change request says the code does not match the spec, or asks for something the spec is silent on. A request that contradicts an acceptance criterion, a non-goal, or a resolved decision of any unit, built or not, is a refinement: the spec itself is changing. Do not absorb it. Stop, as under "Stopping" above, name everything it contradicts, and say that refine handles it. Absorbing it leaves the code saying one thing and every later unit's criteria saying another, and each builder after that records the same correction.
+
+Route a change request to the chunk that owns the affected unit. That chunk's agent makes the change, re-runs the affected unit's checks, and commits it as a new commit. The commit follows the same reference instructions as any other unit commit. Amending rewrites history that later chunks are stacked on; treat it as a project decision, not a default.
 
 Then cascade. Every chunk after the changed one rebases onto the new tip, in order, and adapts its own work. Each one re-runs its checks. Report each as it lands.
 
@@ -246,5 +248,6 @@ Do not claim completion while work or verification remains. A precise blocker wi
 - No destructive version control, and no discarding unrelated working-tree changes
 - No reverting or rebuilding completed work to recover from a later failure
 - No confirmation gate after stage 1, except a change request the user initiates
+- No absorbing a request that contradicts a criterion, a non-goal, or a decision; that is a refinement
 - No unit closed `done` without a verdict and evidence for every acceptance criterion
 - No completion report while a check is failing
