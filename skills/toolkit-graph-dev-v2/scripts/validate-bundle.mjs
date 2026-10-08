@@ -200,6 +200,25 @@ for (const c of chunks) {
   }
 }
 
+// chunk contiguity
+
+{
+  const flat = []
+  for (const c of chunks) for (const uid of arr(c.units)) flat.push(uid)
+  const indexOrder = indexUnits.map((u) => u?.id).filter(str)
+  if (flat.length > 0 && flat.length === indexOrder.length) {
+    for (let i = 0; i < flat.length; i++) {
+      if (flat[i] !== indexOrder[i]) {
+        fail(
+          'Chunk contiguity',
+          `chunks concatenated in order diverge from the unit order at position ${i}: "${flat[i]}" vs "${indexOrder[i]}"; chunks are contiguous runs of the unit order`,
+        )
+        break
+      }
+    }
+  }
+}
+
 // constraints
 
 const constraints = arr(index.constraints).filter(str)
@@ -460,6 +479,118 @@ for (const [sid, us] of unitsRefBySurface) {
   if (s && (s.disposition === 'modify' || s.disposition === 'build_new') && us.length > 1) {
     manual.push(
       `Claim overlap: surface "${sid}" is claimed by ${us.join(', ')}; confirm no two claim the same change and each declares the split in non_goals`,
+    )
+  }
+}
+
+// shared structure among siblings
+
+{
+  // calibrated on mobile-loadboard-tools: sibling pairs shared 8-13 of ~16 refs, background pairs 4-6 of larger sets
+  const SHARE_FLOOR = 3
+  const SHARE_RATIO = 0.5
+  const ids = [...unitDocs.keys()]
+  const done = (id) => indexUnits[unitPos.get(id)]?.status === 'done'
+  const refsOf = new Map(ids.map((id) => [id, new Set(arr(unitDocs.get(id).surface_refs).filter(str))]))
+  // a shape is built once, by a build_new entry; two units modifying one existing file is Claim overlap, not this
+  const planned = new Set()
+  for (const s of surfaceById.values()) {
+    if (s.disposition === 'build_new') planned.add(s.id)
+  }
+
+  // directed reachability over depends_on, so a dependency chain explains overlap the way a direct edge does
+  const reach = new Map()
+  const reachable = (from) => {
+    if (reach.has(from)) return reach.get(from)
+    const seen = new Set()
+    const stack = [from]
+    while (stack.length) {
+      for (const d of arr(unitDocs.get(stack.pop())?.depends_on).filter(str)) {
+        if (!seen.has(d)) {
+          seen.add(d)
+          stack.push(d)
+        }
+      }
+    }
+    reach.set(from, seen)
+    return seen
+  }
+  const depLinked = (a, b) => reachable(a).has(b) || reachable(b).has(a)
+
+  const mkFind = () => {
+    const parent = new Map(ids.map((id) => [id, id]))
+    const find = (x) => (parent.get(x) === x ? x : (parent.set(x, find(parent.get(x))), parent.get(x)))
+    return { find, union: (a, b) => parent.set(find(a), find(b)) }
+  }
+
+  // a planned entry's owner is the earliest unit referencing it; existing code has no owner here
+  const ownerOf = (sid) => {
+    const s = surfaceById.get(sid)
+    if (!s || (s.disposition !== 'build_new' && s.disposition !== 'modify')) return null
+    const us = unitsRefBySurface.get(sid)
+    if (!us || us.length === 0) return null
+    let owner = us[0]
+    for (const u of us) if ((unitPos.get(u) ?? Infinity) < (unitPos.get(owner) ?? Infinity)) owner = u
+    return owner
+  }
+
+  // precedent components: an edge from a build_new entry links two unbuilt owners only when the pattern's unit comes
+  // first in unit order; an edge from an existing entry, modify included, is shared context, not a chain
+  const pattern = mkFind()
+  for (const s of surfaceById.values()) {
+    if (s.disposition !== 'build_new') continue
+    for (const e of arr(s.edges)) {
+      if (e?.type !== 'precedent_for') continue
+      const a = ownerOf(s.id)
+      const b = ownerOf(e?.to)
+      if (!a || !b || a === b || done(a) || done(b)) continue
+      if ((unitPos.get(a) ?? Infinity) < (unitPos.get(b) ?? Infinity)) pattern.union(a, b)
+      else
+        warn(
+          'Shared structure',
+          `precedent_for from "${s.id}" to "${e.to}" makes "${a}" the pattern for "${b}", but "${a}" comes later in the unit order; a mis-ordered edge clears nothing`,
+        )
+    }
+  }
+
+  // clusters of unbuilt high-overlap pairs that no dependency path, precedent chain, or completed status explains
+  const overlap = mkFind()
+  const flagged = new Set()
+  for (let i = 0; i < ids.length; i++) {
+    for (let j = i + 1; j < ids.length; j++) {
+      const a = ids[i]
+      const b = ids[j]
+      if (done(a) || done(b)) continue
+      if (depLinked(a, b)) continue
+      if (pattern.find(a) === pattern.find(b)) continue
+      const ra = refsOf.get(a)
+      const rb = refsOf.get(b)
+      let shared = 0
+      let sharedPlanned = 0
+      for (const r of ra) {
+        if (!rb.has(r)) continue
+        shared++
+        if (planned.has(r)) sharedPlanned++
+      }
+      const smaller = Math.min(ra.size, rb.size)
+      if (shared < SHARE_FLOOR || sharedPlanned === 0 || smaller === 0 || shared / smaller < SHARE_RATIO) continue
+      overlap.union(a, b)
+      flagged.add(a)
+      flagged.add(b)
+    }
+  }
+
+  const groups = new Map()
+  for (const id of flagged) {
+    const r = overlap.find(id)
+    if (!groups.has(r)) groups.set(r, [])
+    groups.get(r).push(id)
+  }
+  for (const g of groups.values()) {
+    const names = g.sort((a, b) => (unitPos.get(a) ?? 0) - (unitPos.get(b) ?? 0))
+    warn(
+      'Shared structure',
+      `units ${names.map((u) => `"${u}"`).join(', ')} overlap heavily in surface_refs with no qualifying dependency path or precedent chain between them; shared structure is planned more than once across ${names.length} units`,
     )
   }
 }
