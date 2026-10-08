@@ -275,6 +275,7 @@ Research and refine run the validator before closing, then the judgment gates, t
 | Acyclicity | `depends_on` forms a DAG |
 | Chunk coverage | At least one chunk exists, and every unit belongs to exactly one |
 | Chunk order | No unit sits in a chunk earlier than a unit it depends on |
+| Chunk contiguity | Chunks concatenated in their order equal the unit order, so each chunk is a contiguous run |
 | Chunk boundary | Every chunk has a `covers` statement |
 | Loose ends | Every `incomplete_after` entry names a `resolved_by` chunk that comes later |
 | Evidence grounding | Every surface entry has at least one evidence record |

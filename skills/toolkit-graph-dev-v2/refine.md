@@ -87,6 +87,8 @@ A refinement unit goes **last in its target's chunk**, not in a new chunk at the
 
 Several refinements to one chunk stack in order at the end of it.
 
+That is also their position in the `units` array: insert at the end of the target's chunk, not at the array's end, so chunks stay contiguous runs of the unit order.
+
 ### Chunks
 
 Update the affected chunk's `covers` to account for what it now does, and confirm the chunk still satisfies the three-part boundary test in `schema.md`. A stale `covers` is the only thing that can silently break a chunk edge.

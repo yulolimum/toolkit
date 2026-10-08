@@ -200,6 +200,25 @@ for (const c of chunks) {
   }
 }
 
+// chunk contiguity
+
+{
+  const flat = []
+  for (const c of chunks) for (const uid of arr(c.units)) flat.push(uid)
+  const indexOrder = indexUnits.map((u) => u?.id).filter(str)
+  if (flat.length > 0 && flat.length === indexOrder.length) {
+    for (let i = 0; i < flat.length; i++) {
+      if (flat[i] !== indexOrder[i]) {
+        fail(
+          'Chunk contiguity',
+          `chunks concatenated in order diverge from the unit order at position ${i}: "${flat[i]}" vs "${indexOrder[i]}"; chunks are contiguous runs of the unit order`,
+        )
+        break
+      }
+    }
+  }
+}
+
 // constraints
 
 const constraints = arr(index.constraints).filter(str)
