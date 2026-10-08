@@ -111,7 +111,7 @@ The user may ask for a single branch instead. Honor it. Commits still land per u
 ### Per chunk
 
 1. Create and check out the chunk's branch.
-2. Spawn a subagent for the chunk. Give it the chunk's units in order, the bundle root, and the path to the bundle validator. Nothing from any other chunk.
+2. Spawn a subagent for the chunk. Give it the chunk's units in order, the bundle root, and the path to the bundle validator. No unit files from any other chunk.
 3. Wait for it to finish.
 4. Verify the chunk. Refer to "Chunk verification" below.
 5. Report three or four lines: chunk id, what it covers, units complete, branch and tip, anything outstanding.
@@ -127,6 +127,8 @@ Its chunk's units, in dependency order. For each unit, only that unit's own slic
 - Every file in `notes_refs`
 
 It does not receive units from other chunks. It does not receive a later unit's slice before reaching it.
+
+**Completed work is context, not spec.** At spawn, before its first unit, the subagent reads the `spec_corrections` of every completed unit, and the full `built/` record of each completed unit this chunk's units `depends_on`. Implement never edits the spec, so until a refine pass absorbs them, those records are the only place earlier chunks' discoveries exist. Code an earlier chunk shipped is already on the branch this one stacks on; treat it as available precedent.
 
 `links` on the index or on a unit is not part of any slice. Those are pointers for people. Do not follow them, and do not treat anything they lead to as a requirement.
 

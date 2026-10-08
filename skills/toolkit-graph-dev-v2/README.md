@@ -87,12 +87,12 @@ This workflow orchestrates. It starts one subagent for each chunk. The subagents
 **Stage 2. Orchestrate.** For each chunk, in order:
 
 1. Create the chunk branch. Each branch starts from the branch before it.
-2. Start a subagent. Give it that chunk's units only.
+2. Start a subagent. Give it that chunk's units. It also reads the spec corrections in earlier build records.
 3. Wait for the subagent.
 4. Verify the chunk.
 5. Report and continue.
 
-The subagent builds one unit at a time. For each unit it reads that unit's data only, writes the code, runs the automated checks, commits, writes a build record, and marks the unit complete.
+The subagent builds one unit at a time. For each unit it reads that unit's data, writes the code, runs the automated checks, commits, writes a build record, and marks the unit complete.
 
 Checks that need a running application wait for the end of the chunk.
 
@@ -124,7 +124,7 @@ Refine adds units. It does not edit or delete the units that came before. Those 
 
 **Stage 3. Finalize.** The skill runs the checks. It then names the earliest chunk that implement must start from.
 
-A refinement unit states its acceptance criteria in full. It does not describe a change to another unit. The agent that builds it sees only its own data.
+A refinement unit states its acceptance criteria in full. It does not describe a change to another unit. The agent that builds it works from its own data; build records are background, not spec.
 
 The chunk with the new unit is no longer complete. Implement then rebuilds that chunk and rebases the chunks after it. This is the normal implement run. No special command is needed.
 
@@ -145,7 +145,7 @@ The brief in the implement workflow is different. That gate always stops, becaus
 | `index.json` | The objective, the constraints, the units, the chunks. |
 | `spec.json` | The surface map and the decisions. |
 | `units/*.json` | One file for each unit. Research writes these. |
-| `built/*.json` | One file for each finished unit. Implement writes these. |
+| `built/*.json` | One file for each finished unit. Implement writes these and later chunks read the relevant parts. |
 | `notes/` | Data that JSON cannot hold. |
 
 ### Three structures

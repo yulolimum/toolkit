@@ -75,7 +75,7 @@ Append refinement units to `units/`. Each one carries `refines`, naming the unit
 
 Same sizing rule as any unit: one job each. If the title needs "and" to be accurate, split it. One request may produce several refinement units.
 
-**Acceptance criteria must be self-contained.** The agent that builds a refinement loads only that unit's own slice, so it will not see the criteria of the unit being refined. Describe the end state in full, as though nothing preceded it. A criterion phrased as a delta is unbuildable.
+**Acceptance criteria must be self-contained.** The agent that builds a refinement loads only that unit's own slice; build records it reads may quote other criteria, but those are context, not spec. Describe the end state in full, as though nothing preceded it. A criterion phrased as a delta is unbuildable.
 
 The same applies to `states` and `non_goals`. Write them fresh. Do not point at another unit's.
 
