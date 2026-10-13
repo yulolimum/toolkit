@@ -1,6 +1,8 @@
 ---
 name: toolkit-living-docs
-description: Create, refresh, audit, and scaffold agent-facing living documentation in the `.agents/docs` system, including its registry, project/technical/domain briefs, and agent entry points. Use only for that system. Do not use for README files, user-facing documentation, changelogs, inline comments, or one-off documentation edits unless the user explicitly asks for living docs.
+description: Review, update, audit, and scaffold the agent-facing `.agents/docs` system. It includes the registry, project/technical/domain briefs, and agent entry points. Use only for that system. Do not use for README files, user-facing documentation, changelogs, inline comments, or one-off documentation edits unless the user explicitly asks for living docs.
+metadata:
+  version: 4
 ---
 
 # Living Docs
@@ -19,27 +21,31 @@ If the registry is absent, do not update agent-facing living documentation. Repo
 
 Root pointers and symlinks are part of the preferred scaffold, but a missing pointer does not block a documentation update once the registry exists. Report the setup issue and repair it only when the user asks.
 
-Determine the work scope from the user's request, the current session, and repository changes. Use the relevant branch diff as a reminder of changed surfaces, then verify every claim against the current source of truth.
+## Review information ownership
 
-Use the project's own vocabulary, organization, and existing documentation as evidence. Do not impose a universal documentation taxonomy.
+Determine the work scope from the user's request, the current session, and repository changes. Use the relevant branch diff as a reminder of changed surfaces. Verify every claim against the current source of truth.
 
-Inventory the registered documentation and identify every brief that reasonably intersects with the work. Read and review those briefs for stale or missing current-state information. Do not mechanically rewrite unrelated documentation.
+Use the project's own vocabulary and organization as evidence. Check existing documentation against its intended scope. Existing misplaced content is not a precedent. Do not impose a universal documentation taxonomy.
 
-Before creating, replacing, or retiring documentation, make a coverage map from the user's stated intent, the current repository, and any approved source documentation. For every durable concern in scope, identify where it is primarily documented: the project brief, the technical brief, a domain brief, or an intentional exclusion. Use this as a completeness check, not a required document structure. When the domain model is ambiguous, advise the user of candidates instead of deciding it unilaterally.
+Before you select a brief, decide whether the changed information belongs in living docs. Information does not belong in a brief merely because it remains true over time. Briefs explain project intent, shared technical foundations, and domain concepts, boundaries, ownership, and relationships. Keep operational instructions and detailed behavior with the source documentation that owns them. A high-level summary of local procedures does not make them domain knowledge.
+
+For information that belongs in living docs, identify relevant briefs in the registry by their purpose and scope. Read those briefs for stale or missing knowledge within that scope. A shared topic alone does not make a brief the owner.
+
+Before you create, replace, or retire documentation, make a coverage map. Base it on the user's stated intent, the current repository, and approved source documentation. Identify each concern's primary owner or its reason for exclusion. Source documentation outside living docs can be the owner. Use this map as a completeness check, not a required document structure. When the domain model is ambiguous, present the candidates to the user.
 
 ## Update existing documentation
 
-Update relevant briefs directly when their current-state content is stale or incomplete. Keep the work scoped to durable context rather than narrating the recent change.
+Update a brief only when its content is stale or incomplete within its intended scope. If the relevant briefs remain accurate and complete, leave them unchanged. A review with no edits is a complete outcome.
 
 Treat the repository as the source of truth. A diff helps find affected domains, but it does not determine what the documentation says. Remove information that no longer reflects the project instead of preserving it as history.
 
-When a durable domain has no useful brief, report it without drafting or creating the document:
+If a distinct domain needs a brief but has none, report the gap below. Do not put its details in a broader brief.
 
 Potential documentation: `<domain name>`
 
 Purpose: `<one terse sentence>`
 
-Tags: `<likely task triggers>`
+Tags: `<main subjects or workflows>`
 
 Create a new document only when the user explicitly asks for it.
 
@@ -76,6 +82,8 @@ Name domain files after the domain, such as `utilities.md` or `authentication.md
 
 Domain boundaries vary by project. They may align with a product area, package, workflow, namespace, or nested feature. Treat repository structure as evidence, not a mandate, and defer to explicit user direction when the intended model is unclear. Do not merge otherwise distinct domains solely to reduce the number of documents. Use an umbrella brief only when the project itself or the user identifies a genuine shared domain.
 
+Choose the most specific brief that owns the knowledge. Keep broad briefs focused on shared concepts, boundaries, and relationships. Put knowledge about a distinct area in its own appropriate brief. Do not expand a broad brief merely because that area belongs to the same topic.
+
 Keep domain briefs free of global project rules and implementation detail. Keep project-wide engineering conventions in the technical brief. Keep agent operating instructions in the repository's agent instruction files, not in project briefs.
 
 ## Write current-state briefs
@@ -93,7 +101,18 @@ Keep domain briefs free of global project rules and implementation detail. Keep 
 
 Treat the registry as part of the documentation, not an afterthought. Update it in the same pass whenever a brief is created, renamed, deleted, or materially re-scoped.
 
-Use one fourth-level heading per brief with its relative reference or path, followed by a `Description:` line and a `Tags:` line. Keep each description terse, limited to purpose and contents, and free of technical detail. Use tags that are likely to appear in a related task.
+Use one fourth-level heading per brief with its relative reference or path, followed by a list that holds a `Description:` item and a `Tags:` item. Keep each description terse, limited to purpose and contents, and free of technical detail.
+
+Tags name a document's main subjects or workflows. They route agents to the documents that provide substantial guidance for their task.
+
+- Choose tags from the document's purpose and scope, not from individual terms in its contents.
+- Add a tag only when work on that subject or workflow needs the document's core guidance.
+- Exclude incidental mentions, supporting details, and prerequisites.
+- Use the smallest set that covers the document's main subjects or workflows.
+- Reuse an existing tag for the same subject or workflow instead of adding synonyms.
+- Review the full tag set whenever an entry changes. Remove tags that no longer meet these rules.
+
+Keep the two items as list items. A formatter that joins prose lines merges two plain lines into one, and a list item survives that.
 
 Treat the template guidance above `## Registry` as stable. Update only the registry entries unless the user explicitly asks to change the template itself.
 
@@ -103,14 +122,14 @@ When replacing or retiring existing documentation, complete the coverage review 
 
 ## Apply the editorial pass
 
-After preparing all documentation and registry changes, invoke the `toolkit-simplified-technical-english` skill in STE-flavored mode. Apply it to the changed documentation prose, including registry descriptions.
+After preparing all documentation and registry changes, invoke the `toolkit-editorial-pass` skill and name the Simplified technical English flavor. Apply it to the changed documentation prose, including registry descriptions.
 
-Preserve every supported fact. Do not introduce new claims. Keep headings, document ordering, registry structure, registry references, and tags intact.
+Preserve every supported fact and introduce no new claims. Keep headings, document ordering, registry structure, registry references, and tags intact.
 
-If the editorial pass cannot run, do not claim that it ran. Stop before finalizing the documentation changes. Report the failed editorial step. Ask the user how to proceed.
+If the editorial pass cannot run, do not claim that it ran. Stop before finalizing documentation changes, report the failed editorial step, and ask the user how to proceed.
 
 ## Finish
 
-Review the final changes against the current repository. Confirm that each changed brief remains accurate, high level, and free of stale history and implementation detail. Confirm that each affected registry entry remains accurate and that its tags still route relevant work.
+Review the final changes against the current repository. Confirm that each changed brief remains accurate, high level, and free of stale history and implementation detail. Confirm that each affected registry entry remains accurate. Check that every tag names a main subject or workflow that the brief substantially covers.
 
-Report only the documentation that changed, the registry updates, and any potential new domains. Do not paste full documents into the conversation unless the user asks for them.
+Report the documentation that changed, the registry updates, and any potential new domains. If no edits are needed, report that outcome briefly. Do not paste full documents into the conversation unless the user asks for them.

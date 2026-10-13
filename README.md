@@ -8,41 +8,48 @@ Everything here is meant to be copied out. Much of it runs in this repository to
 
 Agent skills, shared the same way as configs. Each skill has a README with a short overview and use instructions.
 
-- [`toolkit-living-docs`](skills/toolkit-living-docs) - Scaffold, write, audit, and register living documentation for any project.
+- [`toolkit-living-docs`](skills/toolkit-living-docs) - Review, update, audit, and scaffold agent-facing living documentation.
   - [`README`](skills/toolkit-living-docs/README.md) - Overview and use instructions.
   - [`references/index.md`](skills/toolkit-living-docs/references/index.md) - Registry template for new Living Docs scaffolds.
-- [`toolkit-llm-linter`](skills/toolkit-llm-linter) - Match completed work to selected conventions, then apply the approved registry files.
-  - [`README`](skills/toolkit-llm-linter/README.md) - Overview and use instructions.
-  - [`new-prompt`](skills/toolkit-llm-linter/new-prompt.md) - Workflow branch for creating a linter prompt.
-  - [`commit`](skills/toolkit-llm-linter/registry/commit.md) - Commit message and staging guidance.
-  - [`comments`](skills/toolkit-llm-linter/registry/comments.md) - Code comment conventions.
-  - [`humanizer`](skills/toolkit-llm-linter/registry/humanizer.md) - Invokes the Humanizer skill for prose editing.
-  - [`simplified-technical-english`](skills/toolkit-llm-linter/registry/simplified-technical-english.md) - Invokes the Simplified Technical English skill for prose editing.
-  - [`barrel-exports`](skills/toolkit-llm-linter/registry/barrel-exports.md) - Direct-import conventions.
-  - [`prefer-local-implementations`](skills/toolkit-llm-linter/registry/prefer-local-implementations.md) - Guidance for preferring readable local code over premature extraction.
-  - [`typescript-inference`](skills/toolkit-llm-linter/registry/typescript-inference.md) - Return type inference guidance.
-  - [`tanstack-query-data-fetching`](skills/toolkit-llm-linter/registry/tanstack-query-data-fetching.md) - TanStack Query data-fetching and mutation guidance.
-  - [`markdown`](skills/toolkit-llm-linter/registry/markdown.md) - Markdown formatting guidance.
-  - [`jsx-truthiness`](skills/toolkit-llm-linter/registry/jsx-truthiness.md) - JSX truthiness and conditional-rendering guidance.
-  - [`zod-schema-naming`](skills/toolkit-llm-linter/registry/zod-schema-naming.md) - Zod schema naming and inferred-type guidance.
-  - [`react-hook-form`](skills/toolkit-llm-linter/registry/react-hook-form.md) - React Hook Form usage and submit-handler guidance.
-  - [`component-style-slots`](skills/toolkit-llm-linter/registry/component-style-slots.md) - Component class and style slot guidance.
+- [`toolkit-convention-pass`](skills/toolkit-convention-pass) - Apply selected code and writing conventions after implementation.
+  - [`README`](skills/toolkit-convention-pass/README.md) - Overview and use instructions.
+  - [`references/new-convention.md`](skills/toolkit-convention-pass/references/new-convention.md) - Workflow for adding a shared or project convention.
+  - [`barrel-exports`](skills/toolkit-convention-pass/conventions/barrel-exports.md) - Direct-import conventions.
+  - [`comments`](skills/toolkit-convention-pass/conventions/comments.md) - Code-comment conventions.
+  - [`commit-seven-rules`](skills/toolkit-convention-pass/conventions/commit-seven-rules.md) - Commit-message and staging conventions.
+  - [`component-style-slots`](skills/toolkit-convention-pass/conventions/component-style-slots.md) - Reusable-component style-slot conventions.
+  - [`humanizer`](skills/toolkit-convention-pass/conventions/humanizer.md) - Invokes the editorial humanizer flavor.
+  - [`jsx-truthiness`](skills/toolkit-convention-pass/conventions/jsx-truthiness.md) - JSX truthiness and conditional-rendering conventions.
+  - [`markdown`](skills/toolkit-convention-pass/conventions/markdown.md) - Markdown formatting conventions.
+  - [`prefer-local-implementations`](skills/toolkit-convention-pass/conventions/prefer-local-implementations.md) - Guidance for preferring readable local code over premature extraction.
+  - [`react-hook-form`](skills/toolkit-convention-pass/conventions/react-hook-form.md) - React Hook Form inference, access, and submit-handler conventions.
+  - [`simplified-technical-english`](skills/toolkit-convention-pass/conventions/simplified-technical-english.md) - Invokes the editorial Simplified Technical English flavor.
+  - [`tanstack-query-data-fetching`](skills/toolkit-convention-pass/conventions/tanstack-query-data-fetching.md) - TanStack Query data-fetching and mutation conventions.
+  - [`typescript-inference`](skills/toolkit-convention-pass/conventions/typescript-inference.md) - Return-type inference guidance.
+  - [`zod-schema-naming`](skills/toolkit-convention-pass/conventions/zod-schema-naming.md) - Zod schema naming conventions.
+  - [`conventions/extensions/template.md`](skills/toolkit-convention-pass/conventions/extensions/template.md) - Template for a project-specific convention.
+- [`toolkit-editorial-pass`](skills/toolkit-editorial-pass) - Apply a selected editorial flavor to human-facing prose.
+  - [`README`](skills/toolkit-editorial-pass/README.md) - Overview and use instructions.
+  - [`humanizer`](skills/toolkit-editorial-pass/references/humanizer.md) - Natural, fact-preserving prose guidance.
+  - [`simplified-technical-english`](skills/toolkit-editorial-pass/references/simplified-technical-english.md) - Controlled technical-prose guidance.
+  - [`references/extensions/template.md`](skills/toolkit-editorial-pass/references/extensions/template.md) - Template for a project-specific editorial flavor.
 - [`toolkit-link-global-skills`](skills/toolkit-link-global-skills) - Link local skills individually into the global directories for Codex, Claude Code, and Cursor.
   - [`README`](skills/toolkit-link-global-skills/README.md) - Overview and use instructions.
 - [`toolkit-update-paseo-base-branch`](skills/toolkit-update-paseo-base-branch) - Update the saved base branch for the current Paseo worktree.
   - [`README`](skills/toolkit-update-paseo-base-branch/README.md) - Overview and use instructions.
 - [`toolkit-create-linear-tickets`](skills/toolkit-create-linear-tickets) - Create and update Linear tickets with workspace checks and a structured draft.
   - [`README`](skills/toolkit-create-linear-tickets/README.md) - Overview and use instructions.
-- [`toolkit-humanizer`](skills/toolkit-humanizer) - Apply the upstream Humanizer editorial guidance to prose.
-  - [`README`](skills/toolkit-humanizer/README.md) - Overview and use instructions.
-- [`toolkit-simplified-technical-english`](skills/toolkit-simplified-technical-english) - Apply the upstream ASD-STE100 skill to selected prose.
-  - [`README`](skills/toolkit-simplified-technical-english/README.md) - Overview and use instructions.
 - [`toolkit-typescript-script-pattern`](skills/toolkit-typescript-script-pattern) - Build TypeScript automation scripts with consistent prompt, CLI, cache, and logging conventions.
   - [`README`](skills/toolkit-typescript-script-pattern/README.md) - Overview and use instructions.
 - [`toolkit-react-provider-pattern`](skills/toolkit-react-provider-pattern) - Create React context providers with a data hook, thin provider, and guarded consumer hook.
   - [`README`](skills/toolkit-react-provider-pattern/README.md) - Overview and use instructions.
-- [`toolkit-generate-pr-description`](skills/toolkit-generate-pr-description) - Generate a concise pull-request description from the branch diff.
-  - [`README`](skills/toolkit-generate-pr-description/README.md) - Overview and use instructions.
+- [`toolkit-pr-authoring`](skills/toolkit-pr-authoring) - Write pull-request descriptions from branch commits and diffs.
+  - [`README`](skills/toolkit-pr-authoring/README.md) - Overview and use instructions.
+  - [`templates/pr-description.md`](skills/toolkit-pr-authoring/templates/pr-description.md) - Default pull-request-description outline.
+  - [`references/diagrams.md`](skills/toolkit-pr-authoring/references/diagrams.md) - Decision rules for optional diagrams.
+  - [`references/examples.md`](skills/toolkit-pr-authoring/references/examples.md) - Worked pull-request-description examples.
+  - [`references/proofs.md`](skills/toolkit-pr-authoring/references/proofs.md) - Proof-table rules.
+  - [`extensions/template.md`](skills/toolkit-pr-authoring/extensions/template.md) - Template for project-specific requirements.
 - [`toolkit-dependency-catalog-upgrade`](skills/toolkit-dependency-catalog-upgrade) - Consolidate monorepo dependency versions into a catalog, pin them, and upgrade them.
   - [`README`](skills/toolkit-dependency-catalog-upgrade/README.md) - Overview and use instructions.
 - [`toolkit-graph-dev-v1`](skills/toolkit-graph-dev-v1) - Research a surface area into a spec of dependency-ordered work units, then implement one unit from that spec.
