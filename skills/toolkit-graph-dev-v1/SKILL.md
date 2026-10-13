@@ -11,13 +11,13 @@ Two workflows. Research produces a spec bundle. Implement builds the work units 
 
 Pick the workflow, then read its file in full and follow it. Read only the one that applies.
 
-| Signal | Workflow |
-|---|---|
-| A feature, route, or surface area to understand | `research.md` |
-| Parity between two platforms | `research.md` |
-| A bundle path | `implement.md` |
-| A Linear ticket or issue id | `implement.md` |
-| A unit id | `implement.md` |
+| Signal                                          | Workflow       |
+| ----------------------------------------------- | -------------- |
+| A feature, route, or surface area to understand | `research.md`  |
+| Parity between two platforms                    | `research.md`  |
+| A bundle path                                   | `implement.md` |
+| A Linear ticket or issue id                     | `implement.md` |
+| A unit id                                       | `implement.md` |
 
 The distinction is whether a spec already exists. If the invocation points at one, implement. If it describes work nobody has mapped yet, research.
 

@@ -123,14 +123,14 @@ Run the bundle validator, `scripts/validate-bundle.mjs` in the skill directory, 
 
 Then these:
 
-| Gate | Check |
-|---|---|
-| Refinement target | Every `refines` value names an existing unit |
-| Target built | Every refined unit has status `done` |
-| Placement | Every refinement unit sits in its target's chunk, after it |
-| Self-contained | No acceptance criterion is phrased as a change to another unit's criteria |
-| Covers freshness | Every affected chunk's `covers` accounts for the refinement |
-| No edits | No pre-existing unit file changed except through an agreed amendment |
+| Gate              | Check                                                                     |
+| ----------------- | ------------------------------------------------------------------------- |
+| Refinement target | Every `refines` value names an existing unit                              |
+| Target built      | Every refined unit has status `done`                                      |
+| Placement         | Every refinement unit sits in its target's chunk, after it                |
+| Self-contained    | No acceptance criterion is phrased as a change to another unit's criteria |
+| Covers freshness  | Every affected chunk's `covers` accounts for the refinement               |
+| No edits          | No pre-existing unit file changed except through an agreed amendment      |
 
 Set `phase: "final"`. Report what was added, which chunks are affected, and the earliest chunk implement will need to start from. Where refinements land in more than one chunk, that is the earliest of them, because the cascade carries through the rest anyway.
 

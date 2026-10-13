@@ -9,7 +9,7 @@
 // resolved or carried into the report. The manual section at the end
 // lists the judgment gates this script cannot settle.
 
-import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs'
+import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs'
 import { join } from 'node:path'
 
 const UNIT_STATUS = ['pending', 'in_progress', 'done']

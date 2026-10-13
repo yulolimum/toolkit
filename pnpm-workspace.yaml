@@ -1,6 +1,9 @@
 packages:
   - .
 
+allowBuilds:
+  esbuild: true
+
 catalog:
   '@eslint/js': 10.0.1
   '@inquirer/checkbox': 5.2.1

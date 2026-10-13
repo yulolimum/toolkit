@@ -13,12 +13,12 @@ All three read `schema.md`, which defines the bundle. Read it before the workflo
 
 Pick the workflow, then read `schema.md` and that workflow's file, both in full. Read only the one workflow file that applies.
 
-| Signal | Workflow |
-|---|---|
-| A feature, route, or surface area to understand | `research.md` |
-| Parity between two platforms | `research.md` |
+| Signal                                                 | Workflow       |
+| ------------------------------------------------------ | -------------- |
+| A feature, route, or surface area to understand        | `research.md`  |
+| Parity between two platforms                           | `research.md`  |
 | A bundle path, a unit id, or a pointer to planned work | `implement.md` |
-| Dissatisfaction with something already built | `refine.md` |
+| Dissatisfaction with something already built           | `refine.md`    |
 
 Two questions settle it. Does a spec exist? If not, research. Is the complaint that the spec itself is now wrong? If so, refine. Otherwise implement.
 

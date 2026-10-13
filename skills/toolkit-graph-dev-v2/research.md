@@ -29,8 +29,6 @@ If the invocation states what is being built or researched, infer and proceed. D
 
 If the invocation is too vague to identify a target, ask for the objective.
 
-
-
 ---
 
 ## Stage 1: Surface pass
@@ -42,6 +40,7 @@ Goal: verify aim before spending real effort. Should complete in a few minutes.
 **Name things. Do not explain them.**
 
 Allowed:
+
 - Locate entry points for the target
 - Enumerate routes, screens, components, hooks, endpoints, and models in the immediate footprint
 - Read route definitions, imports, exports, and type signatures
@@ -49,6 +48,7 @@ Allowed:
 - Read AGENTS.md, README, and equivalent governing files
 
 Not allowed:
+
 - Following call chains
 - Reading function bodies
 - Tracing state, data flow, or query behavior
@@ -83,6 +83,7 @@ One message. Four blocks. Nothing written to disk yet.
 **Questions.** Numbered. One line each stating what changes depending on the answer. Offer options where natural.
 
 Then, in the same message, ask for:
+
 - Constraints, if not already given
 - Output directory, proposing the location the project reference sets. With no reference, propose `.context/<slug>/` at repo root.
 - Confirmation of the proposed slug
@@ -98,6 +99,7 @@ The slug is a stable kebab-case feature id, inferred from the target. Example: `
 ### Aim failures
 
 Report immediately, before anything else, if:
+
 - The target does not exist
 - The target exists but does not match its name or description
 - Multiple plausible targets match and the objective does not disambiguate
@@ -130,6 +132,7 @@ A partial directory then tells you where it stopped.
 ### What to map
 
 For each surface entry, establish and record:
+
 - What it does, in behavioral terms
 - Its variants, where it renders differently under different conditions
 - Its edges to other surface entries, typed

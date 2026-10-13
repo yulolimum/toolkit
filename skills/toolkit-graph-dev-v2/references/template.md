@@ -8,10 +8,10 @@ Give the skill what it cannot find on its own. Point at the repository docs. Do 
 
 Where things are. Key paths only. Enough to start the surface pass.
 
-> | Path | Contents |
-> |---|---|
-> | `cli/` | Entry point, commands, shared code |
-> | `docs/` | Project documentation |
+> | Path    | Contents                           |
+> | ------- | ---------------------------------- |
+> | `cli/`  | Entry point, commands, shared code |
+> | `docs/` | Project documentation              |
 
 ## Governing docs
 
@@ -41,9 +41,9 @@ Rules that permit or forbid work. State decisions, not descriptions.
 
 Extra checks the bundle must pass. One row for each check. Write each one so someone can verify it. These run after the schema gates.
 
-> | Gate | Check |
-> |---|---|
-> | pnpm only | No `verify` command calls npm or yarn |
+> | Gate          | Check                                                                     |
+> | ------------- | ------------------------------------------------------------------------- |
+> | pnpm only     | No `verify` command calls npm or yarn                                     |
 > | Docs registry | A unit that adds or renames a doc updates `docs/index.md` in its criteria |
 
 ## Coding-style skill (implement only)
