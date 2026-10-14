@@ -22,15 +22,15 @@ Store project-specific references in `references/`. This repository ignores them
 
 ## Files
 
-| File | Function |
-|---|---|
-| `SKILL.md` | Selects the workflow. Loads the reference. Holds the common rules. |
-| `schema.md` | Defines the bundle. All three workflows read it. |
-| `research.md` | The research workflow. |
-| `implement.md` | The implement workflow. |
-| `refine.md` | The refine workflow. |
-| `references/` | One file for each project. |
-| `scripts/validate-bundle.mjs` | Checks the mechanical gates. All three workflows run it. |
+| File                          | Function                                                           |
+| ----------------------------- | ------------------------------------------------------------------ |
+| `SKILL.md`                    | Selects the workflow. Loads the reference. Holds the common rules. |
+| `schema.md`                   | Defines the bundle. All three workflows read it.                   |
+| `research.md`                 | The research workflow.                                             |
+| `implement.md`                | The implement workflow.                                            |
+| `refine.md`                   | The refine workflow.                                               |
+| `references/`                 | One file for each project.                                         |
+| `scripts/validate-bundle.mjs` | Checks the mechanical gates. All three workflows run it.           |
 
 The skill reads `schema.md` and one workflow file, not all of them.
 
@@ -140,13 +140,13 @@ The brief in the implement workflow is different. That gate always stops, becaus
 
 ## The bundle
 
-| File | Contents |
-|---|---|
-| `index.json` | The objective, the constraints, the units, the chunks. |
-| `spec.json` | The surface map and the decisions. |
-| `units/*.json` | One file for each unit. Research writes these. |
+| File           | Contents                                                                                          |
+| -------------- | ------------------------------------------------------------------------------------------------- |
+| `index.json`   | The objective, the constraints, the units, the chunks.                                            |
+| `spec.json`    | The surface map and the decisions.                                                                |
+| `units/*.json` | One file for each unit. Research writes these.                                                    |
 | `built/*.json` | One file for each finished unit. Implement writes these and later chunks read the relevant parts. |
-| `notes/` | Data that JSON cannot hold. |
+| `notes/`       | Data that JSON cannot hold.                                                                       |
 
 ### Three structures
 

@@ -17,13 +17,13 @@ A bundle is the specification for one feature, on disk, complete enough that an 
 
 ## Ownership
 
-| Path | research | implement | refine |
-|---|---|---|---|
-| `index.json` | creates | `status` only | appends units, updates chunks |
-| `spec.json` | creates | reads | appends, including edges on existing entries |
-| `units/` | creates | reads | appends |
-| `notes/` | creates | reads | may append |
-| `built/` | never | creates | reads |
+| Path         | research | implement     | refine                                       |
+| ------------ | -------- | ------------- | -------------------------------------------- |
+| `index.json` | creates  | `status` only | appends units, updates chunks                |
+| `spec.json`  | creates  | reads         | appends, including edges on existing entries |
+| `units/`     | creates  | reads         | appends                                      |
+| `notes/`     | creates  | reads         | may append                                   |
+| `built/`     | never    | creates       | reads                                        |
 
 No workflow deletes anything. Ids are stable once written.
 
@@ -39,25 +39,17 @@ No workflow deletes anything. Ids are stable once written.
   "created": "",
   "phase": "final",
   "constraints": [],
-  "constraint_verdicts": [
-    { "constraint": "", "verdict": "satisfied", "detail": "" }
-  ],
-  "deviations": [
-    { "id": "", "detail": "", "authorized": true }
-  ],
+  "constraint_verdicts": [{ "constraint": "", "verdict": "satisfied", "detail": "" }],
+  "deviations": [{ "id": "", "detail": "", "authorized": true }],
   "links": [],
-  "units": [
-    { "id": "archive-list", "status": "pending", "depends_on": [] }
-  ],
+  "units": [{ "id": "archive-list", "status": "pending", "depends_on": [] }],
   "chunks": [
     {
       "id": "list-surface",
       "title": "",
       "covers": "",
       "units": [],
-      "incomplete_after": [
-        { "detail": "", "resolved_by": "" }
-      ]
+      "incomplete_after": [{ "detail": "", "resolved_by": "" }]
     }
   ]
 }
@@ -99,12 +91,8 @@ No workflow deletes anything. Ids are stable once written.
       "path": "src/routes/reports/archive/index.tsx",
       "behavior": "",
       "variants": [],
-      "edges": [
-        { "to": "source-archive-table", "type": "renders" }
-      ],
-      "evidence": [
-        { "source": "", "detail": "" }
-      ],
+      "edges": [{ "to": "source-archive-table", "type": "renders" }],
+      "evidence": [{ "source": "", "detail": "" }],
       "disposition": "reference_only"
     }
   ],
@@ -144,15 +132,15 @@ No workflow deletes anything. Ids are stable once written.
 
 ### Edge types
 
-| Type | Meaning | Direction |
-|---|---|---|
-| `renders` | Draws it | Directed |
-| `calls` | Invokes it | Directed |
-| `navigates_to` | Routes to it | Directed |
-| `imports` | Depends on its module | Directed |
-| `reads` / `writes` | Touches its data | Directed |
-| `mirrors` | Cross-platform counterpart | **Symmetric** |
-| `precedent_for` | Pattern the target should follow, existing or planned | Directed |
+| Type               | Meaning                                               | Direction     |
+| ------------------ | ----------------------------------------------------- | ------------- |
+| `renders`          | Draws it                                              | Directed      |
+| `calls`            | Invokes it                                            | Directed      |
+| `navigates_to`     | Routes to it                                          | Directed      |
+| `imports`          | Depends on its module                                 | Directed      |
+| `reads` / `writes` | Touches its data                                      | Directed      |
+| `mirrors`          | Cross-platform counterpart                            | **Symmetric** |
+| `precedent_for`    | Pattern the target should follow, existing or planned | Directed      |
 
 `mirrors` is symmetric. Record it once, on the source-platform entry. Writing both directions doubles the graph without adding information.
 
@@ -182,9 +170,7 @@ Evidence is where certainty lives. A reader can see whether a claim came from th
   "decision_refs": [],
   "notes_refs": [],
   "acceptance": [],
-  "states": [
-    { "state": "empty", "applies": true, "expected": "", "source": "" }
-  ],
+  "states": [{ "state": "empty", "applies": true, "expected": "", "source": "" }],
   "verify": [],
   "non_goals": [],
   "links": [],
@@ -261,32 +247,32 @@ A valid bundle passes all of these. They describe the format, not a process, so 
 
 Research and refine run the validator before closing, then the judgment gates, then anything the project reference adds. Implement runs it at intake, where a failure is a blocker to report rather than fix, and again as each unit closes, which is when the build-record gates first have data.
 
-| Gate | Check |
-|---|---|
-| Disposition coverage | Every surface entry has a disposition |
-| Claim coverage | Every `modify` and `build_new` entry is referenced by at least one unit |
-| Claim overlap | Where several units reference one entry, no two claim the same change, and each declares in `non_goals` what it leaves to the others |
-| Shared structure | Units not yet built that share most of their `surface_refs`, some of it `build_new`, are joined by a `depends_on` path or a `precedent_for` chain from a `build_new` entry whose unit comes earlier; an unlinked group warns, never fails |
-| Reuse reachability | Every `reuse_as_is` entry is referenced by at least one unit |
-| Unit grounding | Every unit references at least one surface entry |
-| Acceptance present | Every unit states at least one acceptance criterion |
-| Unit scope | No unit title requires "and" to be accurate |
-| Reference integrity | Every `surface_refs`, `decision_refs`, `notes_refs`, `depends_on`, `refines`, and `states[].source` target exists |
-| Notes reachability | Every file in `notes/` is referenced by at least one unit |
-| Acyclicity | `depends_on` forms a DAG |
-| Chunk coverage | At least one chunk exists, and every unit belongs to exactly one |
-| Chunk order | No unit sits in a chunk earlier than a unit it depends on |
-| Chunk contiguity | Chunks concatenated in their order equal the unit order, so each chunk is a contiguous run |
-| Chunk boundary | Every chunk has a `covers` statement |
-| Loose ends | Every `incomplete_after` entry names a `resolved_by` chunk that comes later |
-| Evidence grounding | Every surface entry has at least one evidence record |
-| Decision closure | No decision left `open` |
-| Constraint check | Every constraint has a stated verdict, with violations listed |
-| Prose references | Every unit id named in an `acceptance`, `non_goals`, or `behavior` string exists |
-| Prose agreement | No count, name, or claim in an acceptance criterion contradicts a notes file, a constraint verdict, or a resolved decision |
-| Build record coverage | Every `done` unit has a `built/` record naming its chunk, branch, and commits |
-| Criteria verdicts | A `done` unit's record holds a verdict with evidence for each acceptance criterion, verbatim, and every `deviated` verdict pairs with a `criteria_deviations` entry |
-| Check results | Every `verify` command of a `done` unit appears in its record's `checks` with `pass`, and no `done` unit records a failing check |
+| Gate                  | Check                                                                                                                                                                                                                                     |
+| --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Disposition coverage  | Every surface entry has a disposition                                                                                                                                                                                                     |
+| Claim coverage        | Every `modify` and `build_new` entry is referenced by at least one unit                                                                                                                                                                   |
+| Claim overlap         | Where several units reference one entry, no two claim the same change, and each declares in `non_goals` what it leaves to the others                                                                                                      |
+| Shared structure      | Units not yet built that share most of their `surface_refs`, some of it `build_new`, are joined by a `depends_on` path or a `precedent_for` chain from a `build_new` entry whose unit comes earlier; an unlinked group warns, never fails |
+| Reuse reachability    | Every `reuse_as_is` entry is referenced by at least one unit                                                                                                                                                                              |
+| Unit grounding        | Every unit references at least one surface entry                                                                                                                                                                                          |
+| Acceptance present    | Every unit states at least one acceptance criterion                                                                                                                                                                                       |
+| Unit scope            | No unit title requires "and" to be accurate                                                                                                                                                                                               |
+| Reference integrity   | Every `surface_refs`, `decision_refs`, `notes_refs`, `depends_on`, `refines`, and `states[].source` target exists                                                                                                                         |
+| Notes reachability    | Every file in `notes/` is referenced by at least one unit                                                                                                                                                                                 |
+| Acyclicity            | `depends_on` forms a DAG                                                                                                                                                                                                                  |
+| Chunk coverage        | At least one chunk exists, and every unit belongs to exactly one                                                                                                                                                                          |
+| Chunk order           | No unit sits in a chunk earlier than a unit it depends on                                                                                                                                                                                 |
+| Chunk contiguity      | Chunks concatenated in their order equal the unit order, so each chunk is a contiguous run                                                                                                                                                |
+| Chunk boundary        | Every chunk has a `covers` statement                                                                                                                                                                                                      |
+| Loose ends            | Every `incomplete_after` entry names a `resolved_by` chunk that comes later                                                                                                                                                               |
+| Evidence grounding    | Every surface entry has at least one evidence record                                                                                                                                                                                      |
+| Decision closure      | No decision left `open`                                                                                                                                                                                                                   |
+| Constraint check      | Every constraint has a stated verdict, with violations listed                                                                                                                                                                             |
+| Prose references      | Every unit id named in an `acceptance`, `non_goals`, or `behavior` string exists                                                                                                                                                          |
+| Prose agreement       | No count, name, or claim in an acceptance criterion contradicts a notes file, a constraint verdict, or a resolved decision                                                                                                                |
+| Build record coverage | Every `done` unit has a `built/` record naming its chunk, branch, and commits                                                                                                                                                             |
+| Criteria verdicts     | A `done` unit's record holds a verdict with evidence for each acceptance criterion, verbatim, and every `deviated` verdict pairs with a `criteria_deviations` entry                                                                       |
+| Check results         | Every `verify` command of a `done` unit appears in its record's `checks` with `pass`, and no `done` unit records a failing check                                                                                                          |
 
 Unclaimed `modify` means a change was researched and never planned. An unreferenced `reuse_as_is` entry means a "do not rebuild this" finding will never reach the agent that builds, since it loads only its own unit's references. A unit with no surface refs means work was invented with no grounding. All three are silent failures otherwise. The build-record gates bind only `done` units: a done unit with no record, no verdict, or a failing check is a completion claim with nothing behind it.
 
