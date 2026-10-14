@@ -37,8 +37,8 @@ Agent skills, shared the same way as configs. Each skill has a README with a sho
   - [`README`](skills/toolkit-link-global-skills/README.md) - Overview and use instructions.
 - [`toolkit-update-paseo-base-branch`](skills/toolkit-update-paseo-base-branch) - Update the saved base branch for the current Paseo worktree.
   - [`README`](skills/toolkit-update-paseo-base-branch/README.md) - Overview and use instructions.
-- [`toolkit-create-linear-tickets`](skills/toolkit-create-linear-tickets) - Create and update Linear tickets with workspace checks and a structured draft.
-  - [`README`](skills/toolkit-create-linear-tickets/README.md) - Overview and use instructions.
+- [`toolkit-linear-ticket-authoring`](skills/toolkit-linear-ticket-authoring) - Create and update Linear tickets with workspace checks and a structured draft.
+  - [`README`](skills/toolkit-linear-ticket-authoring/README.md) - Overview and use instructions.
 - [`toolkit-typescript-script-pattern`](skills/toolkit-typescript-script-pattern) - Build TypeScript automation scripts with consistent prompt, CLI, cache, and logging conventions.
   - [`README`](skills/toolkit-typescript-script-pattern/README.md) - Overview and use instructions.
 - [`toolkit-react-provider-pattern`](skills/toolkit-react-provider-pattern) - Create React context providers with a data hook, thin provider, and guarded consumer hook.
