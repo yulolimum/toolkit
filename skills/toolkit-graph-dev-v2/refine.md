@@ -6,7 +6,7 @@ Change what a bundle says should exist, after some of it is already built.
 
 Refinement is additive. It appends units. It does not edit or delete the units that came before, because those are the record of what was built and why.
 
-**Refinement versus a change request.** A change request says the code does not match the spec, or asks for a small deviation from it. That is handled inside the implement workflow and leaves no record. Refinement says the spec itself is wrong: you want something different from what was planned. That needs acceptance criteria, so it needs units.
+**Refinement versus a change request.** A change request says the code does not match the spec, or asks for something the spec is silent on. That is handled inside the implement workflow and leaves no record. Refinement says the spec itself is wrong: you want something different from what was planned, including a reversal of something a unit's criteria state. That needs acceptance criteria, so it needs units.
 
 ## Workflow
 
@@ -45,7 +45,7 @@ Read every `spec_corrections` entry, including ones the current request does not
 
 **Current state.** What exists now, and which units built it.
 
-**Change.** What would be added. Which chunk each addition lands in.
+**Change.** What would be added. Which chunk each addition lands in. Every unit not yet built whose criteria, states, or non-goals quote the fact being changed; those get amended, not refined.
 
 **Cascade cost.** Which chunks come after the affected ones, and therefore what has to rebase and re-verify. Refining the first chunk of five is expensive; refining the last is not. The user should know which they are asking for before agreeing.
 
@@ -75,9 +75,11 @@ Append refinement units to `units/`. Each one carries `refines`, naming the unit
 
 Same sizing rule as any unit: one job each. If the title needs "and" to be accurate, split it. One request may produce several refinement units.
 
-**Acceptance criteria must be self-contained.** The agent that builds a refinement loads only that unit's own slice, so it will not see the criteria of the unit being refined. Describe the end state in full, as though nothing preceded it. A criterion phrased as a delta is unbuildable.
+**Acceptance criteria must be self-contained.** The agent that builds a refinement loads only that unit's own slice; build records it reads may quote other criteria, but those are context, not spec. Describe the end state in full, as though nothing preceded it. A criterion phrased as a delta is unbuildable.
 
 The same applies to `states` and `non_goals`. Write them fresh. Do not point at another unit's.
+
+**Propagate to pending units.** A refinement that changes a fact changes every unit not yet built that quotes it. Amend those, with the user's agreement, as under "Target not yet built". The request is a resolved decision by the end of this stage, so a pending unit still quoting the old fact fails the Prose agreement gate; run it knowing that is what it is for.
 
 ### Placement
 
@@ -86,6 +88,8 @@ A refinement unit goes **last in its target's chunk**, not in a new chunk at the
 `depends_on` includes the unit being refined, and anything else in that chunk it now needs.
 
 Several refinements to one chunk stack in order at the end of it.
+
+That is also their position in the `units` array: insert at the end of the target's chunk, not at the array's end, so chunks stay contiguous runs of the unit order.
 
 ### Chunks
 
@@ -98,6 +102,8 @@ Do not create a chunk. Do not reorder chunks. Do not move a unit between chunks.
 ### Surface and decisions
 
 Append surface entries for anything new the refinement touches. These are different from research-time entries: the code exists, so evidence is what is there rather than what is planned. Update the disposition of any existing entry whose fate this changes.
+
+Edges may be appended to existing entries; adding one deletes nothing. A Shared structure warning among refinement units clears through what the refinements themselves introduce: `precedent_for` edges from the first refinement's new entry to the others', or a `depends_on` chain through the refinement units in order. A refinement with no new entry has only the chain. An inherited warning between original pending units clears the same way, through an agreed amendment to those units.
 
 Record the request itself as a resolved decision, with the user's reasoning. Six months later the bundle should explain why the feature turned out the way it did.
 

@@ -46,6 +46,12 @@ Extra checks the bundle must pass. One row for each check. Write each one so som
 > | pnpm only | No `verify` command calls npm or yarn |
 > | Docs registry | A unit that adds or renames a doc updates `docs/index.md` in its criteria |
 
+## Coding-style skill (implement only)
+
+A skill chunk agents invoke before their first unit. It governs how code is written, never what gets built. Research and refine never load it. Remove this section if the project has none.
+
+> `ponytail:ponytail` at level `full`.
+
 ## Verification commands
 
 The commands that go in a unit's `verify` array. Automated only. They run per unit, after that unit's code is complete. Note anything unusual about how they behave. Remove this section if the project has none.

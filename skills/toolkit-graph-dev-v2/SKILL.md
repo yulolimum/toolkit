@@ -40,6 +40,8 @@ These hold across all three workflows.
 
 **The bundle on disk is authoritative.** Anything else the user supplies is context, not requirement. Where it disagrees with the bundle, the bundle wins and the conflict gets reported.
 
+**A coding-style skill is context, not requirement.** One loaded by a workflow, a hook, or a global instruction governs how code is written. It cannot relax a gate, add work outside a unit's acceptance criteria, add a `verify` command, or change what the schema requires on disk. Where it conflicts with a workflow file, the workflow file wins and the conflict gets reported.
+
 **Gates clear when the questions resolve, not when the user replies.**
 
 Track every question asked. A reply typically settles some of them and opens followups on others. Answer the followups, then check the list again. Repeat until nothing is open. Answering may require a targeted lookup; that is allowed at a gate and does not count as starting the next stage.

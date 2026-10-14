@@ -45,7 +45,7 @@ Compare the files named in the chain's `surface_refs` against what the surface e
 
 ### Validate
 
-Run the bundle validator, `scripts/validate-bundle.mjs` in the skill directory, with node against the bundle root. This workflow does not fix a failing bundle; a failure is a blocker, carried into the brief. A warning about a record that predates criteria verdicts is context from an older session, not a blocker.
+Run the bundle validator, `scripts/validate-bundle.mjs` in the skill directory, with node against the bundle root. This workflow does not fix a failing bundle; a failure is a blocker, carried into the brief. A warning about a record that predates criteria verdicts is context from an older session, not a blocker. A Shared structure warning is research's or refine's to resolve; carry it into the brief, do not act on it.
 
 ---
 
@@ -67,7 +67,7 @@ One message. Then stop. This is the only gate that always waits, because scope g
 
 **Drift.** Anything found in stage 0, or "none."
 
-**Bundle health.** Validator failures from stage 0, or "clean."
+**Bundle health.** Validator failures from stage 0 in full, warnings as a count per gate, or "clean." A Shared structure warning goes in full; it names what research or refine must revisit.
 
 **Questions.** Usually none. See below.
 
@@ -111,7 +111,7 @@ The user may ask for a single branch instead. Honor it. Commits still land per u
 ### Per chunk
 
 1. Create and check out the chunk's branch.
-2. Spawn a subagent for the chunk. Give it the chunk's units in order, the bundle root, and the path to the bundle validator. Nothing from any other chunk.
+2. Spawn a subagent for the chunk. Give it the chunk's units in order, the bundle root, and the path to the bundle validator. No unit files from any other chunk.
 3. Wait for it to finish.
 4. Verify the chunk. Refer to "Chunk verification" below.
 5. Report three or four lines: chunk id, what it covers, units complete, branch and tip, anything outstanding.
@@ -128,7 +128,11 @@ Its chunk's units, in dependency order. For each unit, only that unit's own slic
 
 It does not receive units from other chunks. It does not receive a later unit's slice before reaching it.
 
+**Completed work is context, not spec.** At spawn, before its first unit, the subagent reads the `spec_corrections` of every completed unit, and the full `built/` record of each completed unit this chunk's units `depends_on`. Implement never edits the spec, so until a refine pass absorbs them, those records are the only place earlier chunks' discoveries exist. Code an earlier chunk shipped is already on the branch this one stacks on; treat it as available precedent.
+
 `links` on the index or on a unit is not part of any slice. Those are pointers for people. Do not follow them, and do not treat anything they lead to as a requirement.
+
+**Coding-style skill.** If the reference names one, instruct the subagent to invoke it before its first unit. It governs how code gets written, never what gets built.
 
 ### What a subagent does per unit
 
@@ -168,7 +172,7 @@ Record a verdict for every acceptance criterion, the criterion text verbatim: `m
 
 Then set `status` to `done` in `index.json`, but only when every acceptance criterion is met or recorded as a deviation, and every check passes. A unit with outstanding work stays `in_progress`.
 
-Last, run the bundle validator, `scripts/validate-bundle.mjs` in the skill directory, against the bundle root. Fix what it reports against this unit's records before starting the next unit.
+Last, run the bundle validator, `scripts/validate-bundle.mjs` in the skill directory, against the bundle root. Fix what it reports against this unit's records before starting the next unit. A Shared structure warning is not against this unit's records; leave it for the report.
 
 ### Chunk verification
 
@@ -202,7 +206,9 @@ On stopping, leave the current unit `in_progress`, leave completed units `done`,
 
 The user may ask for a change to work already done, in this session or a later one.
 
-Route the request to the chunk that owns the affected unit. That chunk's agent makes the change, re-runs the affected unit's checks, and commits it as a new commit. The commit follows the same reference instructions as any other unit commit. Amending rewrites history that later chunks are stacked on; treat it as a project decision, not a default.
+**A change request is not a reversal.** A change request says the code does not match the spec, or asks for something the spec is silent on. A request that contradicts an acceptance criterion, a non-goal, or a resolved decision of any unit, built or not, is a refinement: the spec itself is changing. Do not absorb it. Stop, as under "Stopping" above, name everything it contradicts, and say that refine handles it. Absorbing it leaves the code saying one thing and every later unit's criteria saying another, and each builder after that records the same correction.
+
+Route a change request to the chunk that owns the affected unit. That chunk's agent makes the change, re-runs the affected unit's checks, and commits it as a new commit. The commit follows the same reference instructions as any other unit commit. Amending rewrites history that later chunks are stacked on; treat it as a project decision, not a default.
 
 Then cascade. Every chunk after the changed one rebases onto the new tip, in order, and adapts its own work. Each one re-runs its checks. Report each as it lands.
 
@@ -242,5 +248,6 @@ Do not claim completion while work or verification remains. A precise blocker wi
 - No destructive version control, and no discarding unrelated working-tree changes
 - No reverting or rebuilding completed work to recover from a later failure
 - No confirmation gate after stage 1, except a change request the user initiates
+- No absorbing a request that contradicts a criterion, a non-goal, or a decision; that is a refinement
 - No unit closed `done` without a verdict and evidence for every acceptance criterion
 - No completion report while a check is failing

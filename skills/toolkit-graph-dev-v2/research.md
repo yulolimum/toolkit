@@ -220,9 +220,15 @@ Keep surface overlap between chunks low. A later chunk modifying a file an earli
 
 ### Wiring units
 
-Chunking exposes work no unit owns: the integration that connects one chunk to the next. Create units for it.
+Chunking exposes two things the unit list does not yet account for.
 
-These are ordinary units. They need the same references, acceptance criteria, states, and non-goals as any other. A wiring unit with no acceptance criteria is a placeholder, not a unit.
+**Integration.** The work that connects one chunk to the next. Create a unit for it.
+
+**Shared structure.** Sibling units building the same shape: a run of screens with near-identical `surface_refs`, a component each of them would otherwise invent, a pattern each would re-derive. The signal is mechanical and the validator's Shared structure warning surfaces it. A validator run here is a probe for that warning, not the gate run, which still comes after this step.
+
+Resolve it by making the first sibling the pattern: `precedent_for` edges from its new surface entries to theirs, plus `depends_on` from the others for ordering, since the pattern's output is a precondition for following it. The edges alone clear the warning, and only when the pattern precedes its followers in the unit order. An existing-code precedent shared by every sibling does not clear it; naming one showcase for five screens leaves each screen deriving the shape alone, which is the failure this warning exists to catch. Hoisting something the siblings share into its own unit is often also right, but it supplements the pattern rather than replacing it; the siblings' remaining overlap stays.
+
+Units created here are ordinary units. They need the same references, acceptance criteria, states, and non-goals as any other. A wiring unit with no acceptance criteria is a placeholder, not a unit. A unit added in this step that changes a chunk's `covers` or its boundary means re-proposing the affected chunks; one that slots under the existing `covers` does not.
 
 Adding units changes what the gates check, so the gates run after this step, not before.
 
