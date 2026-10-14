@@ -31,7 +31,7 @@ The Linear MCP uses one authentication. It reaches one workspace at a time, and 
 2. Compare the team names with the context of the current repository. Do not use a fixed mapping of projects, teams, products, or workspaces. This skill runs in many repositories, and a fixed mapping is correct for only some of them.
 3. If the teams clearly belong to a different product or workspace, stop. Do not create or change a ticket. Tell the user:
 
-   > We're in the wrong Linear workspace — I see teams `X`, but this project (`<repo>`) belongs to `Y`. Re-auth with `/mcp` and reconnect to the correct workspace before I proceed.
+   > We're in the wrong Linear workspace. I see teams `X`, but this project (`<repo>`) belongs to `Y`. Re-auth with `/mcp` and reconnect to the correct workspace before I proceed.
 
 4. Continue only after the workspace is correct.
 
@@ -60,7 +60,7 @@ Use the same method as for labels.
 1. Find the projects of the recent tickets of the user.
 2. Before you propose a project, use `list_projects` or `get_project` to check that the project still exists.
 3. Propose only a project that Linear returns. If no project fits, tell the user. Do not invent a project name.
-4. Ask the user, for example: "Your recent work is under project `X` — assign this ticket to it?"
+4. Ask the user, for example: "Your recent work is under project `X`. Assign this ticket to it?"
 5. Assign the project only after the user confirms it.
 
 ## Propose an estimate
@@ -96,9 +96,12 @@ Write each ticket as a task to complete. The user creates a ticket to work on it
 Separate the intent of the ticket from your suggestions. The agent that implements the ticket often treats each line as a requirement. It then follows the ticket instead of the patterns of the repository and the preferences of the user.
 
 - The intent is firm. It is the task that the ticket must complete, and each requirement that the user states, for example "create a utility function named X". State the intent directly.
+- Write the intent as the result that the user wants: what changes, for whom, and when. How to build it goes in Technical Notes & References: as a requirement when the user states it, otherwise as a suggestion.
 - Everything that you infer or assume is a suggestion: an approach, a file to change, a name, or a structure. Write it as a suggestion. Do not write it as a command, such as "Create file X" or "Do the following". The implementing agent decides these details from its own research.
 
-Keep the Overview, the Description, and the Expected Outcomes short and high-level. State what is necessary, then stop. Put technical detail in Technical Details.
+Keep the Overview, the Description, and the Expected Outcomes short and high-level. State what is necessary, then stop. State each fact in one section only. Expected Outcomes is the exception: it restates the intended result as short outcomes. Put technical detail in Technical Notes & References.
+
+Do not use em dashes in a title, a description, or a comment. Use a period, a comma, or a colon instead.
 
 Local material is a file that only the author can open. It is a path outside the repository, or a file in the repository that git ignores or does not track. Research notes, plans, and generated bundles are often local. Other readers cannot open local material, so the ticket must not depend on it.
 
@@ -111,15 +114,15 @@ Use the sections below in this order. Omit a section only when it does not apply
 
 ### Overview
 
-- Write a high-level summary. Engineers and non-engineers, such as EMs, read it to understand the task without the rest of the ticket.
+- Write a high-level summary: what the task is and why it matters. Every reader, including people who are not engineers, must understand the task from the Overview alone.
+- Use plain language. Do not use code identifiers.
 - Write one paragraph at most. Make it slightly longer only when necessary.
 
 ### Description
 
-- Write the task in depth: the problem, the intended result, and the research and reasoning behind it.
-- Write it for an engineer who must understand the problem.
-- Some technical detail is acceptable. Do not let it overwhelm the reader.
-- Do not include code blocks or file references. Put file references in Technical Details.
+- Explain the task in more detail than the Overview: the problem, the intended result, and the reasoning behind it.
+- Write it for project managers and clients. Use plain language. Do not use code identifiers.
+- Do not include code blocks or file references. Put engineering detail in Technical Notes & References.
 
 ### Action Items
 
@@ -131,10 +134,12 @@ Use the sections below in this order. Omit a section only when it does not apply
   - [ ] Second step
   ```
 
-### Technical Details
+### Technical Notes & References
 
-The agent that implements the ticket does its own research when the work starts, often weeks or months after you write the ticket. Write this section as pointers and reference for that agent.
+This section is for engineers and for the agent that implements the ticket. That agent does its own research when the work starts, often weeks or months after you write the ticket. Write this section as notes and references for that agent. Keep it concise. Do not write steps for the implementation or for testing, even as suggestions.
 
+- Do not restate the product intent here. The Overview, the Description, and the Expected Outcomes hold it.
+- Put each technical requirement that the user states here, and mark it as required. Everything else here is a suggestion.
 - Point to the files and the areas of the code that the task affects. If a file moves or someone deletes it before the work starts, the agent finds the correct place during its research.
 - Do not give line numbers. Do not name functions or other symbols to point at specific logic. These pointers can go stale before the work starts. They also save nothing, because the agent reads the full file.
 - Name a symbol when the ticket is about that symbol, for example a ticket that updates one function.
@@ -142,13 +147,13 @@ The agent that implements the ticket does its own research when the work starts,
 ### Expected Outcomes
 
 - This section is allowed. List only outcomes that are part of the intent. Keep them short and high-level.
-- Do not put implementation details here. Put the detail in Technical Details, not in a long list of outcomes.
+- Do not put implementation details here. Put the detail in Technical Notes & References, not in a long list of outcomes.
 
 ### Local References
 
 - Add this section only when the ticket is based on local material that exists. Do not create local material for this section.
 - Start the section with this line: "These files are on the author's machine. They may not exist for you. The ticket does not depend on them."
-- List the path of each file.
+- List the absolute path of each file. Write each path in full, even when the paths share a long prefix. Do not shorten a path with `...` or `~`. The author opens each path directly, and a shortened path cannot be opened.
 
 ## Offer a branch rename
 

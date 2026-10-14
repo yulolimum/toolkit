@@ -20,7 +20,7 @@ When you state an estimate, such as "make it a 3", the skill uses your value wit
 
 ## What it produces
 
-- A Linear ticket that is assigned to you. The description has these sections: Overview, Description, Technical Details, and Expected Outcomes. The description has an Action Items checklist only when you ask for one. The skill writes details that it inferred as suggestions, so they do not override the patterns of your repository. When the ticket is based on research files that only you can open, the description ends with a Local References section. That section lists the paths and states that the ticket does not depend on them.
+- A Linear ticket that is assigned to you. The description has these sections: Overview, Description, Technical Notes & References, and Expected Outcomes. The description has an Action Items checklist only when you ask for one. The skill writes details that it inferred as suggestions, so they do not override the patterns of your repository. When the ticket is based on research files that only you can open, the description ends with a Local References section. That section lists the absolute paths and states that the ticket does not depend on them.
 - Labels, a project, and an estimate. The skill proposes only labels and projects that exist, and only estimate values that your team already uses. The skill applies each one only after your approval.
 - An offer to rename your current branch to the branch name that Linear suggests.
 - A comment for context that does not fit the description.
