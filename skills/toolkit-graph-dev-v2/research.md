@@ -177,9 +177,15 @@ Interactive. The user is back.
 
 **Summary.** What was mapped, how many surface entries, how many units, the critical path through `depends_on`.
 
-**Red flags.** Anything found that changes scope, cost, or risk. Missing platform patterns, work that turned out to be larger than expected, constraint violations, conclusions resting on weak evidence.
+Then three lists of what research learned, sorted by what was done about it. Omit a list that is empty.
 
-**Decisions.** Every open decision, numbered. State the assumption made, the reasoning, and what changes if it is wrong. These are the questions.
+**Findings.** Learned something the ticket did not know, and the spec already absorbed it. Nothing for the user to do; they read these to stay oriented. Example: no backend module reads the table the ticket says to reuse, so a port unit was added.
+
+**Surprises.** Something deviated from the ticket, the brief, or the reference, and research found a way through on its own. The user checks the way through. Example: a cited file moved, a component cannot do what the ticket assumed, a reference default conflicted with a user instruction and the precedence rule settled it.
+
+**Red flags.** Something could not be reconciled. The ticket, the brief, and the code contradict each other in a way research cannot settle, so part of the premise is unsound and needs a fresh look before the spec is worth finishing. Example: the backend contract the ticket is built on was replaced and nothing in the ticket survives it; the brief states a fact the code disproves and the spec has nowhere to stand. Most red flags produce a decision; point at it.
+
+**Decisions.** Every open decision, numbered. State the assumption made, the reasoning, and what changes if it is wrong. These are the questions. A decision may come from any of the three lists above or from an assumption made during mapping.
 
 Present the chunk proposal after the decisions are settled, not alongside them. Chunking depends on what the decisions resolve to. Show the chunks in order, each with its `covers` line, its units, and its loose ends. The user accepts it, redraws the boundaries, or declines chunking entirely. Declining means one chunk holding every unit.
 
@@ -193,9 +199,17 @@ Redrawing still obeys the rules. Every unit lands in exactly one chunk, chunks s
 
 Nothing gets written and no gate runs until every decision is settled.
 
-Expect back and forth. The user will often resolve some decisions and ask followups on others, or question a red flag. Answer their followups, then check what is still open and ask again. Close out once nothing is.
+The user answers the numbered list in whatever order and quantity they like. Record each answer as it arrives. Followups are answered in place, at whatever depth they need, including reading code. A followup is not a resolution. Do not start writing because most of the decisions came back.
 
-A followup is not a resolution. Do not start writing because most of the decisions came back.
+Do not end a reply with a count of what remains, a re-list of open decisions, or a reminder to answer them. The user has the numbered list; when they want the rest, they will ask. Prompt once only when the user appears to think everything is settled and something is not.
+
+**Walking the rest.** When the user asks to go one by one, or picks one decision to discuss, switch to walk mode for the remaining decisions: take the next open one and give three short parts, then the question.
+
+1. **What it means.** The choice in plain words, and which units it touches.
+2. **Why the assumption.** The evidence behind it and what changes if it is wrong.
+3. **Suggestion.** One recommended answer with the reason.
+
+Ask for that decision's answer and stop. Stay on it through followups until it resolves, then move to the next with the same three parts. If an earlier answer already settles it, say so in one line and confirm. Leave walk mode if the user resolves several at once or asks for the list again.
 
 Once everything is settled, each answer writes into its decision entry: `status: "resolved"`, plus `resolution` and `rationale`. Then update every affected surface entry and unit.
 
