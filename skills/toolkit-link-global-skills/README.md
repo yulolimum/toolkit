@@ -1,6 +1,6 @@
 # toolkit-link-global-skills
 
-Link a project's local skills into global directories for Codex, Claude Code, and Cursor.
+Link a project's local skills into global directories for Codex, Claude Code, Cursor, and Antigravity CLI.
 
 ## What it does
 

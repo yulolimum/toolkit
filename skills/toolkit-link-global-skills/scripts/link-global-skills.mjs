@@ -23,13 +23,19 @@ const providers = [
     location: '~/.cursor/skills',
     directory: join(homeDirectory, '.cursor', 'skills'),
   },
+  {
+    name: 'Antigravity CLI',
+    location: '~/.gemini/antigravity-cli/skills',
+    directory: join(homeDirectory, '.gemini', 'antigravity-cli', 'skills'),
+  },
 ]
 
 function printUsage() {
   console.log(`Usage: node link-global-skills.mjs
 
 Use ./skills from the current repository root, then link each eligible skill into
-~/.agents/skills, ~/.claude/skills, and ~/.cursor/skills.`)
+~/.agents/skills, ~/.claude/skills, ~/.cursor/skills, and
+~/.gemini/antigravity-cli/skills.`)
 }
 
 function parseArguments(arguments_) {

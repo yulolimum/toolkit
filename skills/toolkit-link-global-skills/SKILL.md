@@ -1,6 +1,6 @@
 ---
 name: toolkit-link-global-skills
-description: Link a project's local skills into the user-level skill directories for Codex, Claude Code, and Cursor. Use when installing, synchronizing, repairing, or cleaning global skill symlinks.
+description: Link a project's local skills into the user-level skill directories for Codex, Claude Code, Cursor, and Antigravity CLI. Use when installing, synchronizing, repairing, or cleaning global skill symlinks.
 ---
 
 # Link Global Skills
@@ -23,7 +23,7 @@ node /path/to/toolkit-link-global-skills/scripts/link-global-skills.mjs
 
 ## Behavior
 
-- Clean only broken direct-child symlinks in `~/.agents/skills`, `~/.claude/skills`, and `~/.cursor/skills`.
+- Clean only broken direct-child symlinks in `~/.agents/skills`, `~/.claude/skills`, `~/.cursor/skills`, and `~/.gemini/antigravity-cli/skills`.
 - Link every direct child of the local source that contains a `SKILL.md` file.
 - Skip names in the script's skill blacklist, including `toolkit-link-global-skills` itself.
 - Leave a matching symlink unchanged.

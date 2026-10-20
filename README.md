@@ -33,7 +33,7 @@ Agent skills, shared the same way as configs. Each skill has a README with a sho
   - [`humanizer`](skills/toolkit-editorial-pass/references/humanizer.md) - Natural, fact-preserving prose guidance.
   - [`simplified-technical-english`](skills/toolkit-editorial-pass/references/simplified-technical-english.md) - Controlled technical-prose guidance.
   - [`references/extensions/template.md`](skills/toolkit-editorial-pass/references/extensions/template.md) - Template for a project-specific editorial flavor.
-- [`toolkit-link-global-skills`](skills/toolkit-link-global-skills) - Link local skills individually into the global directories for Codex, Claude Code, and Cursor.
+- [`toolkit-link-global-skills`](skills/toolkit-link-global-skills) - Link local skills individually into the global directories for Codex, Claude Code, Cursor, and Antigravity CLI.
   - [`README`](skills/toolkit-link-global-skills/README.md) - Overview and use instructions.
 - [`toolkit-update-paseo-base-branch`](skills/toolkit-update-paseo-base-branch) - Update the saved base branch for the current Paseo worktree.
   - [`README`](skills/toolkit-update-paseo-base-branch/README.md) - Overview and use instructions.
